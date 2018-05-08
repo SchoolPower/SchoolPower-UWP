@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="SchoolPower.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolPower.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="200" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="UsrInfoPanel.Orientation" Value="Horizontal" />
+                        <Setter Target="UsrInfoPanel.Margin" Value="0,0,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="500" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="UsrInfoPanel.Orientation" Value="Vertical" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+
+        <Frame x:Name="mFrame">
+            <Grid>
+                <StackPanel x:Name="UsrInfoPanel" Margin="0,0,0,50" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Image x:Name="LogoImg" Source="/Assets/LoginPageIcon.png" Width="170" Height="170" Stretch="Uniform" Margin="20" />
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                        <TextBox x:Name="UsernameTextBox" Margin="0,0,0,10" Width="250" PlaceholderText="User name"/>
+                        <PasswordBox Name="PasswordTextBox" Margin="0,0,0,20" Width="250" PlaceholderText="Password"/>
+                        <Button x:Name="SignInButton" Background="#FF0063B1" Foreground="White" Content="Login" Click="SignInButton_Click" Width="80" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                    </StackPanel>
+                </StackPanel>
+                <Grid>
+                    <!--copyright-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="CopyRightTextBlock" Grid.Row="1" Text="Copyright © 2018 SchoolPower Studio" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                </Grid>
+            </Grid>
+        </Frame>
+    </Grid>
+</Page>

@@ -1,0 +1,28 @@
+﻿<ContentDialog
+    x:Class="SchoolPower.Views.Dialogs.GradeInfoDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolPower.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="320" MaxHeight="320">
+
+        <TextBlock Name="Percent" HorizontalAlignment="Right" FontSize="42" Text="Percent" Margin="0,10,0,-5"/>
+        <TextBlock Name="Time" Text="Time"/>
+        <TextBlock Name="Letter" Text="Letter"/>
+
+        <TextBlock Text="Evaluation: " FontSize="22" Margin="0,10,0,0"/>
+        <TextBlock Name="Eval" Text="M"/>
+
+        <TextBlock Text="Comment" FontSize="22" Margin="0,10,0,0" />
+
+        <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="70" >
+            <TextBlock Name="Comment" Text="Trouble maker" TextWrapping="WrapWholeWords" />
+        </ScrollViewer>
+
+        <Button Grid.Row="4" Content="Sweet _(:зゝ∠)_" Margin="0,15,0,0" Click="Button_Click"/>
+
+    </StackPanel>
+</ContentDialog>

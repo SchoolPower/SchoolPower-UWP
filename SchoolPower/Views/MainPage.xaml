@@ -1,0 +1,193 @@
+﻿<Page x:Class="SchoolPower.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:SchoolPower.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:SchoolPower.ViewModels" 
+      xmlns:data="using:SchoolPower.Models" 
+      mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Page.Resources>
+        <DataTemplate x:Key="CoursesListDataTemplate_Compact" x:DataType="data:Subject">
+            <StackPanel Orientation="Horizontal">
+                <!--<Rectangle Fill="{x:Bind Color}" Width="20" Height="20"/>-->
+                <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
+                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight"/>
+                    <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="GradeDetailDataTemplate" x:DataType="data:Peroid">
+            <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
+                <TextBlock Text="{x:Bind Time}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{x:Bind Percent}" HorizontalAlignment="Center" />
+                <TextBlock Text="{x:Bind Letter}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="CoursesListDataTemplate_Detail" x:DataType="data:Subject">
+            <RelativePanel Margin="0,10,0,0" >
+                <TextBlock Name="Title" Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight"/>
+                <StackPanel RelativePanel.Below="Title" Name="InfoPanel" Margin="0,5,0,5">
+                        <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
+                        <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" />
+                        <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" />
+                </StackPanel>
+                <Button 
+                        x:Name="GoToDetailBut" 
+                        Height="50" Width="85"
+                        RelativePanel.RightOf="InfoPanel"
+                        RelativePanel.AlignVerticalCenterWith="InfoPanel"
+                        Loaded="GoToDetailBut_Loaded"
+                        Click="GoToDetailBut_Click"
+                        Visibility="Collapsed"
+                        Margin="25,0,10,0" 
+                        Grid.Column="1">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="More"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                <ScrollViewer
+                    RelativePanel.Below="InfoPanel"
+                    HorizontalScrollBarVisibility="Auto"
+                    HorizontalScrollMode="Enabled"
+                    VerticalScrollBarVisibility="Hidden"
+                    VerticalScrollMode="Disabled">
+                    <GridView 
+                        ItemsSource="{x:Bind Grades}" 
+                   		IsItemClickEnabled="True"
+                        ItemTemplate="{StaticResource GradeDetailDataTemplate}" 
+                        SelectionChanged="GradeDetailGridView_SelectionChanged"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollMode="Enabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                        ScrollViewer.VerticalScrollMode="Disabled">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
+                </ScrollViewer>
+            </RelativePanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeOverViewColumn.Width" Value="*" />
+                        <Setter Target="GradeDetailColumn.Width" Value="0" />
+                        <Setter Target="CurrentVisualState.Text" Value="Narrow" />
+                    </VisualState.Setters>
+                </VisualState>
+                
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailFrame.(Grid.Column)" Value="1" />
+                        <Setter Target="GradeOverView.(Grid.Column)" Value="0"/>
+                        <Setter Target="GradeOverViewColumn.Width" Value="300" />
+                        <Setter Target="GradeDetailColumn.Width" Value="*" />
+                        <Setter Target="CurrentVisualState.Text" Value="Normal" />
+                    </VisualState.Setters>
+                </VisualState>
+                
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Bar-->
+        <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <controls:PageHeader 
+                Text="Main Page" 
+                x:Name="pageHeader" 
+                RelativePanel.AlignLeftWithPanel="True" 
+                RelativePanel.AlignRightWithPanel="True" 
+                RelativePanel.AlignTopWithPanel="True" >
+                <controls:PageHeader.PrimaryCommands>
+                    <AppBarButton 
+                        Icon="Favorite" 
+                        Label="GPA" 
+                        Click="GPA_But_Click" />
+                </controls:PageHeader.PrimaryCommands>
+                <controls:PageHeader.SecondaryCommands>
+                    <AppBarButton 
+                        Label="Refresh" 
+                        Click="Refresh_But_Click" />
+                </controls:PageHeader.SecondaryCommands>
+            </controls:PageHeader>
+        </RelativePanel>
+
+        <!--Grade Content-->
+        <Grid x:Name="MainPageGrid" Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="GradeOverViewColumn" Width="300"/>
+                <ColumnDefinition x:Name="GradeDetailColumn" Width="*"/>
+                <ColumnDefinition x:Name="EmptyColumn" Width="0"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer 
+                HorizontalScrollMode="Auto" 
+                VerticalScrollMode="Auto">
+                <StackPanel 
+                    x:Name="GradeOverView" 
+                    Grid.Column="0" >
+                    <TextBlock 
+                        Visibility="Collapsed" 
+                        Text="" 
+                        x:Name="CurrentVisualState"/>
+                    <ListView 
+                        x:Name="ListV" 
+                        ItemsSource="{x:Bind subjects}" 
+                        ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                        IsItemClickEnabled="True"  
+                        SelectionChanged="ListView_SelectionChanged" 
+                        ItemTemplate="{StaticResource CoursesListDataTemplate_Compact}"/>
+                </StackPanel>
+            </ScrollViewer>
+            <Image 
+                x:Name="NoGradeIcnImg" 
+                Grid.Column="1" 
+                Source="/Assets/no_grades.png" 
+                Width="250" 
+                Height="250" 
+                Stretch="Uniform" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center"/>
+            <Frame 
+                x:Name="GradeDetailFrame" 
+                Grid.Column="1" 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Stretch">
+            </Frame>
+        </Grid>
+    </Grid>
+</Page>

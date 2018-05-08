@@ -1,0 +1,46 @@
+﻿<ContentDialog
+    x:Class="SchoolPower.Views.Dialogs.GPADialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolPower.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="GPA" Grid.Row="0" Margin="0,15,0,5" FontSize="24"/>
+
+        <RelativePanel Grid.Row="1" Margin="0,5,0,5">
+            <ComboBox x:Name="comboBox" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="T1"/>
+                <ComboBoxItem Content="T2"/>
+                <ComboBoxItem Content="X1"/>
+                <ComboBoxItem Content="S1"/>
+                <ComboBoxItem Content="T3"/>
+                <ComboBoxItem Content="T4"/>
+                <ComboBoxItem Content="X2"/>
+                <ComboBoxItem Content="S2"/>
+                <ComboBoxItem Content="Y1"/>
+            </ComboBox>
+            <TextBlock Text="has a GPA of" RelativePanel.RightOf="comboBox" RelativePanel.AlignVerticalCenterWith="comboBox" Margin="10,0,0,0"/>
+        </RelativePanel>
+
+        <TextBlock x:Name="GPA" Text="NaN%" Grid.Row="2" FontSize="56" Margin="0,0,0,0"/>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5,0,5">
+            <RadioButton Content="All" Tag="All" Checked="RadioButton_Checked" IsChecked="True"/>
+            <RadioButton Content="Custom" Tag="Custom" Checked="RadioButton_Checked" Margin="-36,0,0,0" Width="156"/>
+            <RadioButton Content="Official" Tag="Official" Checked="RadioButton_Checked" Margin="-51,0,0,0" Width="81" />
+        </StackPanel>
+
+        <Button Grid.Row="4" Content="Sweet _(:зゝ∠)_" Margin="0,5,0,0" Click="Button_Click"/>
+    </Grid>
+</ContentDialog>

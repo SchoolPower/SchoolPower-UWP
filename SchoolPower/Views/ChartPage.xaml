@@ -1,0 +1,62 @@
+﻿<Page x:Class="SchoolPower.Views.ChartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:SchoolPower.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:SchoolPower.ViewModels" 
+      xmlns:data="using:SchoolPower.Models" 
+      xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+      mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--Bar-->
+        <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <controls:PageHeader Text="Chart" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
+                <controls:PageHeader.SecondaryCommands>
+                    <AppBarButton Label="Refresh" Click="Refresh_But_Click" />
+                </controls:PageHeader.SecondaryCommands>
+            </controls:PageHeader>
+        </RelativePanel>
+
+        <Pivot x:Name="MyPivot" Grid.Row="1" Grid.Column="0" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="pageHeader">
+
+            <!--  settings  -->
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Line">
+                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
+                    <RelativePanel HorizontalAlignment="Left">
+                        <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ"/>
+                        <!--
+                        <Charting:Chart x:Name="Chart" Height="400">
+                            <Charting:LineSeries Title="SmartPhone" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True" />
+                            <Charting:LineSeries Title="StupidPhone" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True" />
+                        </Charting:Chart> -->
+                    </RelativePanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Bar">
+                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
+                    <RelativePanel HorizontalAlignment="Left">
+                        <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ"/>
+                    </RelativePanel>
+                </ScrollViewer>
+            </PivotItem>
+
+        </Pivot>
+
+
+    </Grid>
+</Page>

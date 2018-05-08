@@ -1,0 +1,148 @@
+﻿<Page
+      x:Class="SchoolPower.Views.MainPage_GradePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:SchoolPower.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:SchoolPower.ViewModels" 
+      xmlns:data="using:SchoolPower.Models" 
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="GradesGridDataTemplate" x:DataType="data:AssignmentItem">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="60" Orientation="Vertical" VerticalAlignment="Center" Margin="5,0,5,0">
+                    <TextBlock Text="{x:Bind Percentage}" FontSize="22" HorizontalAlignment="Center" FontWeight="SemiLight"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="{x:Bind Score}"/>
+                        <TextBlock Text="/"/>
+                        <TextBlock Text="{x:Bind MaximumScore}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="10,10,10,10" Width="180">
+                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" FontWeight="SemiLight"/>
+                    <TextBlock Text="{x:Bind Date}" HorizontalAlignment="Left" FontSize="12"/>
+                    <TextBlock Text="{x:Bind LetterGrade}" HorizontalAlignment="Left" FontSize="12"/>
+                </StackPanel>
+
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup >
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="3" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="380" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="4" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="460" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="5" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="520" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="6" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="7" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="680" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="8" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="740" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="9" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="820" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="10" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="11" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="740" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GradeDetailGrid.MaximumRowsOrColumns" Value="9" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <ScrollViewer 
+            HorizontalScrollBarVisibility="Auto" 
+            VerticalScrollBarVisibility="Hidden">
+            <GridView 
+                Name="GradeDetailGridView" 
+                Margin="5,5,5,5"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ItemsSource="{x:Bind assignments}" 
+                IsItemClickEnabled="True" 
+                SelectionChanged="GradeDetailGridView_SelectionChanged"
+                ItemTemplate="{StaticResource GradesGridDataTemplate}">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid 
+                            x:Name="GradeDetailGrid" 
+                            MaximumRowsOrColumns="6" 
+                            Orientation="Vertical"
+                            Loaded="GradeDetailGrid_Loaded"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -1,0 +1,65 @@
+﻿<Page x:Class="SchoolPower.Views.Shell"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Controls="using:Template10.Controls"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:behaviors="using:Template10.Behaviors"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:SchoolPower.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:views="using:SchoolPower.Views"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+        <!--  mainpage button  -->
+        <Controls:HamburgerMenu.PrimaryButtons>
+            <!--Dashbd-->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE8F1;" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Dashboard" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+            <!--Chart-->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:ChartPage">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE9D9;" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Chart" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+            <!--Attendence-->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:AttendancePage">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE7EE;" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Attendance" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+        </Controls:HamburgerMenu.PrimaryButtons>
+        
+        <Controls:HamburgerMenu.SecondaryButtons>
+            <!--setting-->
+            <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0" PageType="views:SettingsPage">
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE713;" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Settings" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+            <!--about-->
+            <Controls:HamburgerButtonInfo x:Name="AboutButton" PageParameter="0" PageType="views:AboutPage">
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE946;" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;About" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+
+        </Controls:HamburgerMenu.SecondaryButtons>
+    </Controls:HamburgerMenu>
+</Page>
