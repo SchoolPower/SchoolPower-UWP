@@ -108,8 +108,10 @@ namespace SchoolPower.Views {
         }
 
         private void GoToDetailBut_Click(object sender, RoutedEventArgs e) {
-            Swap();            // navigate
-            GradeDetailFrame.Navigate(typeof(MainPage_GradePage), ListV.SelectedIndex);
+            if (CurrentVisualState.Text.Equals("Narrow")) {
+                Swap();
+                GradeDetailFrame.Navigate(typeof(MainPage_GradePage), ListV.SelectedIndex);
+            }
         }
 
         private async void GradeDetailGridView_SelectionChanged(object sender, SelectionChangedEventArgs e) {

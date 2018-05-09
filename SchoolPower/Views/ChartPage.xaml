@@ -47,7 +47,7 @@
                     </RelativePanel>
                 </ScrollViewer>
             </PivotItem>
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Bar">
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Radar">
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ"/>
