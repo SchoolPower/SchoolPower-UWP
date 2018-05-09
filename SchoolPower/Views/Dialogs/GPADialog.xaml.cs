@@ -34,47 +34,27 @@ namespace SchoolPower.Views.Dialogs {
                     GPA.Text = StudentData.GetAllGPA(selectedCombo).ToString() + "%";
                     break;
                 case "Custom":
-                    int count = 0;
-                    foreach (var subject in StudentData.subjects) {
-                        if ((bool)localSettings.Values[subject.Name]) {
-                            count++;
-                        }
-                    }
                     switch (localSettings.Values["CalculateRule"]) {
                         case "0":
                             GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
                         case "1":
-                            if (count >= 3) {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo, 3).ToString() + "%";
-                            } else {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
-                            }
+                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
                         case "2":
-                            if (count >= 4) {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo, 4).ToString() + "%";
-                            } else {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
-                            }
+                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
                         case "3":
-                            if (count >= 5) {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo, 5).ToString() + "%";
-                            } else {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
-                            }
+                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
-                    }
-                    break;
+                    } break;
                 case "Official":
                     try {
                         if (StudentData.info.GPA.Equals(null)) { }
                         GPA.Text = StudentData.info.GPA + "%";
                     } catch (System.NullReferenceException) {
                         GPA.Text = "NaN%";
-                    }
-                    break;
+                    } break;
             }
         }
 
@@ -87,47 +67,27 @@ namespace SchoolPower.Views.Dialogs {
                     GPA.Text = StudentData.GetAllGPA(selectedCombo).ToString() + "%";
                     break;
                 case "Custom":
-                    int count = 0;
-                    foreach (var subject in StudentData.subjects) {
-                        if ((bool)localSettings.Values[subject.Name]) {
-                            count++;
-                        }
-                    }
                     switch (localSettings.Values["CalculateRule"]) {
                         case "0":
                             GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
                         case "1":
-                            if (count >= 3) {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo, 3).ToString() + "%";
-                            } else {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
-                            }
+                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
                         case "2":
-                            if (count >= 4) {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo, 4).ToString() + "%";
-                            } else {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
-                            }
+                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
                         case "3":
-                            if (count >= 5) {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo, 5).ToString() + "%";
-                            } else {
-                                GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
-                            }
+                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
                             break;
-                    }
-                    break;
+                    } break;
                 case "Official":
                     try {
                         if (StudentData.info.GPA.Equals(null)) { }
                         GPA.Text = StudentData.info.GPA + "%";
                     } catch (System.NullReferenceException) {
                         GPA.Text = "NaN%";
-                    }
-                    break;
+                    } break;
             }
         }
 

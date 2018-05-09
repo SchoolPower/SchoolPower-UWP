@@ -21,7 +21,7 @@ namespace SchoolPower.Views.Dialogs {
             Time.Text    = peroid.Time;
             Percent.Text = peroid.Percent;
             Letter.Text  = peroid.Letter;
-            Eval.Text    += peroid.Eval;
+            Eval.Text    = peroid.Eval;
             try {
                 peroid.Comment.Equals(null);
                 Comment.Text = peroid.Comment;

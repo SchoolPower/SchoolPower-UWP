@@ -51,7 +51,7 @@
             <!--  header  -->
             <controls:PageHeader 
                 x:Name="pageHeader" 
-                Content="Settings" 
+                Content="About" 
                 Frame="{x:Bind Frame}" 
                 RelativePanel.AlignLeftWithPanel="True" 
                 RelativePanel.AlignRightWithPanel="True" 
@@ -65,7 +65,6 @@
                 RelativePanel.AlignRightWithPanel="True" 
                 RelativePanel.Below="pageHeader">
 
-                <!--  about  -->
                 <PivotItem Header="About">
                     <RelativePanel DataContext="{Binding AboutPartViewModel}">
 
@@ -107,10 +106,12 @@
                     </RelativePanel>
                 </PivotItem>
 
-                <!--  privacy  -->
-                <PivotItem DataContext="{Binding SettingsPartViewModel}"
-                       Header="Privacy statement"
-                       Padding="0">
+                <PivotItem Header="Support">
+                </PivotItem>
+
+                <PivotItem Header="Privacy statement"
+                    DataContext="{Binding SettingsPartViewModel}"
+                    Padding="0">
                     <ScrollViewer Margin="0,0,-12,0" VerticalScrollBarVisibility="Auto">
                         <TextBlock Margin="0,12,24,12"
                                LineHeight="24"

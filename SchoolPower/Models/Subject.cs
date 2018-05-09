@@ -100,6 +100,10 @@ namespace SchoolPower.Models {
                     }
                 } catch (Exception) { }
             }
+
+            // sort
+            Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            Assignments.Reverse();
         }
     }
 

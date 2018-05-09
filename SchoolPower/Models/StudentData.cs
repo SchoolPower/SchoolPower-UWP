@@ -27,6 +27,8 @@ namespace SchoolPower.Models {
             for (int index = 0; index < attendancesJarray.Count; index++) {
                 attendances.Add(new AttendanceItem(attendancesJarray[index]));
             }
+            attendances.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            attendances.Reverse();
             info = new Info(data.information);
         }
 
@@ -83,9 +85,16 @@ namespace SchoolPower.Models {
 
             foreach (var subject in subjects) {
                 foreach (var grade in subject.Grades) {
-                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0.0")) {
+                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0")) {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
+                        System.Diagnostics.Debug.Write(subject.Name);
+                        System.Diagnostics.Debug.Write(" ");
+                        System.Diagnostics.Debug.Write(grade.Percent);
+                        System.Diagnostics.Debug.Write(" ");
+                        System.Diagnostics.Debug.Write(gradeSum);
+                        System.Diagnostics.Debug.Write(" ");
+                        System.Diagnostics.Debug.WriteLine(index);
                     }
                 }
             }
@@ -95,7 +104,7 @@ namespace SchoolPower.Models {
                 default: return Math.Round(gradeSum / index, 3);
             }
         }
-
+        
         public static double GetSomeGPA(String SelectedPeroid) {
 
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -104,7 +113,7 @@ namespace SchoolPower.Models {
 
             foreach (var subject in subjects) {
                 foreach (var grade in subject.Grades) {
-                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0.0") && (bool)localSettings.Values[subject.Name]) {
+                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0") && (bool)localSettings.Values[subject.Name]) {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
                     }
@@ -115,7 +124,7 @@ namespace SchoolPower.Models {
                 default: return Math.Round(gradeSum / index, 3);
             }
         }
-
+        
         public static double GetSomeGPA(String SelectedPeroid, int total) {
 
             Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -123,37 +132,21 @@ namespace SchoolPower.Models {
 
             foreach (var subject in StudentData.subjects) {
                 foreach (var grade in subject.Grades) {
-                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0.0") && (bool)localSettings.Values[subject.Name]) {
+                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0") && (bool)localSettings.Values[subject.Name]) {
                         grades.Add(Convert.ToDouble(grade.Percent));
                     }
                 }
             }
-
-            //rank
-            int i, j, indexOfMax;
-            double temp;
-            for (i = 0; i < grades.Count -1 ; i++) {
-                indexOfMax = i;
-                for (j = i + 1; j < grades.Count; j++) {
-                    if (grades[indexOfMax] < grades[j]) {
-                        indexOfMax = j;
-                    }
-                }
-                temp = grades[i];
-                grades[i] = grades[indexOfMax];
-                grades[indexOfMax] = temp;
-            }
+            grades.Sort();
 
             double sum = 0;
-            for (int k = 0; k < total; k++) {
-                sum += grades[k];
-            }
-
-            foreach (double d in grades) {
-                if (d == 0) {
+            foreach (double grade in grades) {
+                sum += grade;
+                if (grade == 0) {
                     total--;
                 }
             }
+
             return sum/total;
         }
 
