@@ -153,6 +153,9 @@
                 <ColumnDefinition x:Name="GradeDetailColumn" Width="*"/>
                 <ColumnDefinition x:Name="EmptyColumn" Width="0"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <ScrollViewer 
                 HorizontalScrollMode="Auto" 
                 VerticalScrollMode="Auto">
@@ -174,17 +177,18 @@
             </ScrollViewer>
             <Image 
                 x:Name="NoGradeIcnImg" 
-                Grid.Column="1" 
+                Grid.Column="1"
+                Grid.Row="0"
                 Source="/Assets/no_grades.png" 
                 Width="250" 
                 Height="250" 
                 Stretch="Uniform" 
                 VerticalAlignment="Center" 
                 HorizontalAlignment="Center"/>
-
             <Frame 
                 x:Name="GradeDetailFrame" 
                 Grid.Column="1" 
+                Grid.Row="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Stretch">
             </Frame>

@@ -91,7 +91,7 @@ namespace SchoolPower.Views {
             // navigate when normal
             if (CurrentVisualState.Text.Equals("Normal")) {
                 int index = ListV.SelectedIndex;
-                GradeDetailFrame.Navigate(typeof(MainPage_GradePage), index);
+                GradeDetailFrame.Navigate(typeof(MainPageGradePage), index);
             }
         }
 
@@ -110,7 +110,7 @@ namespace SchoolPower.Views {
         private void GoToDetailBut_Click(object sender, RoutedEventArgs e) {
             if (CurrentVisualState.Text.Equals("Narrow")) {
                 Swap();
-                GradeDetailFrame.Navigate(typeof(MainPage_GradePage), ListV.SelectedIndex);
+                GradeDetailFrame.Navigate(typeof(MainPageGradePage), ListV.SelectedIndex);
             }
         }
 

@@ -97,7 +97,7 @@
                                 ItemTemplate="{StaticResource SubjectListCheckBoxDataTemplate}"/>
 
                             <TextBlock Text="Calculate Rule" Margin="0,5,0,5"/>
-                            <ComboBox x:Name="comboBox" Margin="0,5,0,15" SelectionChanged="comboBox_SelectionChanged" Loaded="comboBox_Loaded">
+                            <ComboBox x:Name="comboBox" Margin="0,5,0,15" SelectionChanged="ComboBox_SelectionChanged" Loaded="ComboBox_Loaded">
                                 <ComboBoxItem Content="Calculate all subjects in your selections"/>
                                 <ComboBoxItem Content="Heighest 3"/>
                                 <ComboBoxItem Content="Heighest 4"/>

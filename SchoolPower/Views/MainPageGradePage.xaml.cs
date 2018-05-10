@@ -22,17 +22,19 @@ namespace SchoolPower.Views {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage_GradePage : Page {
+    public sealed partial class MainPageGradePage : Page {
         private List<AssignmentItem> assignments;
         private ItemsWrapGrid _itemsWrapGrid;
 
-        public MainPage_GradePage() {
+        public MainPageGradePage() {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             int index = (int)e.Parameter;
             assignments = StudentData.subjects[index].Assignments;
             InitializeComponent();
+            Window.Current.SizeChanged += Current_SizeChanged;
+
         }
 
         private void GradeDetailGrid_Loaded(object sender, RoutedEventArgs e) {
@@ -40,7 +42,7 @@ namespace SchoolPower.Views {
             _itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
         }
 
-        int GetNumberOfRows() {
+        public static int GetNumberOfRows() {
             return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 80;
         }
 
@@ -48,5 +50,9 @@ namespace SchoolPower.Views {
             AssInfoDialog dialog = new AssInfoDialog(assignments[GradeDetailGridView.SelectedIndex]);
             await dialog.ShowAsync();
         }
-    } 
+
+        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e) {
+
+        }
+    }
 }

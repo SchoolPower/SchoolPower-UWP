@@ -138,8 +138,8 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPage_GradePage.xaml.cs">
-      <DependentUpon>MainPage_GradePage.xaml</DependentUpon>
+    <Compile Include="Views\MainPageGradePage.xaml.cs">
+      <DependentUpon>MainPageGradePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -217,7 +217,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MainPage_GradePage.xaml">
+    <Page Include="Views\MainPageGradePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

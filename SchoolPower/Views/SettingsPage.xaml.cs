@@ -16,7 +16,6 @@ namespace SchoolPower.Views {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
             _SerializationService = Template10.Services.SerializationService.SerializationService.Json;
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
@@ -36,13 +35,12 @@ namespace SchoolPower.Views {
         private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             CheckBox checkBox = sender as CheckBox;
             localSettings.Values[checkBox.Content.ToString()] = !(bool)localSettings.Values[checkBox.Content.ToString()];
-            bool b = (bool)localSettings.Values[checkBox.Content.ToString()];
         }
 
         private void CheckBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             CheckBox checkBox = sender as CheckBox;
             try {
-                bool boo = (bool)localSettings.Values[checkBox.Content.ToString()];
+                bool b = (bool)localSettings.Values[checkBox.Content.ToString()];
             } catch (System.NullReferenceException) {
                 localSettings.Values[checkBox.Content.ToString()] = false;
             }
@@ -51,12 +49,12 @@ namespace SchoolPower.Views {
             }
         }
 
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var combo = sender as ComboBox;
             localSettings.Values["CalculateRule"] = combo.SelectedIndex.ToString();
         }
 
-        private void comboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void ComboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             var combo = sender as ComboBox;
             try {
                 int i = Convert.ToInt32(localSettings.Values["CalculateRule"].ToString());
