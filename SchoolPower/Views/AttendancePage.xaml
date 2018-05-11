@@ -151,8 +151,10 @@
         <Image Name="NoAttendanceImg" Visibility="Collapsed" Source="/Assets/perfect_attendance.png" Width="250" Height="250" Stretch="Uniform" />
 
         <ScrollViewer Margin="16,60,0,0"
-            HorizontalScrollBarVisibility="Auto" 
-            VerticalScrollBarVisibility="Hidden">
+            HorizontalScrollBarVisibility="Auto"
+            HorizontalScrollMode="Enabled"
+            VerticalScrollBarVisibility="Hidden"
+            VerticalScrollMode="Disabled">
             <GridView 
                 Name="AttendanceDetailGridView"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"

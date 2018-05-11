@@ -54,16 +54,23 @@ namespace SchoolPower.Views {
                     CloseButtonText = "哦。",
                 }; ContentDialogResult result = await ErrorEmptyContentDialog.ShowAsync();
             } else {
-                // loading animation 
                 Views.Busy.SetBusy(true, "Loading");
                 Task<string> task = StudentData.Kissing(username, password);
                 string studata = "";
                 try {
                     studata = await task;
                 } catch (Exception) { }
-                StudentData.SaveStudentDataToLocal(studata);
-                await Task.Delay(1000);
+                if (studata.Equals("")) {
+                    ContentDialog ErrorContentDialog = new ContentDialog {
+                        Title = "ERROR",
+                        Content = "Network error, grades will not be updates. Please refresh later. ",
+                        CloseButtonText = "哦。",
+                    }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
+                } else {
+                    StudentData.SaveStudentDataToLocal(studata);
+                }
                 Views.Busy.SetBusy(false);
+
                 if (studata.Equals("Something went wrong! Invalid Username or password")) {
                     PasswordTextBox.PlaceholderText = "";
                     ContentDialog ErrorContentDialog = new ContentDialog {
@@ -71,16 +78,9 @@ namespace SchoolPower.Views {
                         Content = "Wrong username and/or password.",
                         CloseButtonText = "哦。",
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
-                } else if (studata.Equals("")) {
-                    ContentDialog ErrorContentDialog = new ContentDialog {
-                        Title = "ERROR",
-                        Content = "Server error",
-                        CloseButtonText = "哦。",
-                    }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
-                }
+                } 
                 else {
                     Frame.Navigate(typeof(MainPage));
-
                 }
             }
         }

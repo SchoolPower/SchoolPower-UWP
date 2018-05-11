@@ -46,6 +46,7 @@ namespace SchoolPower.Models {
         public String Date { get; set; }
         public String Weight { get; set; }
         public string[] Terms { get; set; }
+        public bool IsNew { get; set; }
 
         public AssignmentItem(dynamic data) {
             Name                = data.name;
@@ -60,6 +61,7 @@ namespace SchoolPower.Models {
             IncludeInFinalGrade = data.includeInFinalGrade;
             Weight              = data.weight;
             Terms               = data.terms.ToObject<string[]>();
+            IsNew               = false;
         }
     }
 }

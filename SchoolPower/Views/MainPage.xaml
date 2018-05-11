@@ -21,7 +21,7 @@
             <StackPanel Orientation="Horizontal">
                 <!--<Rectangle Fill="{x:Bind Color}" Width="20" Height="20"/>-->
                 <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
-                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight"/>
+                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight" TextWrapping="Wrap"/>
                     <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
                     <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" />
                 </StackPanel>
@@ -36,7 +36,7 @@
         </DataTemplate>
         <DataTemplate x:Key="CoursesListDataTemplate_Detail" x:DataType="data:Subject">
             <RelativePanel Margin="0,10,0,0" >
-                <TextBlock Name="Title" Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight"/>
+                <TextBlock Name="Title" Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight" TextWrapping="Wrap"/>
                 <StackPanel RelativePanel.Below="Title" Name="InfoPanel" Margin="0,5,0,5">
                         <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
                         <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" />

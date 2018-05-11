@@ -39,11 +39,9 @@
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ"/>
-                        <!--
-                        <Charting:Chart x:Name="Chart" Height="400">
-                            <Charting:LineSeries Title="SmartPhone" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True" />
-                            <Charting:LineSeries Title="StupidPhone" IndependentValuePath="Name" DependentValuePath="Amount" IsSelectionEnabled="True" />
-                        </Charting:Chart> -->
+                        
+
+
                     </RelativePanel>
                 </ScrollViewer>
             </PivotItem>
