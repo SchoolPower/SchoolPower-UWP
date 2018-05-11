@@ -19,7 +19,6 @@
     <Page.Resources>
         <DataTemplate x:Key="CoursesListDataTemplate_Compact" x:DataType="data:Subject">
             <StackPanel Orientation="Horizontal">
-                <!--<Rectangle Fill="{x:Bind Color}" Width="20" Height="20"/>-->
                 <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
                     <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight" TextWrapping="Wrap"/>
                     <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />

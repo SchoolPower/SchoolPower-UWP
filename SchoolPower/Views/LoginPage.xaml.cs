@@ -68,6 +68,7 @@ namespace SchoolPower.Views {
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
                 } else {
                     StudentData.SaveStudentDataToLocal(studata);
+                    await Task.Delay(1000);
                 }
                 Views.Busy.SetBusy(false);
 
