@@ -16,21 +16,27 @@
 
     <Page.Resources>
         <DataTemplate x:Key="GradesGridDataTemplate" x:DataType="data:AssignmentItem">
-            <StackPanel Orientation="Horizontal" >
-                <StackPanel Width="60" Orientation="Vertical" VerticalAlignment="Center" Margin="5,0,5,0">
-                    <TextBlock Text="{x:Bind Percentage}" FontSize="22" HorizontalAlignment="Center" FontWeight="SemiLight"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="{x:Bind Score}"/>
-                        <TextBlock Text="/"/>
-                        <TextBlock Text="{x:Bind MaximumScore}"/>
+            <Border Loaded="Border_Loaded" >
+               
+                <StackPanel Orientation="Horizontal" >
+
+                    <StackPanel Width="60" Orientation="Vertical" VerticalAlignment="Center" Margin="5,0,5,0">
+                        <TextBlock Text="{x:Bind Percentage}" FontSize="22" HorizontalAlignment="Center" FontWeight="SemiLight"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="{x:Bind Score}"/>
+                            <TextBlock Text="/"/>
+                            <TextBlock Text="{x:Bind MaximumScore}"/>
+                        </StackPanel>
                     </StackPanel>
+
+                    <StackPanel Orientation="Vertical" Margin="10,10,10,10" Width="180">
+                       <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" FontWeight="SemiLight"/>
+                       <TextBlock Text="{x:Bind Date}" HorizontalAlignment="Left" FontSize="12"/>
+                       <TextBlock Text="{x:Bind LetterGrade}" HorizontalAlignment="Left" FontSize="12"/>
+                    </StackPanel>
+                    
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Margin="10,10,10,10" Width="180">
-                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" FontWeight="SemiLight"/>
-                    <TextBlock Text="{x:Bind Date}" HorizontalAlignment="Left" FontSize="12"/>
-                    <TextBlock Text="{x:Bind LetterGrade}" HorizontalAlignment="Left" FontSize="12"/>
-                </StackPanel>
-            </StackPanel>
+            </Border>
         </DataTemplate>
     </Page.Resources>
 

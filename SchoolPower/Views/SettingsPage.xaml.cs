@@ -32,11 +32,6 @@ namespace SchoolPower.Views {
             await CoreApplication.RequestRestartAsync(string.Empty);
         }
 
-        private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            CheckBox checkBox = sender as CheckBox;
-            localSettings.Values[checkBox.Content.ToString()] = !(bool)localSettings.Values[checkBox.Content.ToString()];
-        }
-
         private void CheckBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             CheckBox checkBox = sender as CheckBox;
             try {
@@ -62,6 +57,17 @@ namespace SchoolPower.Views {
                 localSettings.Values["CalculateRule"] = "0";
             }
             combo.SelectedIndex = Convert.ToInt32(localSettings.Values["CalculateRule"].ToString());
+        }
+
+        private void CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            var checkBox = sender as CheckBox;
+            checkBox.IsChecked = !checkBox.IsChecked;
+            if ((bool)checkBox.IsChecked) {
+                localSettings.Values[checkBox.Content.ToString()] = true;
+            } else {
+                localSettings.Values[checkBox.Content.ToString()] = false;
+            }
+            System.Diagnostics.Debug.WriteLine(checkBox.Content.ToString() + " " + localSettings.Values[checkBox.Content.ToString()]);
         }
     }
 }

@@ -36,18 +36,19 @@ namespace SchoolPower.Views.Dialogs {
                 case "Custom":
                     switch (localSettings.Values["CalculateRule"]) {
                         case "0":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo).ToString() + "%";
                             break;
                         case "1":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 3).ToString() + "%";
                             break;
                         case "2":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 4).ToString() + "%";
                             break;
                         case "3":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 5).ToString() + "%";
                             break;
-                    } break;
+                    }
+                    break;
                 case "Official":
                     try {
                         if (StudentData.info.GPA.Equals(null)) { }
@@ -69,16 +70,16 @@ namespace SchoolPower.Views.Dialogs {
                 case "Custom":
                     switch (localSettings.Values["CalculateRule"]) {
                         case "0":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo).ToString() + "%";
                             break;
                         case "1":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 3).ToString() + "%";
                             break;
                         case "2":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 4).ToString() + "%";
                             break;
                         case "3":
-                            GPA.Text = StudentData.GetSomeGPA(selectedCombo).ToString() + "%";
+                            GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 5).ToString() + "%";
                             break;
                     } break;
                 case "Official":

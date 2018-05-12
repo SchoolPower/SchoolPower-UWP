@@ -25,6 +25,7 @@ namespace SchoolPower.Views {
     public sealed partial class MainPageGradePage : Page {
         private List<AssignmentItem> assignments;
         private ItemsWrapGrid _itemsWrapGrid;
+        int index = 0;
 
         public MainPageGradePage() {
         }
@@ -34,7 +35,6 @@ namespace SchoolPower.Views {
             assignments = StudentData.subjects[index].Assignments;
             InitializeComponent();
             Window.Current.SizeChanged += Current_SizeChanged;
-
         }
 
         private void GradeDetailGrid_Loaded(object sender, RoutedEventArgs e) {
@@ -53,6 +53,16 @@ namespace SchoolPower.Views {
 
         private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e) {
 
+        }
+
+        private void Border_Loaded(object sender, RoutedEventArgs e) {
+            Border border = sender as Border;
+            if (assignments[index].IsNew) {
+                border.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+            } else {
+                border.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+            }
+            index += 1;
         }
     }
 }

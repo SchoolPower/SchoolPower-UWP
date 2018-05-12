@@ -31,7 +31,7 @@
         </converter:ValueWhenConverter>
         <DataTemplate x:Key="SubjectListCheckBoxDataTemplate" x:DataType="data:Subject">
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="{x:Bind Name}" Checked="CheckBox_Checked" Loaded="CheckBox_Loaded"/>
+                <CheckBox Content="{x:Bind Name}" Click="CheckBox_Click" Tapped="CheckBox_Click" Loaded="CheckBox_Loaded"/>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -91,7 +91,7 @@
                         <StackPanel HorizontalAlignment="Left">
 
                             <TextBlock Text="Select Subjects" Margin="0,5,0,5"/>
-                            <ListView
+                            <ListView 
                                 ItemsSource="{x:Bind subjects}"
                                 IsItemClickEnabled="False"
                                 ItemTemplate="{StaticResource SubjectListCheckBoxDataTemplate}"/>

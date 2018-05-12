@@ -53,13 +53,17 @@ namespace SchoolPower.Views {
                     Content = "Please input user name and/or password.",
                     CloseButtonText = "哦。",
                 }; ContentDialogResult result = await ErrorEmptyContentDialog.ShowAsync();
-            } else {
+            }
+            
+            // load
+            else { 
+
                 Views.Busy.SetBusy(true, "Loading");
                 Task<string> task = StudentData.Kissing(username, password);
                 string studata = "";
-                try {
-                    studata = await task;
-                } catch (Exception) { }
+                try { studata = await task; } catch (Exception) { }
+
+                // bad network or server
                 if (studata.Equals("")) {
                     ContentDialog ErrorContentDialog = new ContentDialog {
                         Title = "ERROR",
@@ -70,8 +74,8 @@ namespace SchoolPower.Views {
                     StudentData.SaveStudentDataToLocal(studata);
                     await Task.Delay(1000);
                 }
-                Views.Busy.SetBusy(false);
 
+                // wrong account info
                 if (studata.Equals("Something went wrong! Invalid Username or password")) {
                     PasswordTextBox.PlaceholderText = "";
                     ContentDialog ErrorContentDialog = new ContentDialog {
@@ -80,7 +84,10 @@ namespace SchoolPower.Views {
                         CloseButtonText = "哦。",
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
                 } 
+                
+                // navigate
                 else {
+                    Views.Busy.SetBusy(false);
                     Frame.Navigate(typeof(MainPage));
                 }
             }

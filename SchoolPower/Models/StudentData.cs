@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using Windows.Storage;
 
 namespace SchoolPower.Models {
     public class StudentData {
@@ -20,16 +21,17 @@ namespace SchoolPower.Models {
 
         public StudentData(dynamic data) {
             JArray sectionsJarray = (JArray)data["sections"];
-            for (int index = 0; index < sectionsJarray.Count; index++) {
-                subjects.Add(new Subject(sectionsJarray[index]));
+            foreach (var section in sectionsJarray) {
+                subjects.Add(new Subject(section));
             }
             JArray attendancesJarray = (JArray)data["attendances"];
-            for (int index = 0; index < attendancesJarray.Count; index++) {
-                attendances.Add(new AttendanceItem(attendancesJarray[index]));
+            foreach (var attendence in attendancesJarray) {
+                attendances.Add(new AttendanceItem(attendence));
             }
             attendances.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
             attendances.Reverse();
             info = new Info(data.information);
+            MarkNewAssignments();
         }
 
         public static async Task<string> Kissing(string username, string password) {
@@ -43,11 +45,20 @@ namespace SchoolPower.Models {
             return await response.Content.ReadAsStringAsync();
         }
 
-        private static async Task<string> GetJSONFromLocal() {
-            Windows.Storage.StorageFolder folder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            Windows.Storage.StorageFile file = await folder.GetFileAsync("studentInfo");
-            string ret = await Windows.Storage.FileIO.ReadTextAsync(file);
-            return ret;
+        private static async Task<string> GetJSONFromLocal(String NewOrOld) {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            switch (NewOrOld) {
+                case "new": 
+                    StorageFile file = await folder.GetFileAsync("studentInfo");
+                    string ret = await FileIO.ReadTextAsync(file);
+                    return ret;
+                case "old":
+                    StorageFile fileOld = await folder.GetFileAsync("studentInfo-old");
+                    string retOld = await FileIO.ReadTextAsync(fileOld);
+                    return retOld;
+                default: 
+                    return null;
+            }
         }
 
         public async static Task<StudentData> GetStudentDataFromServer(string username, string password) {
@@ -59,26 +70,22 @@ namespace SchoolPower.Models {
         }
 
         public async static void SaveStudentDataToLocal(string json) {
-            Windows.Storage.StorageFolder folder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            Windows.Storage.StorageFile file = await folder.CreateFileAsync("studentInfo", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            Windows.Storage.StorageFile sampleFile = await folder.GetFileAsync("studentInfo");
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile file = await folder.CreateFileAsync("studentInfo", CreationCollisionOption.ReplaceExisting);
+            StorageFile sampleFile = await folder.GetFileAsync("studentInfo");
             file = await folder.GetFileAsync("studentInfo");
-            await Windows.Storage.FileIO.WriteTextAsync(file, json);
+            await FileIO.WriteTextAsync(file, json);
         }
 
         public async static Task<StudentData> GetStudentDataFromLocal() {
-            Task<string> task = GetJSONFromLocal();
+            Task<string> task = GetJSONFromLocal("new");
             string str = await task;
             dynamic data = JObject.Parse(str);
             StudentData ret = new StudentData(data);
             return ret;
         }
 
-        public static implicit operator StudentData(Task<StudentData> v) {
-            throw new NotImplementedException();
-        }
-
-        public static double GetAllGPA(String SelectedPeroid) {   
+        public static double GetAllGPA(string SelectedPeroid) {   
 
             double index = 0; 
             double gradeSum = 0;
@@ -88,13 +95,6 @@ namespace SchoolPower.Models {
                     if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0")) {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
-                        System.Diagnostics.Debug.Write(subject.Name);
-                        System.Diagnostics.Debug.Write(" ");
-                        System.Diagnostics.Debug.Write(grade.Percent);
-                        System.Diagnostics.Debug.Write(" ");
-                        System.Diagnostics.Debug.Write(gradeSum);
-                        System.Diagnostics.Debug.Write(" ");
-                        System.Diagnostics.Debug.WriteLine(index);
                     }
                 }
             }
@@ -105,14 +105,20 @@ namespace SchoolPower.Models {
             }
         }
         
-        public static double GetSomeGPA(String SelectedPeroid) {
+        public static double GetSelectedGPA(string SelectedPeroid) {
 
-            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             double index = 0;
             double gradeSum = 0;
 
+            System.Diagnostics.Debug.WriteLine(SelectedPeroid);
+
             foreach (var subject in subjects) {
+                System.Diagnostics.Debug.WriteLine(subject.Name);
                 foreach (var grade in subject.Grades) {
+
+                    System.Diagnostics.Debug.WriteLine(grade.Time + " " + grade.Percent + " "+ localSettings.Values[subject.Name]);
+
                     if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0") && (bool)localSettings.Values[subject.Name]) {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
@@ -125,9 +131,9 @@ namespace SchoolPower.Models {
             }
         }
         
-        public static double GetSomeGPA(String SelectedPeroid, int total) {
+        public static double GetSelectedGPA(string SelectedPeroid, int total) {
 
-            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             List<double> grades = new List<double>();
 
             foreach (var subject in StudentData.subjects) {
@@ -138,38 +144,84 @@ namespace SchoolPower.Models {
                 }
             }
             grades.Sort();
+            grades.Reverse();
 
             double sum = 0;
-            foreach (double grade in grades) {
-                sum += grade;
-                if (grade == 0) {
-                    total--;
+            if (grades.Count < total) {
+                foreach (double grade in grades) {
+                    sum += grade;
+                }
+                total = grades.Count;
+            } 
+            else {
+                for (int i = 0; i < total; i++) {
+                    sum += grades[i];
                 }
             }
-
-            return sum/total;
+            return Math.Round(sum / total, 3);
         }
 
         public static async void Refresh() {
+
             Views.Busy.SetBusy(true, "Loading");
-            await Task.Delay(100);
-            Views.Busy.SetBusy(true, "Setting App.isMainPageFirstTimeInit value");
             App.isMainPageFirstTimeInit = true;
             await Task.Delay(100);
+
+            // get account info
             Views.Busy.SetBusy(true, "Getting username and assword");
-            Windows.Storage.ApplicationDataContainer account = Windows.Storage.ApplicationData.Current.LocalSettings;
-            String username = (String)account.Values["UsrName"];
-            String password = (String)account.Values["Passwd"];
+            ApplicationDataContainer account = ApplicationData.Current.LocalSettings;
+            String username = (string)account.Values["UsrName"];
+            string password = (string)account.Values["Passwd"];
             await Task.Delay(100);
+
+            // kissing
             Views.Busy.SetBusy(true, "Kissing");
-            Task<string> task = StudentData.Kissing(username, password);
-            string studata = await task;
-            Views.Busy.SetBusy(true, "Saving data");
-            StudentData.SaveStudentDataToLocal(studata);
-            await Task.Delay(200);
-            Views.Busy.SetBusy(true, "Refreshing");
-            await Task.Delay(100);
+            Task<string> task = Kissing(username, password);
+            string studata = "";
+            try { studata = await task; } catch (Exception) { }
+
+            // bad network or server
+            if (studata.Equals("")) {
+                ContentDialog ErrorContentDialog = new ContentDialog {
+                    Title = "ERROR",
+                    Content = "Network error, grades will not be updates. Please refresh later. ",
+                    CloseButtonText = "哦。",
+                }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
+            }
+            // save studata
+            else {
+            SaveStudentDataToLocal(studata);
+                await Task.Delay(200);
+                Views.Busy.SetBusy(true, "Refreshing");
+                await Task.Delay(100);
+            }
+
             Views.Busy.SetBusy(false);
+        }
+
+        public async void MarkNewAssignments() {
+
+            // get dynamic data
+            Task<string> task = GetJSONFromLocal("new");
+            string str = await task;
+            dynamic data = JObject.Parse(str);
+
+            // get subject
+            List<Subject> subjectsOld = new List<Subject>();
+            JArray sectionsJarray = (JArray)data["sections"];
+            foreach (var section in sectionsJarray) {
+                subjectsOld.Add(new Subject(section));
+            }
+
+            // 
+            int index = 0;
+            foreach (var subject in subjects) {
+                index += 1;
+
+                // compare  subject.Assignments  and  subjectsOld[index].Assignments
+                // todo
+            }
+
         }
     }
 }
