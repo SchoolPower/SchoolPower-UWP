@@ -52,9 +52,11 @@ namespace SchoolPower.Models {
             int index = 0;
             foreach (var subject in subjects) {
                 foreach (var assignment in subject.Assignments) {
-                    if (subjectsOld[index].Assignments.Contains(assignment)) {
-                        assignment.IsNew = false;
-                    }
+                    try {
+                        if (subjectsOld[index].Assignments.Contains(assignment)) {
+                            assignment.IsNew = false;
+                        }
+                    } catch (System.ArgumentOutOfRangeException) { }
                 }
                 index += 1;
             }
@@ -103,7 +105,7 @@ namespace SchoolPower.Models {
             return ret;
         }
 
-        public async static void SaveJSONtoLocal(string json, string NewOrOld) {
+        public async static Task SaveJSONtoLocal(string json, string NewOrOld) {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             switch (NewOrOld) {
                 case "new":
@@ -199,7 +201,7 @@ namespace SchoolPower.Models {
             return Math.Round(sum / total, 3);
         }
 
-        public static async void Refresh() {
+        public static async Task Refresh() {
 
             Views.Busy.SetBusy(true, "Loading");
             await Task.Delay(100);
@@ -247,50 +249,5 @@ namespace SchoolPower.Models {
             }
             Views.Busy.SetBusy(false);
         }
-        
-        /*
-        public static async void MarkNewAssignments() {
-
-            Windows.Storage.ApplicationDataContainer setting = Windows.Storage.ApplicationData.Current.LocalSettings;
-           
-            try { if ((bool)setting.Values["IsFirstTimeLogin"]) { }
-            } catch (System.NullReferenceException) {
-                setting.Values["IsFirstTimeLogin"] = true;
-            }
-
-            // create history
-            if ((bool)setting.Values["IsFirstTimeLogin"]) {
-                setting.Values["IsFirstTimeLogin"] = false;
-                Task<string> t = GetJSONFromLocal("new");
-                string s = await t;
-            } 
-                // get history
-                Task<string> task = GetJSONFromLocal("old");
-                string studata = await task;
-                dynamic data = JObject.Parse(studata);
-
-                // get subject
-                List<Subject> subjectsOld = new List<Subject>();
-                JArray sectionsJarray = (JArray)data["sections"];
-                foreach (var section in sectionsJarray) {
-                    subjectsOld.Add(new Subject(section));
-                }
-
-                // compare
-                int index = 0;
-                foreach (var subject in subjects) {
-                    index += 1;
-                    foreach (var assignment in subject.Assignments) {
-                        if (subjectsOld[index].Assignments.Contains(assignment)) {
-                            assignment.IsNew = false;
-                        }
-                    }
-                }
-
-                // save file 
-                //SaveStudentDataToLocal(studata, "old");
-            
-
-        } */
     }
 }
