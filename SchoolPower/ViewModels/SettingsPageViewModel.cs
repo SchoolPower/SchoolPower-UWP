@@ -41,7 +41,7 @@ namespace SchoolPower.ViewModels {
         }
 
         public bool UseLightThemeButton {
-            get { return _settings.AppTheme.Equals(ApplicationTheme.Light); }
+            get { return _settings.AppTheme == ApplicationTheme.Light; }
             set { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
         }
 

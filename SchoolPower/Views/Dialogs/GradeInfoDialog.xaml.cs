@@ -23,7 +23,7 @@ namespace SchoolPower.Views.Dialogs {
             Letter.Text  = peroid.Letter;
             Eval.Text    = peroid.Eval;
             try {
-                peroid.Comment.Equals(null);
+                if (peroid.Comment == null) { }
                 Comment.Text = peroid.Comment;
             } catch (System.NullReferenceException) {
                 Comment.Text = "N/A";

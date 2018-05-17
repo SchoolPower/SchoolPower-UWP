@@ -130,7 +130,7 @@ namespace SchoolPower.Models {
 
             foreach (var subject in subjects) {
                 foreach (var grade in subject.Grades) {
-                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0")) {
+                    if (grade.Time == SelectedPeroid && grade.Percent != "0") {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
                     }
@@ -157,7 +157,7 @@ namespace SchoolPower.Models {
 
                     System.Diagnostics.Debug.WriteLine(grade.Time + " " + grade.Percent + " "+ localSettings.Values[subject.Name]);
 
-                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0") && (bool)localSettings.Values[subject.Name]) {
+                    if (grade.Time == SelectedPeroid && grade.Percent != "0" && (bool)localSettings.Values[subject.Name]) {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
                     }
@@ -176,7 +176,7 @@ namespace SchoolPower.Models {
 
             foreach (var subject in StudentData.subjects) {
                 foreach (var grade in subject.Grades) {
-                    if (grade.Time.Equals(SelectedPeroid) && !grade.Percent.Equals("0") && (bool)localSettings.Values[subject.Name]) {
+                    if (grade.Time != SelectedPeroid && grade.Percent != "0" && (bool)localSettings.Values[subject.Name]) {
                         grades.Add(Convert.ToDouble(grade.Percent));
                     }
                 }
@@ -219,7 +219,7 @@ namespace SchoolPower.Models {
             try { studata = await task; } catch (Exception) { }
 
             // bad network or server
-            if (studata.Equals("")) {
+            if (studata == "") {
                 ContentDialog ErrorContentDialog = new ContentDialog {
                     Title = "ERROR",
                     Content = "Network error, grades will not be updates. Please refresh later. ",

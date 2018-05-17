@@ -28,7 +28,7 @@ namespace SchoolPower.Views {
             try { UsernameTextBox.Text = localSettings.Values["UsrName"].ToString(); } catch (System.NullReferenceException) { } 
             try { PasswordTextBox.Password = localSettings.Values["Passwd"].ToString(); } catch (System.NullReferenceException) { }
 
-            try { if (!UsernameTextBox.Text.Equals("") && !PasswordTextBox.Password.Equals("")) {
+            try { if (UsernameTextBox.Text != "" && PasswordTextBox.Password != "") {
                     Login();
                 }
             } catch (System.NullReferenceException) { }
@@ -48,7 +48,7 @@ namespace SchoolPower.Views {
             localSettings.Values["Passwd"] = password;
 
             // when empty box
-            if (username.Equals("") || password.Equals("")) {
+            if (username == "" || password == "") {
                 ContentDialog ErrorEmptyContentDialog = new ContentDialog {
                     Title = "ERROR",
                     Content = "Please input user name and/or password.",
@@ -67,7 +67,7 @@ namespace SchoolPower.Views {
                 try { studata = await task; } catch (Exception) { }
 
                 // bad network or server
-                if (studata.Equals("")) {
+                if (studata == "") {
                     ContentDialog ErrorContentDialog = new ContentDialog {
                         Title = "ERROR",
                         Content = "Network error, grades will not be updates. Please refresh later. ",
@@ -76,7 +76,7 @@ namespace SchoolPower.Views {
                 } 
 
                 // wrong account info
-                else if (studata.Equals("Something went wrong! Invalid Username or password")) {
+                else if (studata == "Something went wrong! Invalid Username or password") {
                     PasswordTextBox.PlaceholderText = "";
                     ContentDialog ErrorContentDialog = new ContentDialog {
                         Title = "ERROR",
@@ -88,8 +88,7 @@ namespace SchoolPower.Views {
                 // save data
                 else {
 
-                    //?StudentData.SaveJSONtoLocal(studata, "new");
-                    await Task.Delay(1000);
+                    // ? await Task.Delay(1000);
                     
                     // when no IsFirstTimeLogin
                     try {

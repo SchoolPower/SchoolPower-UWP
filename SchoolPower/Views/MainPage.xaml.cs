@@ -31,7 +31,7 @@ namespace SchoolPower.Views {
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => {
-                if (CurrentVisualState.Text.Equals("Narrow") && GradeOverViewColumn.Width.Equals(zeroGridLength)) {
+                if (CurrentVisualState.Text == "Narrow" && GradeOverViewColumn.Width == zeroGridLength) {
                     Swap();
                 }
             };
@@ -87,7 +87,7 @@ namespace SchoolPower.Views {
                 lvi.ContentTemplate = (DataTemplate)this.Resources["CoursesListDataTemplate_Compact"];
             }
             // navigate when normal
-            if (CurrentVisualState.Text.Equals("Normal")) {
+            if (CurrentVisualState.Text == "Normal") {
                 int index = ListV.SelectedIndex;
                 GradeDetailFrame.Navigate(typeof(MainPageGradePage), index);
             }
@@ -106,7 +106,7 @@ namespace SchoolPower.Views {
         }
 
         private void GoToDetailBut_Click(object sender, RoutedEventArgs e) {
-            if (CurrentVisualState.Text.Equals("Narrow")) {
+            if (CurrentVisualState.Text == "Narrow") {
                 Swap();
                 GradeDetailFrame.Navigate(typeof(MainPageGradePage), ListV.SelectedIndex);
             }

@@ -51,7 +51,7 @@ namespace SchoolPower.Views.Dialogs {
                     break;
                 case "Official":
                     try {
-                        if (StudentData.info.GPA.Equals(null)) { }
+                        if (StudentData.info.GPA == null) { }
                         GPA.Text = StudentData.info.GPA + "%";
                     } catch (System.NullReferenceException) {
                         GPA.Text = "NaN%";
@@ -84,7 +84,7 @@ namespace SchoolPower.Views.Dialogs {
                     } break;
                 case "Official":
                     try {
-                        if (StudentData.info.GPA.Equals(null)) { }
+                        if (StudentData.info.GPA == null) { }
                         GPA.Text = StudentData.info.GPA + "%";
                     } catch (System.NullReferenceException) {
                         GPA.Text = "NaN%";
