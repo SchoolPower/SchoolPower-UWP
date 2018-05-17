@@ -73,7 +73,7 @@ namespace SchoolPower.Models {
             return await response.Content.ReadAsStringAsync();
         }
 
-        public static async Task<string> GetJSONFromLocal(string NewOrOld) {
+        public static async Task<string> GetJSON(string NewOrOld) {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             switch (NewOrOld) {
                 case "new": 
@@ -94,18 +94,7 @@ namespace SchoolPower.Models {
             return ret;
         }
 
-        public async static Task<StudentData> GetStudentDataFromLocal() {
-            Task<string> task = GetJSONFromLocal("new");
-            Task<string> taskOld = GetJSONFromLocal("old");
-            string str = await task;
-            string strOld = await task;
-            dynamic data = JObject.Parse(str);
-            dynamic dataOld = JObject.Parse(str);
-            StudentData ret = new StudentData(data, dataOld);
-            return ret;
-        }
-
-        public async static Task SaveJSONtoLocal(string json, string NewOrOld) {
+        public async static Task SaveJSON(string json, string NewOrOld) {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             switch (NewOrOld) {
                 case "new":
@@ -122,8 +111,6 @@ namespace SchoolPower.Models {
                     break;
             }
         }
-
-
 
         public static double GetAllGPA(string SelectedPeroid) {   
 
@@ -204,14 +191,14 @@ namespace SchoolPower.Models {
         public static async Task Refresh() {
 
             Views.Busy.SetBusy(true, "Loading");
-            await Task.Delay(100);
+            ///await Task.Delay(100);
 
             // get account info
             Views.Busy.SetBusy(true, "Getting username and assword");
             ApplicationDataContainer account = ApplicationData.Current.LocalSettings;
             String username = (string)account.Values["UsrName"];
             string password = (string)account.Values["Passwd"];
-            await Task.Delay(100);
+            ///await Task.Delay(100);
 
             // kissing
             Views.Busy.SetBusy(true, "Kissing");
@@ -230,22 +217,22 @@ namespace SchoolPower.Models {
             }
             
             // save studata
-            else { 
-                                
+            else {
+
+                Views.Busy.SetBusy(true, "Kissed");
+
                 // mv previous studata to old
-                Task<string> getHistoryJSON = GetJSONFromLocal("new");
+                Task<string> getHistoryJSON = GetJSON("new");
                 studataOld = await getHistoryJSON;
-                SaveJSONtoLocal(studataOld, "old");
+                SaveJSON(studataOld, "old");
 
                 // save current studata to new
-                SaveJSONtoLocal(studata, "new");
+                SaveJSON(studata, "new");
 
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
 
-                await Task.Delay(200);
-                Views.Busy.SetBusy(true, "Refreshing");
-                await Task.Delay(100);
+                ///await Task.Delay(100);
             }
             Views.Busy.SetBusy(false);
         }

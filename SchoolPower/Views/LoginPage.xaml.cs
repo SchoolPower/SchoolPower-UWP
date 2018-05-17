@@ -60,7 +60,7 @@ namespace SchoolPower.Views {
             else { 
 
                 // kissing
-                Views.Busy.SetBusy(true, "Loading");
+                Views.Busy.SetBusy(true, "Kissing");
                 Task<string> task = StudentData.Kissing(username, password);
                 string studata = "";
                 string studataOld = "";
@@ -99,18 +99,17 @@ namespace SchoolPower.Views {
                     if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                         // cp new to old
                         studataOld = studata;
-                        await StudentData.SaveJSONtoLocal(studata, "old");
+                        await StudentData.SaveJSON(studata, "old");
                         localSettings.Values["IsFirstTimeLogin"] = false;
                     } 
                     else {
                         // mv previous studata to old
-                        Task<string> getHistoryJSON = StudentData.GetJSONFromLocal("new");
+                        Task<string> getHistoryJSON = StudentData.GetJSON("new");
                         studataOld = await getHistoryJSON;
-                        // todo: wait until this is finished
-                        await StudentData.SaveJSONtoLocal(studataOld, "old");
+                        await StudentData.SaveJSON(studataOld, "old");
 
                         // save current studata to new
-                        await StudentData.SaveJSONtoLocal(studata, "new");
+                        await StudentData.SaveJSON(studata, "new");
                     }
                     
                     // new StudentData

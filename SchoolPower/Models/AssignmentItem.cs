@@ -64,8 +64,8 @@ namespace SchoolPower.Models {
             IsNew               = true;
         }
 
-        public bool Equals(AssignmentItem rhs) {
-            return Name == rhs.Name && Percentage == rhs.Percentage && Date == rhs.Date;
+        public bool Equals(AssignmentItem darling) {
+            return Name == darling.Name && Percentage == darling.Percentage && Date == darling.Date;
         }
     }
 }
