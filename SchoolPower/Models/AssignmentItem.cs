@@ -34,7 +34,7 @@ Sample:
 */
 
 namespace SchoolPower.Models {
-    public class AssignmentItem {
+    public class AssignmentItem : IEquatable<AssignmentItem> {
         public String Name { get; set; }
         public String Category { get; set; }
         public String Description { get; set; }
@@ -62,6 +62,10 @@ namespace SchoolPower.Models {
             Weight              = data.weight;
             Terms               = data.terms.ToObject<string[]>();
             IsNew               = true;
+        }
+
+        public bool Equals(AssignmentItem rhs) {
+            return Name == rhs.Name && Percentage == rhs.Percentage && Date == rhs.Date;
         }
     }
 }

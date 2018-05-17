@@ -17,11 +17,12 @@ namespace SchoolPower.Models {
 
         public static List<Subject> subjects                = new List<Subject>();
         public static List<AttendanceItem> attendances      = new List<AttendanceItem>();
-        public static List<Subject> subjectsOld             = new List<Subject>();
-        public static List<AttendanceItem> attendancesOld   = new List<AttendanceItem>();
         public static Info info;
 
         public StudentData(dynamic data, dynamic dataOld) {
+
+            List<Subject> subjectsOld = new List<Subject>();
+            List<AttendanceItem> attendancesOld = new List<AttendanceItem>();
 
             info = new Info(data.information);
 
