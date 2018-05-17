@@ -17,7 +17,7 @@ namespace SchoolPower.Views {
     /// </summary>
     public sealed partial class LoginPage : Page {
 
-        Windows.Storage.ApplicationDataContainer account = Windows.Storage.ApplicationData.Current.LocalSettings;
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         private readonly HttpClient client = new HttpClient();
         
         public LoginPage() { 
@@ -25,8 +25,8 @@ namespace SchoolPower.Views {
             Views.Shell.HamburgerMenu.IsFullScreen = true; // set haumburger invisible
             Views.Shell.HamburgerMenu.HamburgerButtonVisibility = false ? Visibility.Visible : Visibility.Collapsed;  // set haumburger invisible
 
-            try { UsernameTextBox.Text = account.Values["UsrName"].ToString(); } catch (System.NullReferenceException) { } 
-            try { PasswordTextBox.Password = account.Values["Passwd"].ToString(); } catch (System.NullReferenceException) { }
+            try { UsernameTextBox.Text = localSettings.Values["UsrName"].ToString(); } catch (System.NullReferenceException) { } 
+            try { PasswordTextBox.Password = localSettings.Values["Passwd"].ToString(); } catch (System.NullReferenceException) { }
 
             try { if (!UsernameTextBox.Text.Equals("") && !PasswordTextBox.Password.Equals("")) {
                     Login();
@@ -41,10 +41,11 @@ namespace SchoolPower.Views {
 
         async void Login() {
 
+            // get account info
             String username = UsernameTextBox.Text;
             String password = PasswordTextBox.Password;
-            account.Values["UsrName"] = username;
-            account.Values["Passwd"] = password;
+            localSettings.Values["UsrName"] = username;
+            localSettings.Values["Passwd"] = password;
 
             // when empty box
             if (username.Equals("") || password.Equals("")) {
@@ -58,9 +59,11 @@ namespace SchoolPower.Views {
             // load
             else { 
 
+                // kissing
                 Views.Busy.SetBusy(true, "Loading");
                 Task<string> task = StudentData.Kissing(username, password);
                 string studata = "";
+                string studataOld = "";
                 try { studata = await task; } catch (Exception) { }
 
                 // bad network or server
@@ -70,26 +73,55 @@ namespace SchoolPower.Views {
                         Content = "Network error, grades will not be updates. Please refresh later. ",
                         CloseButtonText = "哦。",
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
-                } else {
-                    StudentData.SaveStudentDataToLocal(studata);
-                    await Task.Delay(1000);
-                }
+                } 
 
                 // wrong account info
-                if (studata.Equals("Something went wrong! Invalid Username or password")) {
+                else if (studata.Equals("Something went wrong! Invalid Username or password")) {
                     PasswordTextBox.PlaceholderText = "";
                     ContentDialog ErrorContentDialog = new ContentDialog {
                         Title = "ERROR",
                         Content = "Wrong username and/or password.",
                         CloseButtonText = "哦。",
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
-                } 
-                
-                // navigate
+                }
+
+                // save data
                 else {
-                    Views.Busy.SetBusy(false);
+
+                    //?StudentData.SaveJSONtoLocal(studata, "new");
+                    await Task.Delay(1000);
+                    
+                    // when no IsFirstTimeLogin
+                    try {
+                        if ((bool)localSettings.Values["IsFirstTimeLogin"]) { }
+                    } catch (System.NullReferenceException) {
+                        localSettings.Values["IsFirstTimeLogin"] = true;
+                    }
+
+                    // 
+                    if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
+                        // cp new to old
+                        studataOld = studata;
+                        StudentData.SaveJSONtoLocal(studata, "old");
+                        localSettings.Values["IsFirstTimeLogin"] = false;
+                    } 
+                    else {
+                        // mv previous studata to old
+                        Task<string> getHistoryJSON = StudentData.GetJSONFromLocal("new");
+                        studataOld = await getHistoryJSON;
+                        StudentData.SaveJSONtoLocal(studataOld, "old");
+
+                        // save current studata to new
+                        StudentData.SaveJSONtoLocal(studata, "new");
+                    }
+                    
+                    // new StudentData
+                    StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
+                    
+                    // navigate
                     Frame.Navigate(typeof(MainPage));
                 }
+                Views.Busy.SetBusy(false);
             }
         }
     }

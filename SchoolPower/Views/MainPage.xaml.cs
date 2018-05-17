@@ -8,11 +8,11 @@ using Windows.UI.Core;
 using System;
 using System.Collections.ObjectModel;
 using SchoolPower.Views.Dialogs;
+using Windows.UI.Xaml.Navigation;
 
 namespace SchoolPower.Views {
     public sealed partial class MainPage : Page {
         private List<Subject> subjects;
-        private StudentData studata;
         private Windows.UI.Xaml.GridLength zeroGridLength;
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -22,15 +22,13 @@ namespace SchoolPower.Views {
             //NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
-        async void Initialize() {
-            if (App.isMainPageFirstTimeInit == true) {
-                Task<StudentData> task = StudentData.GetStudentDataFromLocal();
-                studata = await task;
-                App.isMainPageFirstTimeInit = false;
-            }
+        void Initialize() {
+
             subjects = StudentData.subjects;
+
             InitializeComponent();
             zeroGridLength = new Windows.UI.Xaml.GridLength(); zeroGridLength = EmptyColumn.Width;
+
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => {
                 if (CurrentVisualState.Text.Equals("Narrow") && GradeOverViewColumn.Width.Equals(zeroGridLength)) {

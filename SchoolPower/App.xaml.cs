@@ -43,8 +43,6 @@ namespace SchoolPower {
     [Bindable]
     sealed partial class App : BootStrapper {
 
-        internal static bool isMainPageFirstTimeInit = true;
-
         public App() {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);

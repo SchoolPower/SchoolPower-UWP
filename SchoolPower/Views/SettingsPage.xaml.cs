@@ -29,6 +29,7 @@ namespace SchoolPower.Views {
         private async void InnerFlyoutButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             localSettings.Values.Remove("UsrName");
             localSettings.Values.Remove("Passwd");
+            localSettings.Values["IsFirstTimeLogin"] = true;
             await CoreApplication.RequestRestartAsync(string.Empty);
         }
 

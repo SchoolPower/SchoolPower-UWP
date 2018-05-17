@@ -61,7 +61,7 @@ namespace SchoolPower.Models {
             IncludeInFinalGrade = data.includeInFinalGrade;
             Weight              = data.weight;
             Terms               = data.terms.ToObject<string[]>();
-            IsNew               = false;
+            IsNew               = true;
         }
     }
 }
