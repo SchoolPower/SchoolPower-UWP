@@ -141,6 +141,9 @@
                     <AppBarButton 
                         Label="Refresh" 
                         Click="Refresh_But_Click" />
+                    <AppBarButton 
+                        Label="Edit Assignments" 
+                        Click="EditAssignment" />
                 </controls:PageHeader.SecondaryCommands>
             </controls:PageHeader>
         </RelativePanel>

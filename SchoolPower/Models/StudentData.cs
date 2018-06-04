@@ -224,10 +224,10 @@ namespace SchoolPower.Models {
                 // mv previous studata to old
                 Task<string> getHistoryJSON = GetJSON("new");
                 studataOld = await getHistoryJSON;
-                SaveJSON(studataOld, "old");
+                await SaveJSON(studataOld, "old");
 
                 // save current studata to new
-                SaveJSON(studata, "new");
+                await SaveJSON(studata, "new");
 
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));

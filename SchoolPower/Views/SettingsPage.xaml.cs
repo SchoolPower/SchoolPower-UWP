@@ -4,24 +4,25 @@ using Windows.UI.Xaml.Navigation;
 using Windows.ApplicationModel.Core;
 using SchoolPower.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SchoolPower.Views {
     public sealed partial class SettingsPage : Page {
 
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-        Template10.Services.SerializationService.ISerializationService _SerializationService;
+        // Template10.Services.SerializationService.ISerializationService _SerializationService;
         List<Subject> subjects = StudentData.subjects;
 
         public SettingsPage() {
             InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Required;
-            _SerializationService = Template10.Services.SerializationService.SerializationService.Json;
+            // NavigationCacheMode = NavigationCacheMode.Required;
+            // _SerializationService = Template10.Services.SerializationService.SerializationService.Json;
         }
-
+        /*
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             var index = int.Parse(_SerializationService.Deserialize(e.Parameter?.ToString()).ToString());
             MyPivot.SelectedIndex = index;
-        }
+        }*/
 
         private void LogoutButtonClick_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
         }

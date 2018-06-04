@@ -9,6 +9,7 @@ using System;
 using System.Collections.ObjectModel;
 using SchoolPower.Views.Dialogs;
 using Windows.UI.Xaml.Navigation;
+using System.Diagnostics;
 
 namespace SchoolPower.Views {
     public sealed partial class MainPage : Page {
@@ -65,8 +66,8 @@ namespace SchoolPower.Views {
             await dialog.ShowAsync();
         }
 
-        private void Refresh_But_Click(object sender, RoutedEventArgs e) {
-            StudentData.Refresh();
+        private async void Refresh_But_Click(object sender, RoutedEventArgs e) {
+            await StudentData.Refresh();
             Initialize();
         }
 
@@ -114,6 +115,10 @@ namespace SchoolPower.Views {
             GridView gridView = sender as GridView;
             GradeInfoDialog dialog = new GradeInfoDialog(subjects[ListV.SelectedIndex].Grades[gridView.SelectedIndex]);
             await dialog.ShowAsync();
+        }
+
+        private void EditAssignment(object sender, RoutedEventArgs e) {
+
         }
     }
 }

@@ -42,7 +42,7 @@ namespace SchoolPower.Views {
         }
 
         private async void Refresh_But_Click(object sender, RoutedEventArgs e) {
-            StudentData.Refresh();
+            await StudentData.Refresh();
             InitializeComponent();
         }
 
