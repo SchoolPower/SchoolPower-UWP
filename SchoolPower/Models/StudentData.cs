@@ -190,6 +190,14 @@ namespace SchoolPower.Models {
 
         public static async Task Refresh() {
 
+            // clear history
+            for (int i = subjects.Count; i >= 1; i--) {
+                subjects.RemoveAt(i - 1);
+            }
+            for (int j = attendances.Count; j >= 1; j--) {
+                attendances.RemoveAt(j - 1);
+            }
+
             Views.Busy.SetBusy(true, "Loading");
             ///await Task.Delay(100);
 

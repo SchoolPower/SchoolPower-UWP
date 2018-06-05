@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace SchoolPower.Views {
     public sealed partial class MainPage : Page {
-        private List<Subject> subjects = StudentData.subjects;
+        private List<Subject> subjects;
         private Windows.UI.Xaml.GridLength zeroGridLength;
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -25,6 +25,7 @@ namespace SchoolPower.Views {
 
         void Initialize() {
 
+            subjects = StudentData.subjects;
             InitializeComponent();
             zeroGridLength = new Windows.UI.Xaml.GridLength(); zeroGridLength = EmptyColumn.Width;
 
