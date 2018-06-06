@@ -37,7 +37,7 @@ namespace SchoolPower.Views {
             email.To.Add(new EmailRecipient("harryyunull@gmail.com"));
             email.Subject = "Found Bug(s) in SchoolPower";
             email.Body = "Please provide as much info as possible, such as how to reproduce it, what is the expected result. \n" +
-                            "Debug Info: SchoolPower Android 1.1.6. \n" +
+                            "Debug Info: SchoolPower UWP Preview \n" + 
                             "PowerSchool Username and Password(Optional, help us solve it faster): \n";
             await EmailManager.ShowComposeNewEmailAsync(email);
         }
