@@ -70,7 +70,7 @@ namespace SchoolPower.Views {
                 if (studata == "") {
                     ContentDialog ErrorContentDialog = new ContentDialog {
                         Title = "ERROR",
-                        Content = "Network error, grades will not be updates. Please refresh later. ",
+                        Content = "Network error. Please try again later.",
                         CloseButtonText = "哦。",
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
                 } 
@@ -95,7 +95,6 @@ namespace SchoolPower.Views {
                         localSettings.Values["IsFirstTimeLogin"] = true;
                     }
 
-                    // 
                     if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                         // cp new to old
                         studataOld = studata;
