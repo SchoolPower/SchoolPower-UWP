@@ -107,6 +107,24 @@
                 </PivotItem>
 
                 <PivotItem Header="Support">
+                    <ScrollViewer Margin="0,12,-12,0"
+                              HorizontalContentAlignment="Left"
+                              VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                        
+                            <TextBlock Text="電話レンジ（仮）" FontSize="22" Margin="0,5,0,5"/>
+                            <TextBlock Text="Report a bug to developers with D-Mail." Margin="0,5,0,5"/>
+                            <Button Content="Send!" Click="Dmail_Button_Click" Margin="-1,5,0,5"/>
+
+                            <TextBlock Text="Feedback Forum" FontSize="22" Margin="0,25,0,5"/>
+                            <TextBlock Text="View announcements, give suggestions or report bugs via our forum." Margin="0,5,0,5"/>
+                            <Button Content="Visit" Click="Forum_Button_Click" Margin="-1,5,0,5"/>
+
+                            <TextBlock Text="More" FontSize="22" Margin="0,25,0,5"/>
+
+
+                        </StackPanel>
+                    </ScrollViewer>
                 </PivotItem>
 
                 <PivotItem Header="Privacy statement"
