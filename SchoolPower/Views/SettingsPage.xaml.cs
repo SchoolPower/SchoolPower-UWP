@@ -27,11 +27,19 @@ namespace SchoolPower.Views {
         private void LogoutButtonClick_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
         }
 
-        private async void InnerFlyoutButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void InnerFlyoutButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             localSettings.Values.Remove("UsrName");
             localSettings.Values.Remove("Passwd");
             localSettings.Values["IsFirstTimeLogin"] = true;
-            await CoreApplication.RequestRestartAsync(string.Empty);
+            // clear history
+            for (int i = StudentData.subjects.Count; i >= 1; i--) {
+                StudentData.subjects.RemoveAt(i - 1);
+            }
+            for (int j = StudentData.attendances.Count; j >= 1; j--) {
+                StudentData.attendances.RemoveAt(j - 1);
+            }
+            Frame.Navigate(typeof(LoginPage));
+            // await CoreApplication.RequestRestartAsync(string.Empty);
         }
 
         private void CheckBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
