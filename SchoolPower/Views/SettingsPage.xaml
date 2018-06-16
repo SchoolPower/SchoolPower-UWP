@@ -82,7 +82,7 @@
                     <StackPanel Orientation="Vertical">
 
                         <ToggleSwitch 
-                            Margin="0,5,0,5 "
+                            Margin="0, 15,0,5 "
                             Header="Show inactive subjects" 
                             Toggled="InactiveSubjects_ToggleSwitch"
                             Loaded="InactiveSubjects_Loaded"
