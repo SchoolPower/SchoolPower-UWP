@@ -20,9 +20,12 @@ namespace SchoolPower.Views.Dialogs {
             this.InitializeComponent();
             Date.Text     = ass.Date;
             Name.Text     = ass.Name;
-            Percent.Text  = ass.Percentage;
             Score.Text    = ass.Score + "/" + ass.MaximumScore;
             Weight.Text   = ass.Weight;
+
+            if (ass.Percentage == null) {
+                Percent.Text = "--";
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
