@@ -9,7 +9,7 @@
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="320" MaxHeight="320">
 
-        <TextBlock Name="Percent" HorizontalAlignment="Right" FontWeight="SemiLight" FontSize="42" Text="Percent" Margin="0,10,0,-5"/>
+        <TextBlock Name="Percent" HorizontalAlignment="Right" FontWeight="SemiLight" FontSize="42" Text="Percent" Margin="0,0,0,-5"/>
         <TextBlock Name="Time" Text="Time"/>
         <TextBlock Name="Letter" Text="Letter"/>
 

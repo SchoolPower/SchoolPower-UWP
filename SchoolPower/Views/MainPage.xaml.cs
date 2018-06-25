@@ -20,6 +20,7 @@ namespace SchoolPower.Views {
         public MainPage() {
             Initialize();
             SetUI();
+
             //NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
@@ -35,6 +36,7 @@ namespace SchoolPower.Views {
                     Swap();
                 }
             };
+
         }
 
         void SetUI() {

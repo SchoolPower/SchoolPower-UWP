@@ -88,12 +88,7 @@ namespace SchoolPower.Views {
                 // save data
                 else {
                     
-                    // when no IsFirstTimeLogin
-                    try {
-                        if ((bool)localSettings.Values["IsFirstTimeLogin"]) { }
-                    } catch (System.NullReferenceException) {
-                        localSettings.Values["IsFirstTimeLogin"] = true;
-                    }
+                    // when IsFirstTimeLogin
 
                     if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                         // cp new to old
@@ -102,7 +97,7 @@ namespace SchoolPower.Views {
                         localSettings.Values["IsFirstTimeLogin"] = false;
                     } 
                     else {
-                        // mv previous studata to old
+                        // move previous studata to old
                         Task<string> getHistoryJSON = StudentData.GetJSON("new");
                         studataOld = await getHistoryJSON;
                         await StudentData.SaveJSON(studataOld, "old");

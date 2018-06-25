@@ -25,11 +25,14 @@ namespace SchoolPower.Views.Dialogs {
 
             if (ass.Percentage == null) {
                 Percent.Text = "--";
+            } else {
+                Percent.Text = ass.Percentage;
             }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            this.Hide();
+            Hide();
         }
     }
 }

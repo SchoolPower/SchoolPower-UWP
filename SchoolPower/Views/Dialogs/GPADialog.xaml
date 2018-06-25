@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="GPA" Grid.Row="0" Margin="0,15,0,5" FontSize="24"/>
+        <TextBlock Text="GPA" Grid.Row="0" Margin="0,0,0,5" FontSize="24"/>
 
         <RelativePanel Grid.Row="1" Margin="0,5,0,5">
             <ComboBox x:Name="comboBox" SelectionChanged="ComboBox_SelectionChanged">

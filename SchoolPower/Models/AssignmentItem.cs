@@ -57,7 +57,7 @@ namespace SchoolPower.Models {
             MaximumScore        = data.pointsPossible;
             MaximumScore        = MaximumScore.Substring(0, MaximumScore.IndexOf("."));
             LetterGrade         = data.letterGrade;
-            Category            = data.name;
+            Category            = data.category;
             IncludeInFinalGrade = data.includeInFinalGrade;
             Weight              = data.weight;
             Terms               = data.terms.ToObject<string[]>();

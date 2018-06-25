@@ -34,6 +34,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Core;
 using Newtonsoft.Json.Linq;
+using Windows.Storage;
+using SchoolPower.Models;
 
 namespace SchoolPower {
     /// Documentation on APIs used in this page:
@@ -42,6 +44,8 @@ namespace SchoolPower {
 
     [Bindable]
     sealed partial class App : BootStrapper {
+
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
             InitializeComponent();
@@ -67,7 +71,27 @@ namespace SchoolPower {
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args) {
-            await NavigationService.NavigateAsync(typeof(Views.LoginPage));
+
+            bool IsLogin;
+
+            try {
+                IsLogin = (bool)localSettings.Values["IsFirstTimeLogin"];
+            } catch (System.NullReferenceException) {
+                localSettings.Values["IsFirstTimeLogin"] = true;
+            }
+
+
+            if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
+                await NavigationService.NavigateAsync(typeof(Views.LoginPage));
+            } 
+            else {
+                Task<string> getHistoryJSON = StudentData.GetJSON("new");
+                String studata = await getHistoryJSON;
+                StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studata));
+
+                await NavigationService.NavigateAsync(typeof(Views.MainPage));
+
+            }
         }
     }
 }
