@@ -41,6 +41,9 @@ namespace SchoolPower.Views {
 
         async void Login() {
 
+            string studata = "";
+            string studataOld = "";
+
             // get account info
             String username = UsernameTextBox.Text;
             String password = PasswordTextBox.Password;
@@ -58,13 +61,10 @@ namespace SchoolPower.Views {
             
             // load
             else { 
-
                 // kissing
                 Views.Busy.SetBusy(true, "Kissing");
-                Task<string> task = StudentData.Kissing(username, password);
-                string studata = "";
-                string studataOld = "";
-                try { studata = await task; } catch (Exception) { }
+
+                try { studata = await StudentData.Kissing(username, password); } catch (Exception) { }
 
                 // bad network or server
                 if (studata == "") {
@@ -98,8 +98,7 @@ namespace SchoolPower.Views {
                     } 
                     else {
                         // move previous studata to old
-                        Task<string> getHistoryJSON = StudentData.GetJSON("new");
-                        studataOld = await getHistoryJSON;
+                        studataOld = await StudentData.GetJSON("new");
                         await StudentData.SaveJSON(studataOld, "old");
 
                         // save current studata to new

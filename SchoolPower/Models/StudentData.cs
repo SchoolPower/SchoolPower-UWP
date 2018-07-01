@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 using Windows.Storage;
 
 namespace SchoolPower.Models {
@@ -188,7 +184,10 @@ namespace SchoolPower.Models {
             return Math.Round(sum / total, 3);
         }
 
-        public static async Task Refresh() {
+        public static async Task<String> Refresh() {
+
+            string studata = "";
+            string studataOld = "";
 
             // clear history
             for (int i = subjects.Count; i >= 1; i--) {
@@ -198,40 +197,24 @@ namespace SchoolPower.Models {
                 attendances.RemoveAt(j - 1);
             }
 
-            Views.Busy.SetBusy(true, "Loading");
-            ///await Task.Delay(100);
-
             // get account info
-            Views.Busy.SetBusy(true, "Getting username and assword");
             ApplicationDataContainer account = ApplicationData.Current.LocalSettings;
             String username = (string)account.Values["UsrName"];
             string password = (string)account.Values["Passwd"];
-            ///await Task.Delay(100);
 
             // kissing
-            Views.Busy.SetBusy(true, "Kissing");
-            Task<string> task = Kissing(username, password);
-            string studata = "";
-            string studataOld = "";
-            try { studata = await task; } catch (Exception) { }
+            try { studata = await Kissing(username, password); } catch (Exception) { }
 
-            // bad network or server
+            // bad network or server error 
             if (studata == "") {
-                ContentDialog ErrorContentDialog = new ContentDialog {
-                    Title = "ERROR",
-                    Content = "Network error, grades will not be updates. Please refresh later. ",
-                    CloseButtonText = "哦。",
-                }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
+                return "error";
             }
-            
+
             // save studata
             else {
-
-                Views.Busy.SetBusy(true, "Kissed");
-
+                
                 // mv previous studata to old
-                Task<string> getHistoryJSON = GetJSON("new");
-                studataOld = await getHistoryJSON;
+                studataOld = await GetJSON("new");
                 await SaveJSON(studataOld, "old");
 
                 // save current studata to new
@@ -239,10 +222,8 @@ namespace SchoolPower.Models {
 
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
-
-                ///await Task.Delay(100);
+                return "okey dokey";
             }
-            Views.Busy.SetBusy(false);
         }
     }
 }

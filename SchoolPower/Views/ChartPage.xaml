@@ -26,9 +26,12 @@
         <!--Bar-->
         <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <controls:PageHeader Text="Chart" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
-                <controls:PageHeader.SecondaryCommands>
-                    <AppBarButton Label="Refresh" Click="Refresh_But_Click" />
-                </controls:PageHeader.SecondaryCommands>
+                <controls:PageHeader.PrimaryCommands>
+                    <AppBarButton 
+                        Icon="Refresh" 
+                        Label="Refresh" 
+                        Click="Refresh_But_Click" />
+                </controls:PageHeader.PrimaryCommands>
             </controls:PageHeader>
         </RelativePanel>
 

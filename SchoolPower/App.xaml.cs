@@ -29,11 +29,7 @@ using Windows.ApplicationModel.Activation;
 using Template10.Controls;
 using Template10.Common;
 using System;
-using System.Linq;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Core;
-using Newtonsoft.Json.Linq;
 using Windows.Storage;
 using SchoolPower.Models;
 
@@ -41,9 +37,10 @@ namespace SchoolPower {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
 
-
     [Bindable]
     sealed partial class App : BootStrapper {
+
+        public static bool isMainPageFirstTimeInit = true;
 
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 

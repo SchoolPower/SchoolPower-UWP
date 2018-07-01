@@ -10,13 +10,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:SchoolPower.ViewModels" 
       xmlns:data="using:SchoolPower.Models" 
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      Loaded="Page_Loaded">
 
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
     <Page.Resources>
+        
         <DataTemplate x:Key="CoursesListDataTemplate_Compact" x:DataType="data:Subject">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
@@ -81,9 +83,37 @@
                 </ScrollViewer>
             </RelativePanel>
         </DataTemplate>
+
+        <Storyboard x:Name="ShowKissingBar">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="KissingBar" Storyboard.TargetProperty="Visibility" Duration="0">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KissingBar" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="28"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="KissingBarRow" Storyboard.TargetProperty="Height" Duration="0">
+                <DiscreteObjectKeyFrame KeyTime="00:00:01.0000000" Value="28"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="HideKissingBar">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KissingBar" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="28"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="HideKissingBarRow">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="KissingBarRow" Storyboard.TargetProperty="Height" Duration="0">
+                <DiscreteObjectKeyFrame KeyTime="00:00:01.0000000" Value="0"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid
+        x:Name="MainPageGridddd"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -118,6 +148,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" x:Name="KissingBarRow"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -136,11 +167,12 @@
                         Icon="Favorite" 
                         Label="GPA" 
                         Click="GPA_But_Click" />
-                </controls:PageHeader.PrimaryCommands>
-                <controls:PageHeader.SecondaryCommands>
                     <AppBarButton 
+                        Icon="Refresh" 
                         Label="Refresh" 
                         Click="Refresh_But_Click" />
+                </controls:PageHeader.PrimaryCommands>
+                <controls:PageHeader.SecondaryCommands>
                     <AppBarButton 
                         Label="Edit Assignments" 
                         Click="EditAssignment" />
@@ -149,7 +181,7 @@
         </RelativePanel>
 
         <!--Grade Content-->
-        <Grid x:Name="MainPageGrid" Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">
+        <Grid x:Name="MainPageGrid" Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="GradeOverViewColumn" Width="300"/>
                 <ColumnDefinition x:Name="GradeDetailColumn" Width="*"/>
@@ -195,5 +227,38 @@
                 VerticalAlignment="Stretch">
             </Frame>
         </Grid>
+
+        <RelativePanel 
+            Grid.Row="2">
+            <Border
+                Visibility="Collapsed"
+                x:Name="KissingBar"
+                BorderThickness="0" 
+                Background="#FF0063b1" 
+                RelativePanel.AlignBottomWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                RenderTransformOrigin="0.5,0.5" >
+                <Border.RenderTransform>
+                    <CompositeTransform/>
+                </Border.RenderTransform>
+                <RelativePanel>
+                    <TextBlock 
+                        Name="StatusTextBlock" 
+                        FontSize="12"
+                        Text="Kissing..."  
+                        Margin="8,6,0,6" />
+                    <ProgressRing 
+                        x:Name="ProcesR"
+                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        IsActive="True"
+                        Margin="0,1,8,1"
+                        Foreground="White" />
+                </RelativePanel>
+            </Border>
+        </RelativePanel>
+
+
     </Grid>
 </Page>

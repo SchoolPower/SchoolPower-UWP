@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Core;
 using System;
-using System.Collections.ObjectModel;
 using SchoolPower.Views.Dialogs;
-using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
+using System.Threading;
 
 namespace SchoolPower.Views {
     public sealed partial class MainPage : Page {
@@ -18,13 +16,11 @@ namespace SchoolPower.Views {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public MainPage() {
-            Initialize();
             SetUI();
-
-            //NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            Initialize();
         }
 
-        void Initialize() {
+        async void Initialize() {
 
             subjects = StudentData.subjects;
             InitializeComponent();
@@ -36,6 +32,8 @@ namespace SchoolPower.Views {
                     Swap();
                 }
             };
+
+            await Task.Delay(1); // <- this code displays buck button, i do not know why
 
         }
 
@@ -64,14 +62,20 @@ namespace SchoolPower.Views {
             GradeOverViewColumn.Width = gridLength;
         }
 
+        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            if (App.isMainPageFirstTimeInit) {
+                App.isMainPageFirstTimeInit = !App.isMainPageFirstTimeInit;
+                await KissingAsync();
+            }
+        }
+
         private async void GPA_But_Click(object sender, RoutedEventArgs e) {
             SchoolPower.Views.Dialogs.GPADialog dialog = new SchoolPower.Views.Dialogs.GPADialog();
             await dialog.ShowAsync();
         }
 
         private async void Refresh_But_Click(object sender, RoutedEventArgs e) {
-            await StudentData.Refresh();
-            Initialize();
+            await KissingAsync();
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -122,6 +126,44 @@ namespace SchoolPower.Views {
 
         private void EditAssignment(object sender, RoutedEventArgs e) {
 
+        }
+
+        private async Task KissingAsync() {
+            
+            // show
+            ShowKissingBar.Begin();
+
+            // refresh
+            string result = await StudentData.Refresh();
+
+            // hide
+            HideKissingBar.Begin();
+            await Task.Delay(300);
+            HideKissingBarRow.Begin();
+
+            switch (result) {
+                case "okey dokey":
+                    StatusTextBlock.Text = "Kissed!";
+                    break;
+                case "error":
+                    StatusTextBlock.Text = "Network error, grades are not updated. Please refresh later. ";
+                    // Tawny
+                    KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
+                    break;
+            }
+
+            ProcesR.Visibility = Visibility.Collapsed;
+            ShowKissingBar.Begin();
+            await Task.Delay(2000);
+            HideKissingBar.Begin();
+            await Task.Delay(300);
+            HideKissingBarRow.Begin();
+
+            StatusTextBlock.Text = "Kissing...";
+            ProcesR.Visibility = Visibility.Visible;
+            KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+
+            Initialize();
         }
     }
 }
