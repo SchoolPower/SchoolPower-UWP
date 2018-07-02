@@ -33,7 +33,7 @@ namespace SchoolPower.Views {
                 }
             };
 
-            await Task.Delay(1); // <- this code displays buck button, i do not know why
+            await Task.Delay(1); // <- this code displays back button, i do not know why
 
         }
 
