@@ -122,10 +122,14 @@ namespace SchoolPower.Models {
                 Percent   = data.percent;
                 Percent   = Percent.Substring(0, Percent.IndexOf("."));
                 Letter    = data.letter;
-                Comment   = data.comment;
                 Eval      = data.eval;
                 StartDate = data.startDate;
                 EndDate   = data.endDate;
+                if (data.comment == null) {
+                    Comment = "";
+                } else {
+                    Comment = data.comment;
+                }
             } catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { }
         }
     }
