@@ -126,7 +126,7 @@ namespace SchoolPower.Models {
                 StartDate = data.startDate;
                 EndDate   = data.endDate;
                 if (data.comment == null) {
-                    Comment = "";
+                    Comment = "--";
                 } else {
                     Comment = data.comment;
                 }
