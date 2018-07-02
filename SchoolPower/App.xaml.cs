@@ -82,7 +82,7 @@ namespace SchoolPower {
                 await NavigationService.NavigateAsync(typeof(Views.LoginPage));
             } 
             else {
-                Task<string> getHistoryJSON = StudentData.GetJSON("new");
+                Task<string> getHistoryJSON = StudentData.GetJSON(StudentData.NewOrOld.New);
                 String studata = await getHistoryJSON;
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studata));
 

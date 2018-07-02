@@ -11,6 +11,8 @@ namespace SchoolPower.Models {
         //internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
         internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
 
+        public enum NewOrOld { New, Old};
+
         public static List<Subject> subjects                = new List<Subject>();
         public static List<AttendanceItem> attendances      = new List<AttendanceItem>();
         public static Info info;
@@ -69,14 +71,14 @@ namespace SchoolPower.Models {
             return await response.Content.ReadAsStringAsync();
         }
 
-        public static async Task<string> GetJSON(string NewOrOld) {
+        public static async Task<string> GetJSON(NewOrOld NoO) {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            switch (NewOrOld) {
-                case "new": 
+            switch (NoO) {
+                case NewOrOld.New: 
                     StorageFile file = await folder.GetFileAsync("studentInfo");
                     string ret = await FileIO.ReadTextAsync(file);
                     return ret;
-                case "old":
+                case NewOrOld.Old:
                     StorageFile fileOld = await folder.GetFileAsync("studentInfoOld");
                     string retOld = await FileIO.ReadTextAsync(fileOld);
                     return retOld;
@@ -90,16 +92,16 @@ namespace SchoolPower.Models {
             return ret;
         }
 
-        public async static Task SaveJSON(string json, string NewOrOld) {
+        public async static Task SaveJSON(string json, NewOrOld NoO) {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            switch (NewOrOld) {
-                case "new":
+            switch (NoO) {
+                case NewOrOld.New:
                     StorageFile file = await folder.CreateFileAsync("studentInfo", CreationCollisionOption.ReplaceExisting);
                     StorageFile sampleFile = await folder.GetFileAsync("studentInfo");
                     file = await folder.GetFileAsync("studentInfo");
                     await FileIO.WriteTextAsync(file, json);
                     break;
-                case "old":
+                case NewOrOld.Old:
                     StorageFile fileOld = await folder.CreateFileAsync("studentInfoOld", CreationCollisionOption.ReplaceExisting);
                     StorageFile sampleFileOld = await folder.GetFileAsync("studentInfoOld");
                     fileOld = await folder.GetFileAsync("studentInfoOld");
@@ -214,11 +216,11 @@ namespace SchoolPower.Models {
             else {
                 
                 // mv previous studata to old
-                studataOld = await GetJSON("new");
-                await SaveJSON(studataOld, "old");
+                studataOld = await GetJSON(NewOrOld.New);
+                await SaveJSON(studataOld, NewOrOld.Old);
 
                 // save current studata to new
-                await SaveJSON(studata, "new");
+                await SaveJSON(studata, NewOrOld.New);
 
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));

@@ -93,16 +93,16 @@ namespace SchoolPower.Views {
                     if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                         // cp new to old
                         studataOld = studata;
-                        await StudentData.SaveJSON(studata, "old");
+                        await StudentData.SaveJSON(studata, StudentData.NewOrOld.Old);
                         localSettings.Values["IsFirstTimeLogin"] = false;
                     } 
                     else {
                         // move previous studata to old
-                        studataOld = await StudentData.GetJSON("new");
-                        await StudentData.SaveJSON(studataOld, "old");
+                        studataOld = await StudentData.GetJSON(StudentData.NewOrOld.New);
+                        await StudentData.SaveJSON(studataOld, StudentData.NewOrOld.Old);
 
                         // save current studata to new
-                        await StudentData.SaveJSON(studata, "new");
+                        await StudentData.SaveJSON(studata, StudentData.NewOrOld.New);
                     }
                     
                     // new StudentData
