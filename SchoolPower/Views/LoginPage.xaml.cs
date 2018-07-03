@@ -44,6 +44,8 @@ namespace SchoolPower.Views {
             string studata = "";
             string studataOld = "";
 
+            App.isMainPageFirstTimeInit = false;
+
             // get account info
             String username = UsernameTextBox.Text;
             String password = PasswordTextBox.Password;
@@ -76,7 +78,7 @@ namespace SchoolPower.Views {
                 } 
 
                 // wrong account info
-                else if (studata == "Something went wrong! Invalid Username or password") {
+                else if (studata.Contains("Something went wrong! Invalid Username or password")) {
                     PasswordTextBox.PlaceholderText = "";
                     ContentDialog ErrorContentDialog = new ContentDialog {
                         Title = "ERROR",
@@ -85,26 +87,13 @@ namespace SchoolPower.Views {
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
                 }
 
-                // save data
                 else {
-                    
-                    // when IsFirstTimeLogin
 
-                    if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
-                        // cp new to old
-                        studataOld = studata;
-                        await StudentData.SaveJSON(studata, StudentData.NewOrOld.Old);
-                        localSettings.Values["IsFirstTimeLogin"] = false;
-                    } 
-                    else {
-                        // move previous studata to old
-                        studataOld = await StudentData.GetJSON(StudentData.NewOrOld.New);
-                        await StudentData.SaveJSON(studataOld, StudentData.NewOrOld.Old);
+                    // save student data to new
+                    studataOld = studata;
+                    await StudentData.SaveJSON(studata, StudentData.NewOrOld.New);
+                    localSettings.Values["IsFirstTimeLogin"] = false;
 
-                        // save current studata to new
-                        await StudentData.SaveJSON(studata, StudentData.NewOrOld.New);
-                    }
-                    
                     // new StudentData
                     StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
                     

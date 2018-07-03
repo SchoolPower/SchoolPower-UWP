@@ -191,14 +191,6 @@ namespace SchoolPower.Models {
             string studata = "";
             string studataOld = "";
 
-            // clear history
-            for (int i = subjects.Count; i >= 1; i--) {
-                subjects.RemoveAt(i - 1);
-            }
-            for (int j = attendances.Count; j >= 1; j--) {
-                attendances.RemoveAt(j - 1);
-            }
-
             // get account info
             ApplicationDataContainer account = ApplicationData.Current.LocalSettings;
             String username = (string)account.Values["UsrName"];
@@ -215,12 +207,20 @@ namespace SchoolPower.Models {
             // save studata
             else {
                 
-                // mv previous studata to old
+                // move previous studata to old
                 studataOld = await GetJSON(NewOrOld.New);
                 await SaveJSON(studataOld, NewOrOld.Old);
 
                 // save current studata to new
                 await SaveJSON(studata, NewOrOld.New);
+
+                // clear history
+                for (int i = subjects.Count; i >= 1; i--) {
+                    subjects.RemoveAt(i - 1);
+                }
+                for (int j = attendances.Count; j >= 1; j--) {
+                    attendances.RemoveAt(j - 1);
+                }
 
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
