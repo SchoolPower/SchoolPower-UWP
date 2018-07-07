@@ -13,7 +13,7 @@ namespace SchoolPower.Models {
         // internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
         // internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
 
-        public enum NewOrOld { New, Old};
+        public enum NewOrOld { New, Old };
 
         public static List<Subject> subjects                = new List<Subject>();
         public static List<AttendanceItem> attendances      = new List<AttendanceItem>();
