@@ -70,9 +70,10 @@ namespace SchoolPower.Models {
         public String BlockLetter { get; set; }
         public String RoomNumber { get; set; }
         public List<AssignmentItem> Assignments = new List<AssignmentItem>();
-        public String StartDate { get; set; }
-        public String EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public List<Peroid> Grades = new List<Peroid>();
+        public bool IsActive { get; set; }
 
         public Subject(dynamic data) {
 
@@ -104,6 +105,15 @@ namespace SchoolPower.Models {
             // sort
             Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
             Assignments.Reverse();
+
+            // compare
+            int i = DateTime.Compare(StartDate, DateTime.Now);
+            int ii = DateTime.Compare(DateTime.Now, EndDate);
+            if (DateTime.Compare(StartDate, DateTime.Now) < 0 && DateTime.Compare(DateTime.Now, EndDate) < 0) {
+                IsActive = true;
+            } else {
+                IsActive = false;
+            }
         }
     }
 

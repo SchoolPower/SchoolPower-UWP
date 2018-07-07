@@ -31,7 +31,14 @@ namespace SchoolPower.Views {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            int index = (int)e.Parameter;
+            int index = 0;
+            string selectdeSubject= (string)e.Parameter;
+            foreach (var subject in StudentData.subjects) {
+                if (subject.Name == selectdeSubject) {
+                    break;
+                }
+                index += 1;
+            }
             assignments = StudentData.subjects[index].Assignments;
             InitializeComponent();
             Window.Current.SizeChanged += Current_SizeChanged;

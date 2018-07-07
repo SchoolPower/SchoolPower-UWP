@@ -21,7 +21,19 @@ namespace SchoolPower.Views {
 
         void Initialize() {
 
-            subjects = StudentData.subjects;
+            if ((bool)localSettings.Values["showInactive"]) {
+                subjects = StudentData.subjects;
+            } else {
+                List<Subject> temp = new List<Subject>();
+                foreach (var subject in StudentData.subjects) {
+                    if (subject.IsActive) {
+                        temp.Add(subject);
+                    }
+                }
+                subjects = temp;
+            }
+
+
             InitializeComponent();
             zeroGridLength = new Windows.UI.Xaml.GridLength(); zeroGridLength = EmptyColumn.Width;
 
@@ -93,8 +105,8 @@ namespace SchoolPower.Views {
             }
             // navigate when normal
             if (CurrentVisualState.Text == "Normal") {
-                int index = ListV.SelectedIndex;
-                GradeDetailFrame.Navigate(typeof(MainPageGradePage), index);
+                string selectedSubject = subjects[ListV.SelectedIndex].Name;
+                GradeDetailFrame.Navigate(typeof(MainPageGradePage), selectedSubject);
             }
         }
 
