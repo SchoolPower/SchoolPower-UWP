@@ -1,6 +1,5 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.ViewManagement;
 using SchoolPower.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,12 +14,12 @@ namespace SchoolPower.Views {
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public MainPage() {
-            SetUI();
+            Views.Shell.HamburgerMenu.IsFullScreen = !true;
+            Views.Shell.HamburgerMenu.HamburgerButtonVisibility = !false ? Visibility.Visible : Visibility.Collapsed;
             Initialize();
         }
 
         void Initialize() {
-
             if ((bool)localSettings.Values["showInactive"]) {
                 subjects = StudentData.subjects;
             } else {
@@ -48,23 +47,6 @@ namespace SchoolPower.Views {
 
         }
 
-        void SetUI() {
-            Views.Shell.HamburgerMenu.IsFullScreen = !true;
-            Views.Shell.HamburgerMenu.HamburgerButtonVisibility = !false ? Visibility.Visible : Visibility.Collapsed;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.ForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.ButtonForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(0, 25, 114, 184);
-            titleBar.ButtonPressedForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonInactiveBackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.ButtonInactiveForegroundColor = Windows.UI.Colors.LightGray;
-            titleBar.InactiveBackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.InactiveForegroundColor = Windows.UI.Colors.LightGray;
-            titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(0, 25, 114, 184);
-            titleBar.ButtonHoverForegroundColor = Windows.UI.Colors.White;
-        }
 
         void Swap() {
             Windows.UI.Xaml.GridLength gridLength = new Windows.UI.Xaml.GridLength();
