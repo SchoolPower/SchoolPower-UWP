@@ -28,37 +28,30 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
-        <DataTemplate x:Key="GradeDetailDataTemplate" x:DataType="data:Peroid">
-            <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
-                <TextBlock Text="{x:Bind Time}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{x:Bind Percent}" HorizontalAlignment="Center" />
-                <TextBlock Text="{x:Bind Letter}" HorizontalAlignment="Center"/>
-            </StackPanel>
-        </DataTemplate>
         <DataTemplate x:Key="CoursesListDataTemplate_Detail" x:DataType="data:Subject">
             <RelativePanel Margin="0,10,0,0" >
                 <TextBlock Name="Title" Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight" TextWrapping="Wrap"/>
                 <StackPanel RelativePanel.Below="Title" Name="InfoPanel" Margin="0,5,0,5">
-                        <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
-                        <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" />
-                        <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" />
                 </StackPanel>
                 <Button 
-                        x:Name="GoToDetailBut" 
-                        Height="50" Width="85"
-                        RelativePanel.RightOf="InfoPanel"
-                        RelativePanel.AlignVerticalCenterWith="InfoPanel"
-                        Loaded="GoToDetailBut_Loaded"
-                        Click="GoToDetailBut_Click"
-                        Visibility="Collapsed"
-                        Margin="25,0,10,0" 
-                        Grid.Column="1">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="More"/>
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
+                    x:Name="GoToDetailBut" 
+                    Height="50" Width="85"
+                    RelativePanel.RightOf="InfoPanel"
+                    RelativePanel.AlignVerticalCenterWith="InfoPanel"
+                    Loaded="GoToDetailBut_Loaded"
+                    Click="GoToDetailBut_Click"
+                    Visibility="Collapsed"
+                    Margin="25,0,10,0" 
+                    Grid.Column="1">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="More"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
                 <ScrollViewer
                     RelativePanel.Below="InfoPanel"
                     HorizontalScrollBarVisibility="Auto"
@@ -83,6 +76,14 @@
                 </ScrollViewer>
             </RelativePanel>
         </DataTemplate>
+        <DataTemplate x:Key="GradeDetailDataTemplate" x:DataType="data:Peroid">
+            <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
+                <TextBlock Text="{x:Bind Time}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{x:Bind Percent}" HorizontalAlignment="Center" />
+                <TextBlock Text="{x:Bind Letter}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+
 
         <Storyboard x:Name="ShowKissingBar">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="KissingBar" Storyboard.TargetProperty="Visibility" Duration="0">
@@ -258,7 +259,5 @@
                 </RelativePanel>
             </Border>
         </RelativePanel>
-
-
     </Grid>
 </Page>

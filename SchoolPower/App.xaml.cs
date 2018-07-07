@@ -32,6 +32,7 @@ using System;
 using Windows.UI.Xaml.Data;
 using Windows.Storage;
 using SchoolPower.Models;
+using Windows.UI.Core;
 
 namespace SchoolPower {
     /// Documentation on APIs used in this page:
@@ -73,8 +74,10 @@ namespace SchoolPower {
 
             try {
                 IsLogin = (bool)localSettings.Values["IsFirstTimeLogin"];
+                bool b = (bool)localSettings.Values["showInactive"];
             } catch (System.NullReferenceException) {
                 localSettings.Values["IsFirstTimeLogin"] = true;
+                localSettings.Values["showInactive"] = true;
             }
 
 
@@ -89,6 +92,9 @@ namespace SchoolPower {
                 await NavigationService.NavigateAsync(typeof(Views.MainPage));
 
             }
+
+            // SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
         }
     }
 }

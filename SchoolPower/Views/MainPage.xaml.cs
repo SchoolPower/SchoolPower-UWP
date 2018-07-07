@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using System;
 using SchoolPower.Views.Dialogs;
-using System.Threading;
 
 namespace SchoolPower.Views {
     public sealed partial class MainPage : Page {
@@ -20,7 +19,7 @@ namespace SchoolPower.Views {
             Initialize();
         }
 
-        async void Initialize() {
+        void Initialize() {
 
             subjects = StudentData.subjects;
             InitializeComponent();
@@ -33,7 +32,7 @@ namespace SchoolPower.Views {
                 }
             };
 
-            await Task.Delay(1); // <- this code displays back button, i do not know why
+            // await Task.Delay(1); // <- this code displays back button, i do not know why
 
         }
 
