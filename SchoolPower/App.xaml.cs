@@ -77,7 +77,7 @@ namespace SchoolPower {
                 bool b = (bool)localSettings.Values["showInactive"];
             } catch (System.NullReferenceException) {
                 localSettings.Values["IsFirstTimeLogin"] = true;
-                localSettings.Values["showInactive"] = true;
+                localSettings.Values["showInactive"] = false;
             }
 
 
