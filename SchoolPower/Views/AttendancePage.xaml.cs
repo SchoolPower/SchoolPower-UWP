@@ -1,31 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using SchoolPower.Models;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace SchoolPower.Views {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+
     public sealed partial class AttendancePage : Page {
 
         private List<AttendanceItem> attendanceItems;
         private ItemsWrapGrid _itemsWrapGrid;
+
+        private double GridHeight;
 
         public AttendancePage() {
             this.InitializeComponent();
@@ -62,7 +49,9 @@ namespace SchoolPower.Views {
             DependencyProperty.Register(nameof(AttendanceDetailGridColumns), typeof(int), typeof(AttendancePage), new PropertyMetadata(0));
             */
         int GetNumberOfRows() {
-            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 50;
+            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 50 -1;
+            // return (int)AttendanceDetailGridView.ActualHeight / 50;
         }
+
     }
 }

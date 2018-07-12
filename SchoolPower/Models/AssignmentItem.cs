@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Windows.UI.Xaml.Media;
 
 /*
 Sample:
@@ -47,6 +43,7 @@ namespace SchoolPower.Models {
         public String Weight { get; set; }
         public string[] Terms { get; set; }
         public bool IsNew { get; set; }
+        public SolidColorBrush Color { get; set; }
 
         public AssignmentItem(dynamic data) {
             Name                = data.name;
@@ -62,6 +59,12 @@ namespace SchoolPower.Models {
             Weight              = data.weight;
             Terms               = data.terms.ToObject<string[]>();
             IsNew               = true;
+            Color               = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+
+            switch (LetterGrade) {
+
+            }
+
         }
 
         public bool Equals(AssignmentItem darling) {
