@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using System;
 using SchoolPower.Views.Dialogs;
+using System.Collections.ObjectModel;
 
 namespace SchoolPower.Views {
     public sealed partial class MainPage : Page {
@@ -20,14 +21,16 @@ namespace SchoolPower.Views {
         }
 
         void Initialize() {
+            subjects = null;
+
             if ((bool)localSettings.Values["showInactive"]) {
-                subjects = StudentData.subjects;
+                subjects = new List<Subject>(StudentData.subjects);
             } else {
                 List<Subject> temp = new List<Subject>();
-                foreach (var subject in StudentData.subjects) 
-                    if (subject.IsActive) 
+                foreach (var subject in StudentData.subjects)
+                    if (subject.IsActive)
                         temp.Add(subject);
-                subjects = temp;
+                subjects = subjects = new List<Subject>(temp);
             }
 
             foreach (var subject in subjects) {
@@ -55,7 +58,7 @@ namespace SchoolPower.Views {
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => {
-                if (CurrentVisualState.Text == "Narrow" && GradeOverViewColumn.Width == zeroGridLength) 
+                if (CurrentVisualState.Text == "Narrow" && GradeOverViewColumn.Width == zeroGridLength)
                     Swap();
             };
 
@@ -92,12 +95,12 @@ namespace SchoolPower.Views {
             NoGradeIcnImg.SetValue(Grid.ColumnProperty, 2);
             // change listview selected itm data template
             // Assign DataTemplate 
-            foreach (var item in e.AddedItems) { 
+            foreach (var item in e.AddedItems) {
                 ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
                 lvi.ContentTemplate = (DataTemplate)this.Resources["CoursesListDataTemplate_Detail"];
             }
             // Remove DataTemplate
-            foreach (var item in e.RemovedItems) { 
+            foreach (var item in e.RemovedItems) {
                 ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
                 try {
                     lvi.ContentTemplate = (DataTemplate)this.Resources["CoursesListDataTemplate_Compact"];
@@ -109,7 +112,7 @@ namespace SchoolPower.Views {
                 try {
                     selectedSubject = subjects[ListV.SelectedIndex].Name;
                 } catch (System.ArgumentOutOfRangeException) { }
-                if (ListV.SelectedIndex != -1) 
+                if (ListV.SelectedIndex != -1)
                     GradeDetailFrame.Navigate(typeof(MainPageGradePage), selectedSubject);
             }
         }
@@ -144,7 +147,7 @@ namespace SchoolPower.Views {
         }
 
         private async Task KissingAsync() {
-            
+
             // show
             ShowKissingBar.Begin();
 
@@ -179,6 +182,7 @@ namespace SchoolPower.Views {
             KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
 
             Initialize();
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }
