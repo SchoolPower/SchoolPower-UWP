@@ -96,5 +96,32 @@ namespace SchoolPower.Views {
             var tSwitch = sender as ToggleSwitch;
             tSwitch.IsOn = (bool)localSettings.Values["showInactive"];
         }
+
+        private void DisplayScoreOfRadioButtonCheck(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            var rButton = sender as RadioButton;
+            string tag = rButton.Tag.ToString();
+            switch (tag) {
+                case "term":
+                    localSettings.Values["DashboardShowGradeOfTERM"] = true;
+                    break;
+                case "sem":
+                    localSettings.Values["DashboardShowGradeOfTERM"] = !true;
+                    break;
+            }
+        }
+
+        private void TermRadioButtonLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
+                var rButton = sender as RadioButton;
+                rButton.IsChecked = true;
+            }
+        }
+
+        private void SemRadioButtonLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            if (!(bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
+                var rButton = sender as RadioButton;
+                rButton.IsChecked = true;
+            }
+        }
     }
 }

@@ -24,23 +24,39 @@ namespace SchoolPower.Views {
                 subjects = StudentData.subjects;
             } else {
                 List<Subject> temp = new List<Subject>();
-                foreach (var subject in StudentData.subjects) {
-                    if (subject.IsActive) {
+                foreach (var subject in StudentData.subjects) 
+                    if (subject.IsActive) 
                         temp.Add(subject);
-                    }
-                }
                 subjects = temp;
             }
 
+            foreach (var subject in subjects) {
+                if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
+                    foreach (var p in subject.Peroids) {
+                        if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
+                            subject.LetterGradeOnDashboard = p.Letter;
+                            subject.PercentageGradeOnDashboard = p.Percent;
+                            break;
+                        }
+                    }
+                } else {
+                    foreach (var p in subject.Peroids) {
+                        if ((p.IsActive) && ((p.Time == "S1") || (p.Time == "S2"))) {
+                            subject.LetterGradeOnDashboard = p.Letter;
+                            subject.PercentageGradeOnDashboard = p.Percent;
+                            break;
+                        }
+                    }
+                }
+            }
 
             InitializeComponent();
             zeroGridLength = new Windows.UI.Xaml.GridLength(); zeroGridLength = EmptyColumn.Width;
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => {
-                if (CurrentVisualState.Text == "Narrow" && GradeOverViewColumn.Width == zeroGridLength) {
+                if (CurrentVisualState.Text == "Narrow" && GradeOverViewColumn.Width == zeroGridLength) 
                     Swap();
-                }
             };
 
             // await Task.Delay(1); // <- this code displays back button, i do not know why
@@ -83,12 +99,18 @@ namespace SchoolPower.Views {
             // Remove DataTemplate
             foreach (var item in e.RemovedItems) { 
                 ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
-                lvi.ContentTemplate = (DataTemplate)this.Resources["CoursesListDataTemplate_Compact"];
+                try {
+                    lvi.ContentTemplate = (DataTemplate)this.Resources["CoursesListDataTemplate_Compact"];
+                } catch (System.NullReferenceException) { }
             }
             // navigate when normal
             if (CurrentVisualState.Text == "Normal") {
-                string selectedSubject = subjects[ListV.SelectedIndex].Name;
-                GradeDetailFrame.Navigate(typeof(MainPageGradePage), selectedSubject);
+                string selectedSubject = "";
+                try {
+                    selectedSubject = subjects[ListV.SelectedIndex].Name;
+                } catch (System.ArgumentOutOfRangeException) { }
+                if (ListV.SelectedIndex != -1) 
+                    GradeDetailFrame.Navigate(typeof(MainPageGradePage), selectedSubject);
             }
         }
 
@@ -113,7 +135,7 @@ namespace SchoolPower.Views {
 
         private async void GradeDetailGridView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             GridView gridView = sender as GridView;
-            GradeInfoDialog dialog = new GradeInfoDialog(subjects[ListV.SelectedIndex].Grades[gridView.SelectedIndex]);
+            GradeInfoDialog dialog = new GradeInfoDialog(subjects[ListV.SelectedIndex].Peroids[gridView.SelectedIndex]);
             await dialog.ShowAsync();
         }
 

@@ -118,7 +118,7 @@ namespace SchoolPower.Models {
             double gradeSum = 0;
 
             foreach (var subject in subjects) {
-                foreach (var grade in subject.Grades) {
+                foreach (var grade in subject.Peroids) {
                     if (grade.Time == SelectedPeroid && grade.Percent != "0") {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
@@ -142,7 +142,7 @@ namespace SchoolPower.Models {
 
             foreach (var subject in subjects) {
                 System.Diagnostics.Debug.WriteLine(subject.Name);
-                foreach (var grade in subject.Grades) {
+                foreach (var grade in subject.Peroids) {
 
                     System.Diagnostics.Debug.WriteLine(grade.Time + " " + grade.Percent + " "+ localSettings.Values[subject.Name]);
 
@@ -164,7 +164,7 @@ namespace SchoolPower.Models {
             List<double> grades = new List<double>();
 
             foreach (var subject in StudentData.subjects) {
-                foreach (var grade in subject.Grades) {
+                foreach (var grade in subject.Peroids) {
                     if (grade.Time != SelectedPeroid && grade.Percent != "0" && (bool)localSettings.Values[subject.Name]) {
                         grades.Add(Convert.ToDouble(grade.Percent));
                     }
@@ -195,7 +195,7 @@ namespace SchoolPower.Models {
 
             // get account info
             ApplicationDataContainer account = ApplicationData.Current.LocalSettings;
-            String username = (string)account.Values["UsrName"];
+            string username = (string)account.Values["UsrName"];
             string password = (string)account.Values["Passwd"];
 
             // kissing

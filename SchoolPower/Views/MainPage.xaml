@@ -18,16 +18,52 @@
     </Page.DataContext>
 
     <Page.Resources>
-        
+
         <DataTemplate x:Key="CoursesListDataTemplate_Compact" x:DataType="data:Subject">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
-                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight" TextWrapping="Wrap"/>
-                    <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
-                    <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" />
-                </StackPanel>
-            </StackPanel>
+            <RelativePanel Margin="0,10,0,10" >
+                <RelativePanel 
+                    Name="sp"
+                    Margin="10,0,20,0"
+                    HorizontalAlignment="Center"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignVerticalCenterWithPanel="True">
+
+                    <TextBlock 
+                        Name="xsw"
+                        Margin="0,-1,0,0"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True"
+                        Text="{x:Bind LetterGradeOnDashboard}" FontSize="24" FontWeight="SemiLight"/>
+
+                    <TextBlock 
+                        RelativePanel.Below="xsw"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True"
+                        Text="{x:Bind PercentageGradeOnDashboard}" FontSize="24" FontWeight="SemiLight"
+                        Margin="0,0,0,-1"/>
+
+                </RelativePanel>
+
+
+                <TextBlock 
+                    Text="{x:Bind Name}"
+                    x:Name="eman"
+                    RelativePanel.AlignTopWithPanel= "True"
+                    RelativePanel.RightOf="sp"
+                    FontSize="22" FontWeight="SemiLight" TextWrapping="NoWrap"/>
+
+                <TextBlock 
+                    x:Name="emanb"
+                    RelativePanel.RightOf="sp"
+                    Text="{x:Bind BlockLetter}" 
+                    RelativePanel.Below = "eman"/>
+
+                <TextBlock 
+                    Text="{x:Bind TeacherName}" 
+                    RelativePanel.RightOf="sp"
+                    RelativePanel.Below = "emanb"/>
+
+            </RelativePanel>
         </DataTemplate>
+
         <DataTemplate x:Key="CoursesListDataTemplate_Detail" x:DataType="data:Subject">
             <RelativePanel Margin="0,10,0,0" >
                 <TextBlock Name="Title" Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="22" FontWeight="SemiLight" TextWrapping="Wrap"/>
@@ -59,7 +95,7 @@
                     VerticalScrollBarVisibility="Hidden"
                     VerticalScrollMode="Disabled">
                     <GridView 
-                        ItemsSource="{x:Bind Grades}" 
+                        ItemsSource="{x:Bind Peroids}" 
                    		IsItemClickEnabled="True"
                         ItemTemplate="{StaticResource GradeDetailDataTemplate}" 
                         SelectionChanged="GradeDetailGridView_SelectionChanged"
@@ -76,6 +112,7 @@
                 </ScrollViewer>
             </RelativePanel>
         </DataTemplate>
+
         <DataTemplate x:Key="GradeDetailDataTemplate" x:DataType="data:Peroid">
             <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
                 <TextBlock Text="{x:Bind Time}" HorizontalAlignment="Center"/>
@@ -109,7 +146,7 @@
                 <DiscreteObjectKeyFrame KeyTime="00:00:01.0000000" Value="0"/>
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
-        
+
     </Page.Resources>
 
     <Grid
@@ -118,7 +155,7 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
-                
+
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
@@ -129,7 +166,7 @@
                         <Setter Target="CurrentVisualState.Text" Value="Narrow" />
                     </VisualState.Setters>
                 </VisualState>
-                
+
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
@@ -142,7 +179,7 @@
                         <Setter Target="CurrentVisualState.Text" Value="Normal" />
                     </VisualState.Setters>
                 </VisualState>
-                
+
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 

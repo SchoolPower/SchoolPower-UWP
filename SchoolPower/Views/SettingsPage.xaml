@@ -82,15 +82,29 @@
                     <StackPanel Orientation="Vertical">
 
                         <ToggleSwitch 
-                            Margin="0, 15,0,5 "
+                            Margin="0,15,0,15"
                             Header="Show inactive subjects" 
                             Toggled="InactiveSubjects_ToggleSwitch"
                             Loaded="InactiveSubjects_Loaded"
                             OnContent="Show subjects that you are not currently taking"
                             OffContent="Hide subjects that you are not currently taking"/>
 
+                        <TextBlock 
+                            Text="Dashboard displays the score of " 
+                            Margin="0,0,0,5"/>
+                        <RadioButton 
+                            Margin="0,0,0,0" 
+                            Content="This term" Tag="term" 
+                            Loaded="TermRadioButtonLoaded"
+                            Checked="DisplayScoreOfRadioButtonCheck"/>
+                        <RadioButton 
+                            Margin="0,0,0,15" 
+                            Loaded="SemRadioButtonLoaded"
+                            Content="This semester" Tag="sem" 
+                            Checked="DisplayScoreOfRadioButtonCheck"/>
+
                         <TextBlock Text="Language" Margin="0,0,0,5"/>
-                        <ComboBox Margin="0,5,0,15" SelectionChanged="Language_ComboBox_SelectionChanged" Loaded="Language_ComboBox_Loaded">
+                        <ComboBox Margin="0,5,0,10" SelectionChanged="Language_ComboBox_SelectionChanged" Loaded="Language_ComboBox_Loaded">
                             <ComboBoxItem Content="System default"/>
                             <ComboBoxItem Content="English"/>
                             <ComboBoxItem Content="正體中文"/>

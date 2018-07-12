@@ -32,7 +32,7 @@ namespace SchoolPower.Views {
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             int index = 0;
-            string selectdeSubject= (string)e.Parameter;
+            string selectdeSubject = (string)e.Parameter;
             foreach (var subject in StudentData.subjects) {
                 if (subject.Name == selectdeSubject) {
                     break;
@@ -53,7 +53,7 @@ namespace SchoolPower.Views {
             return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 80;
         }
 
-        private async void GradeDetailGridView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private async void GradeDetailGridView_Tapped(object sender, TappedRoutedEventArgs e) {
             AssInfoDialog dialog = new AssInfoDialog(assignments[GradeDetailGridView.SelectedIndex]);
             await dialog.ShowAsync();
         }

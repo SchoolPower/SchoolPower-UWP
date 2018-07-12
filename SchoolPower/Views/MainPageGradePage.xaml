@@ -135,13 +135,12 @@
                 Name="GradeDetailGridView" 
                 Margin="5,5,5,5"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollMode="Disabled"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.HorizontalScrollMode="Enabled"
                 ItemsSource="{x:Bind assignments}" 
                 IsItemClickEnabled="True" 
-                SelectionChanged="GradeDetailGridView_SelectionChanged"
-                ItemTemplate="{StaticResource GradesGridDataTemplate}">
+                ItemTemplate="{StaticResource GradesGridDataTemplate}" 
+                Tapped="GradeDetailGridView_Tapped">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsWrapGrid 

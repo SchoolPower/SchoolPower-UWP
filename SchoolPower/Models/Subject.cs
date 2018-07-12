@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 /*
     Sample:
@@ -72,10 +73,14 @@ namespace SchoolPower.Models {
         public List<AssignmentItem> Assignments = new List<AssignmentItem>();
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public List<Peroid> Grades = new List<Peroid>();
+        public List<Peroid> Peroids = new List<Peroid>();
+        public String LetterGradeOnDashboard { get; set; }
+        public String PercentageGradeOnDashboard { get; set; }
         public bool IsActive { get; set; }
 
         public Subject(dynamic data) {
+
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
             Name         = data.name;
             TeacherName  = data.teacher.firstName + " " + data.teacher.lastName;
@@ -84,36 +89,71 @@ namespace SchoolPower.Models {
             RoomNumber   = data.roomName;
             StartDate    = data.startDate;
             EndDate      = data.endDate;
+            LetterGradeOnDashboard      = "--";
+            PercentageGradeOnDashboard  = "--";
+
+            IsActive = GetActivity(StartDate, EndDate);
 
             JArray assignmentsJarray = (JArray)data.assignments;
             try {
-                for (int index = 0; index < assignmentsJarray.Count; index++) {
+                for (int index = 0; index < assignmentsJarray.Count; index++) 
                     Assignments.Add(new AssignmentItem(assignmentsJarray[index]));
-                } 
+                
             } catch (System.NullReferenceException) { }
 
             String[] peroidList = { "T1", "T2", "X1", "S1", "T3", "T4", "X2", "S2", "Y1" };
 
             foreach (var time in peroidList) {
                 try {
-                    if (data.finalGrades[time].percent != null) { 
-                        Grades.Add(new Peroid(time, data.finalGrades[time]));
-                    }
+                    if (data.finalGrades[time].percent != null)
+                        Peroids.Add(new Peroid(time, data.finalGrades[time]));
                 } catch (Exception) { }
+            }
+            
+            //activity
+            if (IsActive) {
+
+                // terms
+                var time = new List<DateTime>();
+                foreach (var p in Peroids) 
+                    if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4")) 
+                        time.Add(p.Date);
+                
+                time.Sort();
+                time.Reverse();
+
+                foreach (var p in Peroids) 
+                    if (p.Date == time[0])
+                        if ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4")) 
+                            p.IsActive = true;
+                
+
+                //semasters
+                time = null;
+                time = new List<DateTime>();
+                foreach (var p in Peroids) 
+                    if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "S1") || (p.Time == "S2")) 
+                        time.Add(p.Date);
+                time.Sort();
+                time.Reverse();
+                foreach (var p in Peroids)
+                    if ((p.Time == "S1") || (p.Time == "S2"))
+                        if (p.Date == time[0])
+                            p.IsActive = true;
+               
             }
 
             // sort
             Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
             Assignments.Reverse();
 
-            // compare
-            int i = DateTime.Compare(StartDate, DateTime.Now);
-            int ii = DateTime.Compare(DateTime.Now, EndDate);
-            if (DateTime.Compare(StartDate, DateTime.Now) < 0 && DateTime.Compare(DateTime.Now, EndDate) < 0) {
-                IsActive = true;
-            } else {
-                IsActive = false;
-            }
+        }
+
+        bool GetActivity (DateTime start, DateTime end) {
+            if (DateTime.Compare(start, DateTime.Now) < 0 && DateTime.Compare(DateTime.Now, end) < 0) 
+                return true;
+            else 
+                return false;
         }
     }
 
@@ -123,24 +163,26 @@ namespace SchoolPower.Models {
         public String Letter { get; set; }    
         public String Comment { get; set; }
         public String Eval { get; set; }
-        public String StartDate { get; set; }
-        public String EndDate { get; set; }
+        public DateTime Date { get; set; }
+        // public DateTime EndDate { get; set; }
+        public bool IsActive { get; set; }
 
         public Peroid(String time, dynamic data) {
-            try {
-                Time      = time;
-                Percent   = data.percent;
-                Percent   = Percent.Substring(0, Percent.IndexOf("."));
-                Letter    = data.letter;
-                Eval      = data.eval;
-                StartDate = data.startDate;
-                EndDate   = data.endDate;
-                if (data.comment == null) {
-                    Comment = "--";
-                } else {
-                    Comment = data.comment;
-                }
-            } catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException) { }
+            Time = time;
+            Percent = data.percent;
+            Percent = Percent.Substring(0, Percent.IndexOf("."));
+            Letter = data.letter;
+            Eval = data.eval;
+            IsActive = false;
+
+            DateTime Genesis = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            Date = Genesis.AddSeconds((double)data.startDate).ToLocalTime();
+
+            if (data.comment == null) 
+                Comment = "--";
+            else 
+                Comment = data.comment;
+            
         }
     }
 }
