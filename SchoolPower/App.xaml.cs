@@ -49,10 +49,10 @@ namespace SchoolPower {
         public App() {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
-        #region app settings
+            #region app settings
 
-        // some settings must be set in app.constructor
-        var settings = SettingsService.Instance;
+            // some settings must be set in app.constructor
+            var settings = SettingsService.Instance;
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
@@ -86,13 +86,12 @@ namespace SchoolPower {
 
             if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                 await NavigationService.NavigateAsync(typeof(Views.LoginPage));
-            } 
-            else {
+            } else {
                 Task<string> getHistoryJSON = StudentData.GetJSON(StudentData.NewOrOld.New);
                 String studata = await getHistoryJSON;
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studata));
                 App.SetUIBlue();
-                await NavigationService.NavigateAsync(typeof(Views.MainPage));
+                await NavigationService.NavigateAsync(typeof(Views.SubjectsAssignmentsPage));
             }
 
             // SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;

@@ -14,10 +14,6 @@
     xmlns:data="using:SchoolPower.Models" 
     mc:Ignorable="d">
 
-    <Page.DataContext>
-        <vm:SettingsPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">

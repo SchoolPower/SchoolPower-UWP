@@ -18,6 +18,10 @@ namespace SchoolPower.Models {
         public static List<Subject> subjects                = new List<Subject>();
         public static List<AttendanceItem> attendances      = new List<AttendanceItem>();
         public static Info info;
+        public static String SelectedSubjectName;
+
+        public static IList<object> SubjectListViewRemovedItems;
+        public static IList<object> SubjectListViewAddedItems;
 
         public StudentData(dynamic data, dynamic dataOld) {
 

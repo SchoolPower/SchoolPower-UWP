@@ -111,7 +111,8 @@ namespace SchoolPower.Models {
             }
             
             //activity
-            if (IsActive) {
+            if (true) {
+            //if (IsActive) {
 
                 // terms
                 var time = new List<DateTime>();

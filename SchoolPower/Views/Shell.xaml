@@ -16,7 +16,7 @@
         <!--  mainpage button  -->
         <Controls:HamburgerMenu.PrimaryButtons>
             <!--Dashbd-->
-            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:SubjectsAssignmentsPage">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE8F1;" />
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Dashboard" />

@@ -13,10 +13,6 @@
       xmlns:data="using:SchoolPower.Models" 
       mc:Ignorable="d">
 
-    <Page.DataContext>
-        <vm:SettingsPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
     <Page.Resources>
         <converter:ValueWhenConverter x:Name="FalseWhenTrueConverter">
             <converter:ValueWhenConverter.When>

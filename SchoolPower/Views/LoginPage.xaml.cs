@@ -99,7 +99,7 @@ namespace SchoolPower.Views {
                     StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
                     
                     // navigate
-                    Frame.Navigate(typeof(MainPage));
+                    Frame.Navigate(typeof(SubjectsAssignmentsPage));
                 }
                 Views.Busy.SetBusy(false);
             }
