@@ -119,6 +119,9 @@ namespace SchoolPower.Views {
             } else if (AdaptiveStates.CurrentState == Normal) {
                 GoToDetailButton.Visibility = Visibility.Collapsed;
                 EditButton.Visibility = Visibility.Collapsed;
+            } else if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex == -1) {
+                GoToDetailButton.Visibility = Visibility.Collapsed;
+                EditButton.Visibility = Visibility.Collapsed;
             }
         }
 
