@@ -4,15 +4,17 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SchoolPower.Models;
+using System.Diagnostics;
 
 namespace SchoolPower.Views {
 
     public sealed partial class AttendancePage : Page {
 
         private List<AttendanceItem> attendanceItems;
-        private ItemsWrapGrid _itemsWrapGrid;
 
-        private double GridHeight;
+        int GetNumberOfRows() {
+            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 46 - 1;
+        }
 
         public AttendancePage() {
             this.InitializeComponent();
@@ -38,20 +40,21 @@ namespace SchoolPower.Views {
         }
 
         private void AttendanceDetailGrid_Loaded(object sender, RoutedEventArgs e) {
-            _itemsWrapGrid = sender as ItemsWrapGrid;
-            _itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
-        }
-        /*
-        private int AttendanceDetailGridColumns {
-            set { SetValue(MaxColumnProperty, value); }
-        }
-        private static readonly DependencyProperty MaxColumnProperty =
-            DependencyProperty.Register(nameof(AttendanceDetailGridColumns), typeof(int), typeof(AttendancePage), new PropertyMetadata(0));
-            */
-        int GetNumberOfRows() {
-            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 50 -1;
-            // return (int)AttendanceDetailGridView.ActualHeight / 50;
+            var gridView = sender as GridView;
+            var itemsWrapGrid = (ItemsWrapGrid)gridView.ItemsPanelRoot;
+            itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
         }
 
+        private void AttendanceDetailGrid_SizeChanged(object sender, SizeChangedEventArgs e) {
+            var gridView = sender as GridView;
+            var itemsWrapGrid = (ItemsWrapGrid)gridView.ItemsPanelRoot;
+            itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
+        }
+
+        private void StackPanel_Loaded(object sender, RoutedEventArgs e) {
+            var s = sender as StackPanel;
+            var v = s.ActualHeight;
+            Debug.WriteLine(v);
+        }
     }
 }

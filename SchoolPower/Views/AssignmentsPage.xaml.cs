@@ -16,9 +16,12 @@ namespace SchoolPower.Views {
     /// </summary>
     public sealed partial class AssignmentsPage : Page {
         private List<AssignmentItem> assignments;
-        private ItemsWrapGrid _itemsWrapGrid;
         private string selectdeSubject = StudentData.SelectedSubjectName;
         int index = 0;
+
+        int GetNumberOfRows() {
+            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 75;
+        }
 
         public AssignmentsPage() {
         }
@@ -37,16 +40,27 @@ namespace SchoolPower.Views {
         }
 
         private void AssignmentsWarp_Loaded(object sender, RoutedEventArgs e) {
-            _itemsWrapGrid = sender as ItemsWrapGrid;
-            _itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
+            var gridView = sender as GridView;
+            var itemsWrapGrid = (ItemsWrapGrid)gridView.ItemsPanelRoot;
+            itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
         }
 
-        public static int GetNumberOfRows() {
-            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 80 - 1;
+        private void AssignmentsWarp_SizeChanged(object sender, SizeChangedEventArgs e) {
+            var gridView = sender as GridView;
+            var itemsWrapGrid = (ItemsWrapGrid)gridView.ItemsPanelRoot;
+            itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
         }
+
 
         private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e) {
-
+            var _Parent = sender as Page;
+            ItemsWrapGrid _itemsWrapGrid;
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(_Parent); i++) {
+                var _Child = VisualTreeHelper.GetChild(Parent, i);
+                if (_Child is ItemsWrapGrid) {
+                    _itemsWrapGrid = (ItemsWrapGrid)_Child;
+                }
+            }
         }
 
         private void Border_Loaded(object sender, RoutedEventArgs e) {

@@ -9,14 +9,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SchoolPower.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:SchoolPower.ViewModels" 
     xmlns:data="using:SchoolPower.Models" 
     mc:Ignorable="d">
 
     <Page.Resources>
         <DataTemplate x:Key="AssignmentsListTemplate" x:DataType="data:AssignmentItem">
+            
             <Border Loaded="Border_Loaded" >
-               
                 <StackPanel Orientation="Horizontal" >
 
                     <StackPanel Width="60" Orientation="Vertical" VerticalAlignment="Center" Margin="5,0,5,0">
@@ -42,88 +41,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup >
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="3" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="380" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="4" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="460" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="5" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="520" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="6" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="600" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="7" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="680" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="8" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="740" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="9" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="820" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="10" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="900" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="11" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="740" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AssignmentsWarp.MaximumRowsOrColumns" Value="9" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
             <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStatesChanged">
                 <VisualState x:Name="Narrow">
                     <VisualState.StateTriggers>
@@ -179,14 +96,15 @@
                 ItemsSource="{x:Bind assignments}" 
                 IsItemClickEnabled="True" 
                 ItemTemplate="{StaticResource AssignmentsListTemplate}" 
+                Loaded="AssignmentsWarp_Loaded"
+                SizeChanged="AssignmentsWarp_SizeChanged"
                 ItemClick="AssignmentsGridView_ItemClick" >
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsWrapGrid 
                             x:Name="AssignmentsWarp" 
                             Orientation="Vertical"
-                            MaximumRowsOrColumns="5"  
-                            Loaded="AssignmentsWarp_Loaded"/>
+                            MaximumRowsOrColumns="5" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>

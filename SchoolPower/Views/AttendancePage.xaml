@@ -30,116 +30,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup >
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="5" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="350" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="6" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="400" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="7" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="450" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="8" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="500" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="9" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="550" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="10" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="600" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="11" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="650" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="12" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="700" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="13" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="750" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="14" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="800" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="15" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="850" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="16" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState >
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowHeight="900" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="AttendanceDetailGrid.MaximumRowsOrColumns" Value="17" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <!--Bar-->
+        <!--HEAD-->
         <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <controls:PageHeader Text="Attendance" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
                 <controls:PageHeader.PrimaryCommands>
@@ -150,7 +41,6 @@
                 </controls:PageHeader.PrimaryCommands>
             </controls:PageHeader>
         </RelativePanel>
-<!--        <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ" Margin="16,60,0,0"/> -->
         <Image Name="NoAttendanceImg" Visibility="Collapsed" Source="/Assets/perfect_attendance.png" Width="250" Height="250" Stretch="Uniform" />
 
         <ScrollViewer Margin="16,60,0,0"
@@ -166,12 +56,13 @@
                 ItemsSource="{x:Bind attendanceItems}" 
                 IsItemClickEnabled="True" 
                 ItemClick="GridView_ItemClick"
+                Loaded="AttendanceDetailGrid_Loaded"
+                SizeChanged="AttendanceDetailGrid_SizeChanged"
                 ItemTemplate="{StaticResource AttendanceGridDataTemplate}">
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsWrapGrid 
                             Name="AttendanceDetailGrid" 
-                            Loaded="AttendanceDetailGrid_Loaded"
                             Orientation="Vertical"/>
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
