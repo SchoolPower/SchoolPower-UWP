@@ -8,6 +8,7 @@ using System;
 using SchoolPower.Views.Dialogs;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.ObjectModel;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
@@ -22,6 +23,9 @@ namespace SchoolPower.Views {
         }
 
         void Initialize() {
+
+            InitializeComponent();
+
             subjects = null;
             subjects = new List<Subject>();
 
@@ -57,14 +61,22 @@ namespace SchoolPower.Views {
                 }
             }
 
-            InitializeComponent();
-            /*
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => {
-                if (AdaptiveStates.CurrentState == Narrow && SubjectsColumn.ActualWidth == 0)
-                    Swap();
-            }; */
+            SubjectsListView.ItemsSource = subjects;
 
+            // assignments
+            // normal -> navigate 
+            if (StudentData.SelectedSubjectName != null) {
+                if (AdaptiveStates.CurrentState == Normal) {
+                    int index = 0;
+                    foreach (var subject in StudentData.subjects) {
+                        if (subject.Name == StudentData.SelectedSubjectName) {
+                            break;
+                        }
+                        index += 1;
+                    }
+                    AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
+                }
+            }
         }
 
         private async Task KissingAsync() {
