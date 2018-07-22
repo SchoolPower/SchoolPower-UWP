@@ -23,14 +23,14 @@ namespace SchoolPower.Views {
 
         void Initialize() {
             subjects = null;
+            subjects = new List<Subject>();
 
             if ((bool)localSettings.Values["showInactive"]) {
                 subjects = new List<Subject>(StudentData.subjects);
             } else {
-                List<Subject> temp = new List<Subject>();
                 foreach (var subject in StudentData.subjects)
-                    temp.Add(subject);
-                subjects = subjects = new List<Subject>(temp);
+                    if (subject.IsActive)
+                        subjects.Add(subject);
             }
 
             foreach (var subject in subjects) {
