@@ -49,6 +49,8 @@ namespace SchoolPower {
         public App() {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
+            App.Current.UnhandledException += OnUnhandledException;
+
             #region app settings
 
             // some settings must be set in app.constructor
@@ -88,8 +90,8 @@ namespace SchoolPower {
                 await NavigationService.NavigateAsync(typeof(Views.LoginPage));
             } else {
                 Task<string> getHistoryJSON = StudentData.GetJSON(StudentData.NewOrOld.New);
-                String studata = await getHistoryJSON;
-                StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studata));
+                String studataOld = await getHistoryJSON;
+                StudentData studentData = new StudentData(StudentData.ParseJSON(studataOld), StudentData.ParseJSON(studataOld));
                 App.SetUIBlue();
                 await NavigationService.NavigateAsync(typeof(Views.SubjectsAssignmentsPage));
             }
@@ -128,6 +130,10 @@ namespace SchoolPower {
             titleBar.InactiveForegroundColor = Windows.UI.Colors.LightGray;
             titleBar.ButtonHoverBackgroundColor = Windows.UI.Colors.Black;
             titleBar.ButtonHoverForegroundColor = Windows.UI.Colors.White;
+        }
+
+        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs) {
+            await Windows.Storage.ApplicationData.Current.ClearAsync();
         }
     }
 }
