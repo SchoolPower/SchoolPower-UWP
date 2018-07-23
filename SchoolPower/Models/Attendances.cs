@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 
 /*
 Sample:
@@ -23,7 +24,8 @@ namespace SchoolPower.Models {
         public String Description { get; set; }
         public String Date { get; set; }
         public String Peroid { get; set; }
-        public String Name { get; set; } 
+        public String Name { get; set; }
+        public SolidColorBrush Color { get; set; }
 
         public AttendanceItem(dynamic data) {
             Code        = data.code;
@@ -32,6 +34,7 @@ namespace SchoolPower.Models {
             Date        = Date.Substring(0, Date.IndexOf(" "));
             Peroid      = data.peroid;
             Name        = data.name;
+            Color       = StudentData.GetColor(Code);
         }
     }
 }

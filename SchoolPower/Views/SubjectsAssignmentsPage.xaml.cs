@@ -41,7 +41,7 @@ namespace SchoolPower.Views {
                 if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
                     foreach (var p in subject.Peroids) {
                         if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
-                            subject.LetterGradeOnDashboard = p.Letter;
+                            subject.LetterGradeOnDashboard = p.LetterGrade;
                             subject.PercentageGradeOnDashboard = p.Percent;
                             break;
                         }
@@ -49,11 +49,11 @@ namespace SchoolPower.Views {
                 } else {
                     foreach (var p in subject.Peroids) {
                         if ((p.IsActive) && ((p.Time == "S1") || (p.Time == "S2"))) {
-                            subject.LetterGradeOnDashboard = p.Letter;
+                            subject.LetterGradeOnDashboard = p.LetterGrade;
                             subject.PercentageGradeOnDashboard = p.Percent;
                             break;
                         } else if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
-                            subject.LetterGradeOnDashboard = p.Letter;
+                            subject.LetterGradeOnDashboard = p.LetterGrade;
                             subject.PercentageGradeOnDashboard = p.Percent;
                             break;
                         }

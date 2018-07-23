@@ -59,12 +59,7 @@ namespace SchoolPower.Models {
             Weight              = data.weight;
             Terms               = data.terms.ToObject<string[]>();
             IsNew               = true;
-            Color               = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
-
-            switch (LetterGrade) {
-
-            }
-
+            Color               = StudentData.GetColor(LetterGrade);
         }
 
         public bool Equals(AssignmentItem darling) {

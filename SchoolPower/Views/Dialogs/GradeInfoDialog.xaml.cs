@@ -20,7 +20,7 @@ namespace SchoolPower.Views.Dialogs {
             this.InitializeComponent();
             Time.Text    = peroid.Time;
             Percent.Text = peroid.Percent;
-            Letter.Text  = peroid.Letter;
+            Letter.Text  = peroid.LetterGrade;
             Eval.Text    = peroid.Eval;
             try {
                 if (peroid.Comment == null) { }

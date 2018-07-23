@@ -8,7 +8,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:SchoolPower.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:SchoolPower.ViewModels" 
       xmlns:data="using:SchoolPower.Models" 
       mc:Ignorable="d"
       Loaded="Page_Loaded">
@@ -67,24 +66,7 @@
                     <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" />
                     <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" />
                     <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" />
-                </StackPanel> 
-                <!--
-                <Button 
-                    x:Name="GoToDetailBut" 
-                    Height="50" Width="85"
-                    RelativePanel.RightOf="InfoPanel"
-                    RelativePanel.AlignVerticalCenterWith="InfoPanel"
-                    Loaded="GoToDetailBut_Loaded"
-                    Click="GoToDetailBut_Click"
-                    Visibility="Collapsed"
-                    Margin="25,0,10,0" 
-                    Grid.Column="1">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="More"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button> -->
+                </StackPanel>
                 <ScrollViewer
                     RelativePanel.Below="InfoPanel"
                     HorizontalScrollBarVisibility="Auto"
@@ -100,9 +82,16 @@
                         ScrollViewer.HorizontalScrollMode="Enabled"
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         ScrollViewer.VerticalScrollMode="Disabled">
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="Height" Value="80" />
+                                <Setter Property="Width" Value="40"/>
+                                <Setter Property="Background" Value="Transparent" />
+                            </Style>
+                        </GridView.ItemContainerStyle>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <ItemsWrapGrid Orientation="Horizontal"/>
+                                <ItemsWrapGrid  Orientation="Horizontal"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                     </GridView>
@@ -111,13 +100,23 @@
         </DataTemplate>
 
         <DataTemplate x:Key="PeroidsListTemplate" x:DataType="data:Peroid">
-            <StackPanel Orientation="Vertical" Margin="0,10,0,10" >
-                <TextBlock Text="{x:Bind Time}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{x:Bind Percent}" HorizontalAlignment="Center" />
-                <TextBlock Text="{x:Bind Letter}" HorizontalAlignment="Center"/>
-            </StackPanel>
+            <RelativePanel HorizontalAlignment="Center" 
+                Width="44" Height="80" Background="{x:Bind Color}">
+                <TextBlock 
+                    Text="{x:Bind Time}"
+                    RelativePanel.AlignHorizontalCenterWith="Percent"
+                    RelativePanel.Above="Percent"/>
+                <TextBlock 
+                    Text="{x:Bind Percent}" x:Name="Percent"
+                    RelativePanel.AlignVerticalCenterWithPanel="True"
+                    RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                <TextBlock 
+                    Text="{x:Bind LetterGrade}"
+                    RelativePanel.AlignHorizontalCenterWith="Percent"
+                    RelativePanel.Below="Percent"/>
+            </RelativePanel>
         </DataTemplate>
-        
+
 
         <Storyboard x:Name="ShowKissingBar">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="KissingBar" Storyboard.TargetProperty="Visibility" Duration="0">
@@ -152,7 +151,7 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStatesChanged">
-                
+
                 <VisualState x:Name="Narrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
@@ -222,7 +221,7 @@
 
         <!--Content-->
         <Grid x:Name="ContentGrid" Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="SubjectsColumn" Width="300"/>
                 <ColumnDefinition x:Name="AssignmentsColumn" Width="*"/>
@@ -243,7 +242,7 @@
             <ScrollViewer 
                 HorizontalScrollMode="Auto" 
                 VerticalScrollMode="Auto">
-                
+
                 <StackPanel 
                     x:Name="SubjectPanel" 
                     Grid.Column="0" >
@@ -255,7 +254,7 @@
                         IsItemClickEnabled="True"  
                         SelectionChanged="SubjectsListView_SelectionChanged" 
                         ItemTemplate="{StaticResource SubjectsListTemplate_Compact}"/>
-                    
+
                 </StackPanel>
             </ScrollViewer>
 

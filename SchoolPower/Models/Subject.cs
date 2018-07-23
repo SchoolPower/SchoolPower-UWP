@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml.Media;
 
 /*
     Sample:
@@ -161,20 +162,21 @@ namespace SchoolPower.Models {
     public class Peroid {
         public String Time { get; set; }
         public String Percent { get; set; }
-        public String Letter { get; set; }    
+        public String LetterGrade { get; set; }    
         public String Comment { get; set; }
         public String Eval { get; set; }
         public DateTime Date { get; set; }
-        // public DateTime EndDate { get; set; }
+        public SolidColorBrush Color { get; set; }
         public bool IsActive { get; set; }
 
         public Peroid(String time, dynamic data) {
             Time = time;
             Percent = data.percent;
             Percent = Percent.Substring(0, Percent.IndexOf("."));
-            Letter = data.letter;
+            LetterGrade = data.letter;
             Eval = data.eval;
             IsActive = false;
+            Color = StudentData.GetColor(LetterGrade);
 
             DateTime Genesis = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
             Date = Genesis.AddSeconds((double)data.startDate).ToLocalTime();

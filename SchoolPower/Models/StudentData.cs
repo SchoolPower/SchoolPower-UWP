@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml.Media;
 
 namespace SchoolPower.Models {
     public class StudentData {
 
-        // internal const string APIURL = "http://127.0.0.1:8000/";
+        //internal const string APIURL = "http://127.0.0.1:8000/";
         // internal const string APIURL = "http://10.0.0.9:8000/";
-        // internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
-        internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
+         internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
+        // internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
 
         public enum NewOrOld { New, Old };
 
@@ -23,7 +24,11 @@ namespace SchoolPower.Models {
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
 
-        public StudentData(dynamic data, dynamic dataOld) {
+         public StudentData(dynamic data, dynamic dataOld) {
+
+            if (data == dataOld) {
+                System.Diagnostics.Debug.WriteLine("x");
+            }
 
             List<Subject> subjectsOld = new List<Subject>();
             List<AttendanceItem> attendancesOld = new List<AttendanceItem>();
@@ -231,6 +236,23 @@ namespace SchoolPower.Models {
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
                 return "okey dokey";
+            }
+        }
+
+        public static SolidColorBrush GetColor(string letterGrade) {
+            switch (letterGrade) {
+                case "A":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 0, 121, 107));
+                case "B":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 56, 124, 60));
+                case "C+":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 179, 0));
+                case "C":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 87, 34));
+                case "C-":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 211, 47, 47));
+                default:
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 30, 30, 30));
             }
         }
     }

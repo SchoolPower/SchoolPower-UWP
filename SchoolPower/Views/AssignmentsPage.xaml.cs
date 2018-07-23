@@ -17,10 +17,9 @@ namespace SchoolPower.Views {
     public sealed partial class AssignmentsPage : Page {
         private List<AssignmentItem> assignments;
         private string selectdeSubject = StudentData.SelectedSubjectName;
-        int index = 0;
 
         int GetNumberOfRows() {
-            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 75;
+            return (int)(((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 75) -1;
         }
 
         public AssignmentsPage() {
@@ -52,25 +51,18 @@ namespace SchoolPower.Views {
         }
 
 
-        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e) {
-            var _Parent = sender as Page;
-            ItemsWrapGrid _itemsWrapGrid;
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(_Parent); i++) {
-                var _Child = VisualTreeHelper.GetChild(Parent, i);
-                if (_Child is ItemsWrapGrid) {
-                    _itemsWrapGrid = (ItemsWrapGrid)_Child;
-                }
-            }
+        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e) { 
+
         }
 
-        private void Border_Loaded(object sender, RoutedEventArgs e) {
+        int index = 0;
+        private void Border_Loaded(object sender, RoutedEventArgs e) { 
             Border border = sender as Border;
             if (assignments[this.index].IsNew) {
-                border.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
-            } else {
-                border.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
-            }
-            this.index += 1;
+                border.Background = StudentData.GetColor(assignments[index].LetterGrade);
+                // new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+            } 
+            this.index += 1; 
         }
 
         private void Head_Loaded(object sender, RoutedEventArgs e) {

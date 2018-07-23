@@ -13,7 +13,7 @@ namespace SchoolPower.Views {
         private List<AttendanceItem> attendanceItems;
 
         int GetNumberOfRows() {
-            return (int)((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 46 - 1;
+            return (int)(((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 46) - 1;
         }
 
         public AttendancePage() {
