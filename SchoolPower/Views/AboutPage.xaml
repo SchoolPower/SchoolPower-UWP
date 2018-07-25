@@ -75,7 +75,7 @@
                                 <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
                             </Border.Background>
                             <Image Margin="12"
-                               Source="{Binding Logo}"
+                               Source="{x:Bind Logo}"
                                Stretch="None" />
                         </Border>
 
@@ -85,18 +85,18 @@
                                RelativePanel.AlignLeftWithPanel="True"
                                RelativePanel.AlignRightWith="LogoImage"
                                RelativePanel.AlignTopWithPanel="True"
-                               Text="{Binding DisplayName}" />
+                               Text="{x:Bind DisplayName}" />
 
                         <TextBlock x:Name="PublisherTextBlock"
                                 RelativePanel.AlignLeftWithPanel="True"
                                 RelativePanel.Below="DisplayNameTextBlock"
-                                Text="{Binding Publisher}" />
+                                Text="{x:Bind Publisher}" />
 
                         <TextBlock x:Name="VersionTextBlock"
                                 RelativePanel.AlignLeftWithPanel="True"
                                 RelativePanel.Below="PublisherTextBlock">
                                 <Run>Version</Run>
-                                <Run Text="{Binding Version}" />
+                                <Run Text="{x:Bind Version}" />
                         </TextBlock>
 
                     </RelativePanel>

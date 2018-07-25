@@ -14,9 +14,21 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Email;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace SchoolPower.Views {
     public sealed partial class AboutPage : Page {
+
+        public ImageSource Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.png"));//Windows.ApplicationModel.Package.Current.Logo;
+        public string DisplayName = Windows.ApplicationModel.Package.Current.DisplayName;
+        public string Publisher = Windows.ApplicationModel.Package.Current.PublisherDisplayName;
+        public string Version {
+            get {
+                var v = Windows.ApplicationModel.Package.Current.Id.Version;
+                return $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
+            }
+        }
+
         public AboutPage() {
             this.InitializeComponent();
         }
