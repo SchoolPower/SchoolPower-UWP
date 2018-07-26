@@ -9,6 +9,7 @@ using SchoolPower.Views.Dialogs;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
@@ -22,9 +23,15 @@ namespace SchoolPower.Views {
             Initialize();
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e) {
+            //Application.Current.Resources["SystemAccentColor"] = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+        }
+
         void Initialize() {
 
             InitializeComponent();
+
+           // Application.Current.Resources["SystemAccentColor"] = new SolidColorBrush(Windows.UI.Colors.Transparent);
 
             subjects = null;
             subjects = new List<Subject>();
@@ -35,30 +42,6 @@ namespace SchoolPower.Views {
                 foreach (var subject in StudentData.subjects)
                     if (subject.IsActive)
                         subjects.Add(subject);
-            }
-
-            foreach (var subject in subjects) {
-                if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
-                    foreach (var p in subject.Peroids) {
-                        if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
-                            subject.LetterGradeOnDashboard = p.LetterGrade;
-                            subject.PercentageGradeOnDashboard = p.Percent;
-                            break;
-                        }
-                    }
-                } else {
-                    foreach (var p in subject.Peroids) {
-                        if ((p.IsActive) && ((p.Time == "S1") || (p.Time == "S2"))) {
-                            subject.LetterGradeOnDashboard = p.LetterGrade;
-                            subject.PercentageGradeOnDashboard = p.Percent;
-                            break;
-                        } else if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
-                            subject.LetterGradeOnDashboard = p.LetterGrade;
-                            subject.PercentageGradeOnDashboard = p.Percent;
-                            break;
-                        }
-                    }
-                }
             }
 
             SubjectsListView.ItemsSource = subjects;

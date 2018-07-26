@@ -77,6 +77,7 @@ namespace SchoolPower.Models {
         public List<Peroid> Peroids = new List<Peroid>();
         public String LetterGradeOnDashboard { get; set; }
         public String PercentageGradeOnDashboard { get; set; }
+        public SolidColorBrush ColorOnDashboard { get; set; }
         public bool IsActive { get; set; }
 
         public Subject(dynamic data) {
@@ -149,6 +150,30 @@ namespace SchoolPower.Models {
             Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
             Assignments.Reverse();
 
+            // OnDashboard
+            if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
+                foreach (var p in this.Peroids) {
+                    if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
+                        this.LetterGradeOnDashboard = p.LetterGrade;
+                        this.PercentageGradeOnDashboard = p.Percent;
+                        break;
+                    }
+                }
+            } else {
+                foreach (var p in this.Peroids) {
+                    if ((p.IsActive) && ((p.Time == "S1") || (p.Time == "S2"))) {
+                        this.LetterGradeOnDashboard = p.LetterGrade;
+                        this.PercentageGradeOnDashboard = p.Percent;
+                        break;
+                    } else if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
+                        this.LetterGradeOnDashboard = p.LetterGrade;
+                        this.PercentageGradeOnDashboard = p.Percent;
+                        break;
+                    }
+                }
+            }
+
+            ColorOnDashboard = StudentData.GetColor(LetterGradeOnDashboard);
         }
 
         bool GetActivity (DateTime start, DateTime end) {
