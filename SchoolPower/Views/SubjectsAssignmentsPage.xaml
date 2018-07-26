@@ -16,11 +16,9 @@
 
         <DataTemplate x:Key="SubjectsListTemplate_Compact" x:DataType="data:Subject">
             <RelativePanel Margin="0,10,0,10" >
-                <RelativePanel 
-                    Width="44"
-                    Height="80"
-                    Name="SubjectGradePanel"
-                    Margin="10,0,20,0"
+                <RelativePanel Name="SubjectGradePanel"
+                    Width="50" Height="66"
+                    Margin="10,5,20,0"
                     RelativePanel.AlignLeftWithPanel="True"
                     Background="{x:Bind ColorOnDashboard}"
                     RelativePanel.AlignVerticalCenterWithPanel="True">
@@ -39,21 +37,18 @@
 
                 </RelativePanel>
 
-                <TextBlock 
-                    Text="{x:Bind Name}"
+                <TextBlock Text="{x:Bind Name}"
                     x:Name="SubjectNameTxtBlock"
                     RelativePanel.AlignTopWithPanel= "True"
                     RelativePanel.RightOf="SubjectGradePanel"
                     FontSize="22" FontWeight="SemiLight" TextWrapping="NoWrap"/>
 
-                <TextBlock 
+                <TextBlock Text="{x:Bind BlockLetter}"
                     x:Name="SubjectBlockLetterTxtBlock"
                     RelativePanel.RightOf="SubjectGradePanel"
-                    Text="{x:Bind BlockLetter}" 
                     RelativePanel.Below = "SubjectNameTxtBlock"/>
 
-                <TextBlock 
-                    Text="{x:Bind TeacherName}" 
+                <TextBlock Text="{x:Bind TeacherName}"
                     RelativePanel.RightOf="SubjectGradePanel"
                     RelativePanel.Below = "SubjectBlockLetterTxtBlock"/>
 
