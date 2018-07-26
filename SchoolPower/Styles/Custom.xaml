@@ -11,7 +11,7 @@
 
     <Color x:Key="CustomColor">#FF0063b1</Color> <!--Main color and -->
     <Color x:Key="ContrastColor">White</Color> <!--Title bar text color-->
-    <Color x:Key="SystemAccentColor">#FF0063b1</Color> <!--unknown-->
+    <Color x:Key="SystemAccentColor">#FF0063b1</Color>
 
     <ResourceDictionary.ThemeDictionaries>
 
