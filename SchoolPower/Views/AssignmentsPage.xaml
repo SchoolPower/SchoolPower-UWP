@@ -13,6 +13,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+       
         <DataTemplate x:Key="AssignmentsListTemplate" x:DataType="data:AssignmentItem">
 
             <Border 
@@ -21,18 +22,36 @@
                 <StackPanel Orientation="Horizontal" >
 
                     <StackPanel Width="60" Orientation="Vertical" VerticalAlignment="Center" Margin="10,0,10,0">
-                        <TextBlock Text="{x:Bind Percentage}" FontSize="22" HorizontalAlignment="Center" FontWeight="SemiLight"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Text="{x:Bind Score}"/>
-                            <TextBlock Text="/"/>
-                            <TextBlock Text="{x:Bind MaximumScore}"/>
+                        <TextBlock 
+                            Text="{x:Bind Percentage}" 
+                            FontSize="22" 
+                            HorizontalAlignment="Center" 
+                            FontWeight="{x:Bind LargeTextFontWeight}"/>
+                        <StackPanel 
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center">
+                            <TextBlock 
+                                Text="{x:Bind Score}" 
+                                FontWeight="{x:Bind SmallTextFontWeight}"/>
+                            <TextBlock 
+                                Text="/" 
+                                FontWeight="{x:Bind SmallTextFontWeight}"/>
+                            <TextBlock 
+                                Text="{x:Bind MaximumScore}" 
+                                FontWeight="{x:Bind SmallTextFontWeight}"/>
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Orientation="Vertical" Margin="10,10,10,10" Width="180">
-                       <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" FontSize="16" FontWeight="SemiLight"/>
-                       <TextBlock Text="{x:Bind Date}" HorizontalAlignment="Left" FontSize="12"/>
-                       <TextBlock Text="{x:Bind LetterGrade}" HorizontalAlignment="Left" FontSize="12"/>
+                        <TextBlock Text="{x:Bind DisplayName}" 
+                            HorizontalAlignment="Left" 
+                            FontSize="16" FontWeight="{x:Bind LargeTextFontWeight}"/>
+                        <TextBlock Text="{x:Bind Date}" 
+                            HorizontalAlignment="Left" 
+                            FontSize="12" FontWeight="{x:Bind SmallTextFontWeight}"/>
+                        <TextBlock Text="{x:Bind LetterGrade}" 
+                            HorizontalAlignment="Left" 
+                            FontSize="12" FontWeight="{x:Bind SmallTextFontWeight}"/>
                     </StackPanel>
                     
                 </StackPanel>
@@ -98,7 +117,7 @@
                 ItemsSource="{x:Bind assignments}" 
                 IsItemClickEnabled="True" 
                 ItemTemplate="{StaticResource AssignmentsListTemplate}" 
-                Loaded="AssignmentsWarp_Loaded"
+                Loaded="AssignmentsWarp_Loaded"                  
                 SizeChanged="AssignmentsWarp_SizeChanged"
                 ItemClick="AssignmentsGridView_ItemClick" >
                 <GridView.ItemsPanel>

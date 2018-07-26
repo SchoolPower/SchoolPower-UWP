@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
 
 namespace SchoolPower.Models {
     public class StudentData {
 
-        //internal const string APIURL = "http://127.0.0.1:8000/";
-        // internal const string APIURL = "http://10.0.0.9:8000/";
-         internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+        internal const string APIURL = "http://127.0.0.1:8000/";
+        // internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
         // internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
 
         public enum NewOrOld { New, Old };
@@ -24,17 +26,14 @@ namespace SchoolPower.Models {
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
 
-         public StudentData(dynamic data, dynamic dataOld) {
-
-            if (data == dataOld) {
-                System.Diagnostics.Debug.WriteLine("x");
-            }
+        public StudentData(dynamic data, dynamic dataOld) {
 
             List<Subject> subjectsOld = new List<Subject>();
             List<AttendanceItem> attendancesOld = new List<AttendanceItem>();
 
             info = new Info(data.information);
 
+            // parse
             JArray sectionsJarray = (JArray)data["sections"];
             foreach (var section in sectionsJarray) {
                 subjects.Add(new Subject(section));
@@ -43,7 +42,6 @@ namespace SchoolPower.Models {
             foreach (var sectionOld in sectionsJarrayOld) {
                 subjectsOld.Add(new Subject(sectionOld));
             }
-
             JArray attendancesJarray = (JArray)data["attendances"];
             foreach (var attendence in attendancesJarray) {
                 attendances.Add(new AttendanceItem(attendence));
@@ -53,17 +51,26 @@ namespace SchoolPower.Models {
                 attendancesOld.Add(new AttendanceItem(attendenceOld));
             }
 
+            // sort
             attendances.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
             attendances.Reverse();
             attendancesOld.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
             attendancesOld.Reverse();
 
+            // new assignments 
             int index = 0;
             foreach (var subject in subjects) {
                 foreach (var assignment in subject.Assignments) {
                     try {
-                        if (subjectsOld[index].Assignments.Contains(assignment)) {
-                            assignment.IsNew = false;
+                        if (!subjectsOld[index].Assignments.Contains(assignment)) {
+                            assignment.IsNew = true;
+                            assignment.DisplayName += " *";
+                            assignment.LargeTextFontWeight = FontWeights.SemiBold;
+                            assignment.SmallTextFontWeight = FontWeights.Bold;
+                            subject.DisplayName += " *";
+                            subject.LargeTextFontWeight = FontWeights.SemiBold;
+                            subject.SmallTextFontWeight = FontWeights.Bold;
+
                         }
                     } catch (System.ArgumentOutOfRangeException) { }
                 }

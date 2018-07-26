@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
 
 /*
@@ -67,6 +68,7 @@ namespace SchoolPower.Models {
 
     public class Subject {
         public String Name { get; set; }
+        public String DisplayName { get; set; }
         public String TeacherName { get; set; }
         public String TeacherEmail { get; set; }
         public String BlockLetter { get; set; }
@@ -79,12 +81,15 @@ namespace SchoolPower.Models {
         public String PercentageGradeOnDashboard { get; set; }
         public SolidColorBrush ColorOnDashboard { get; set; }
         public bool IsActive { get; set; }
+        public FontWeight LargeTextFontWeight { get; set; }
+        public FontWeight SmallTextFontWeight { get; set; }
 
         public Subject(dynamic data) {
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
             Name         = data.name;
+            DisplayName  = data.name;
             TeacherName  = data.teacher.firstName + " " + data.teacher.lastName;
             TeacherEmail = data.teacher.email;
             BlockLetter  = data.expression;
@@ -93,6 +98,8 @@ namespace SchoolPower.Models {
             EndDate      = data.endDate;
             LetterGradeOnDashboard      = "--";
             PercentageGradeOnDashboard  = "--";
+            LargeTextFontWeight = FontWeights.SemiLight;
+            SmallTextFontWeight = FontWeights.Normal;
 
             IsActive = GetActivity(StartDate, EndDate);
 

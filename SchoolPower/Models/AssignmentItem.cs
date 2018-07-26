@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
 
 /*
@@ -32,6 +33,7 @@ Sample:
 namespace SchoolPower.Models {
     public class AssignmentItem : IEquatable<AssignmentItem> {
         public String Name { get; set; }
+        public String DisplayName { get; set; }
         public String Category { get; set; }
         public String Description { get; set; }
         public String Percentage { get; set; }
@@ -43,10 +45,13 @@ namespace SchoolPower.Models {
         public String Weight { get; set; }
         public string[] Terms { get; set; }
         public bool IsNew { get; set; }
+        public FontWeight LargeTextFontWeight { get; set; }
+        public FontWeight SmallTextFontWeight { get; set; }
         public SolidColorBrush Color { get; set; }
 
         public AssignmentItem(dynamic data) {
             Name                = data.name;
+            DisplayName         = data.name;
             Date                = data.date;
             Date                = Date.Substring(0, Date.IndexOf(" "));
             Percentage          = data.percent;
@@ -58,7 +63,9 @@ namespace SchoolPower.Models {
             IncludeInFinalGrade = data.includeInFinalGrade;
             Weight              = data.weight;
             Terms               = data.terms.ToObject<string[]>();
-            IsNew               = true;
+            IsNew               = false;
+            LargeTextFontWeight = FontWeights.SemiLight;
+            SmallTextFontWeight = FontWeights.Normal;
             Color               = StudentData.GetColor(LetterGrade);
         }
 
