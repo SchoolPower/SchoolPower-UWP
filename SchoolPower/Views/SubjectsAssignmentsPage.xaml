@@ -186,7 +186,8 @@
         </Grid.ColumnDefinitions>
 
         <!--Head-->
-        <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
             <controls:PageHeader 
                 Text="Dashboard" 
                 x:Name="pageHeader" 
@@ -202,7 +203,9 @@
                         Visibility="Collapsed"/>
                     <AppBarButton 
                         Icon="Refresh" 
+                        ToolTipService.ToolTip="Refresh (F5)" 
                         Label="Refresh" 
+                        AutomationProperties.AcceleratorKey="F5"
                         Click="Refresh_But_Click" />
                 </controls:PageHeader.PrimaryCommands>
                 <controls:PageHeader.SecondaryCommands>

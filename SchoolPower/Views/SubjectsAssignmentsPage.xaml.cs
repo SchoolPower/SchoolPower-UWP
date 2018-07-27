@@ -10,11 +10,13 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Media;
+using Windows.System;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
         private List<Subject> subjects;
         public static string selectedSubjectName;
+        private bool IsKissing = false;
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public SubjectsAssignmentsPage() {
@@ -28,6 +30,16 @@ namespace SchoolPower.Views {
         }
 
         void Initialize() {
+
+            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
+                async (window, e) => {
+                    switch (e.VirtualKey) {
+                        case VirtualKey.F5:
+                            if (!IsKissing)
+                                await KissingAsync();
+                            break;
+                    }
+                };
 
             InitializeComponent();
 
@@ -64,6 +76,8 @@ namespace SchoolPower.Views {
 
         private async Task KissingAsync() {
 
+            IsKissing = true;
+
             // show
             ShowKissingBar.Begin();
 
@@ -98,7 +112,8 @@ namespace SchoolPower.Views {
             KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
 
             Initialize();
-            // Frame.Navigate(typeof(MainPage));
+
+            IsKissing = false;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
