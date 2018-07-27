@@ -58,23 +58,28 @@ namespace SchoolPower.Models {
             attendancesOld.Reverse();
 
             // new assignments 
-            int index = 0;
             foreach (var subject in subjects) {
-                foreach (var assignment in subject.Assignments) {
-                    try {
-                        if (!subjectsOld[index].Assignments.Contains(assignment)) {
-                            assignment.IsNew = true;
-                            assignment.DisplayName += " *";
-                            assignment.LargeTextFontWeight = FontWeights.SemiBold;
-                            assignment.SmallTextFontWeight = FontWeights.Bold;
-                            subject.DisplayName += " *";
-                            subject.LargeTextFontWeight = FontWeights.SemiBold;
-                            subject.SmallTextFontWeight = FontWeights.Bold;
-
+                foreach (var subjectOld in subjectsOld) {
+                    if (subjectOld.Name == subject.Name) {
+                        foreach (var assignment in subject.Assignments) {
+                            try {
+                                if (!subjectOld.Assignments.Contains(assignment)) {
+                                    subject.IsNew = true;
+                                    assignment.IsNew = true;
+                                    assignment.DisplayName += " *";
+                                    assignment.LargeTextFontWeight = FontWeights.SemiBold;
+                                    assignment.SmallTextFontWeight = FontWeights.Bold;
+                                }
+                            } catch (System.ArgumentOutOfRangeException) { }
                         }
-                    } catch (System.ArgumentOutOfRangeException) { }
+
+                    }
                 }
-                index += 1;
+                if (subject.IsNew) {
+                    subject.DisplayName += " *";
+                    subject.LargeTextFontWeight = FontWeights.SemiBold;
+                    subject.SmallTextFontWeight = FontWeights.Bold;
+                }
             }
         }
 

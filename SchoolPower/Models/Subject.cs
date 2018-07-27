@@ -81,6 +81,7 @@ namespace SchoolPower.Models {
         public String PercentageGradeOnDashboard { get; set; }
         public SolidColorBrush ColorOnDashboard { get; set; }
         public bool IsActive { get; set; }
+        public bool IsNew { get; set; }
         public FontWeight LargeTextFontWeight { get; set; }
         public FontWeight SmallTextFontWeight { get; set; }
 
@@ -96,11 +97,11 @@ namespace SchoolPower.Models {
             RoomNumber   = data.roomName;
             StartDate    = data.startDate;
             EndDate      = data.endDate;
-            LetterGradeOnDashboard      = "--";
+            IsNew        = false;
+            LetterGradeOnDashboard = "--";
             PercentageGradeOnDashboard  = "--";
             LargeTextFontWeight = FontWeights.SemiLight;
             SmallTextFontWeight = FontWeights.Normal;
-
             IsActive = GetActivity(StartDate, EndDate);
 
             JArray assignmentsJarray = (JArray)data.assignments;
