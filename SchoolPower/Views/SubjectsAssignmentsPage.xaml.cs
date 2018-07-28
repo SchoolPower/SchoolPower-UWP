@@ -94,7 +94,7 @@ namespace SchoolPower.Views {
                     StatusTextBlock.Text = "Kissed!";
                     break;
                 case "error":
-                    StatusTextBlock.Text = "Network error, grades are not updated. Please refresh later. ";
+                    StatusTextBlock.Text = "Cannot connect to server. ";
                     // Tawny
                     KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
                     break;
