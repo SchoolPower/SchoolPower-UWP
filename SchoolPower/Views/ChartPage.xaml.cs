@@ -33,10 +33,5 @@ namespace SchoolPower.Views {
         private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
 
         }
-
-        private void Refresh_But_Click(object sender, RoutedEventArgs e) {
-            StudentData.Refresh();
-            InitializeComponent();
-        }
     }
 }

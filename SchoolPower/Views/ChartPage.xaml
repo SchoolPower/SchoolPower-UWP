@@ -8,7 +8,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:SchoolPower.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:SchoolPower.ViewModels" 
       xmlns:data="using:SchoolPower.Models" 
       xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
       mc:Ignorable="d">
@@ -17,13 +16,13 @@
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <!--Bar-->
+        <!--HEAD-->
         <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <controls:PageHeader Text="Chart" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
                 <controls:PageHeader.PrimaryCommands>
@@ -39,21 +38,16 @@
 
             <!--  settings  -->
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Line">
+                <WebView Source="https://www.bilibili.com"/>
+                <!--
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
                         <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ"/>
-                        
-
-
                     </RelativePanel>
-                </ScrollViewer>
+                </ScrollViewer>-->
             </PivotItem>
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Radar">
-                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
-                    <RelativePanel HorizontalAlignment="Left">
-                        <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ"/>
-                    </RelativePanel>
-                </ScrollViewer>
+                <WebView Source="https://www.bilibili.com"/>
             </PivotItem>
 
         </Pivot>
