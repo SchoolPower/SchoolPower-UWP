@@ -81,6 +81,16 @@ namespace SchoolPower.Models {
                     subject.SmallTextFontWeight = FontWeights.Bold;
                 }
             }
+
+            // new attendance
+            foreach (var attendance in attendances) {
+                try { 
+                    if (!attendancesOld.Contains(attendance)){
+                        attendance.SmallTextFontWeight = FontWeights.SemiBold;
+                        attendance.DisplayName += " *";
+                    }
+                } catch (System.ArgumentOutOfRangeException) {}
+            }
         }
 
         public static async Task<string> Kissing(string username, string password) {
@@ -263,6 +273,19 @@ namespace SchoolPower.Models {
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 87, 34));
                 case "C-":
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 211, 47, 47));
+
+                    // I E H 
+                case "E":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 0, 121, 107));
+                case "2":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 56, 124, 60));
+                case "3":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 179, 0));
+                case "H":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 87, 34));
+                case "I":
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 211, 47, 47));
+
                 default:
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 30, 30, 30));
             }

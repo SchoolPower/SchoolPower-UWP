@@ -13,7 +13,7 @@ namespace SchoolPower.Views {
         private List<AttendanceItem> attendanceItems;
 
         int GetNumberOfRows() {
-            return (int)(((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 46) - 1;
+            return (int)(((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 56) - 2;
         }
 
         public AttendancePage() {
@@ -30,11 +30,6 @@ namespace SchoolPower.Views {
 
         }
 
-        private async void Refresh_But_Click(object sender, RoutedEventArgs e) {
-            await StudentData.Refresh();
-            InitializeComponent();
-        }
-
         private void GridView_ItemClick(object sender, ItemClickEventArgs e) {
 
         }
@@ -49,12 +44,6 @@ namespace SchoolPower.Views {
             var gridView = sender as GridView;
             var itemsWrapGrid = (ItemsWrapGrid)gridView.ItemsPanelRoot;
             itemsWrapGrid.MaximumRowsOrColumns = GetNumberOfRows();
-        }
-
-        private void StackPanel_Loaded(object sender, RoutedEventArgs e) {
-            var s = sender as StackPanel;
-            var v = s.ActualHeight;
-            Debug.WriteLine(v);
         }
     }
 }

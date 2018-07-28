@@ -8,22 +8,22 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:SchoolPower.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:SchoolPower.ViewModels" 
       xmlns:data="using:SchoolPower.Models" 
       mc:Ignorable="d">
 
     <Page.Resources>
         <DataTemplate x:Key="AttendanceGridDataTemplate" x:DataType="data:AttendanceItem">
-            <Border >
-                <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Width="175" >
+            <Border Background ="{x:Bind Color}" >
+                <StackPanel Orientation="Horizontal" Margin="10,10,10,10" Width="175" >
                     <TextBlock Text="{x:Bind Code}"
                         Margin="5,0,15,0"
                         FontSize="22" 
+                        FontWeight="{x:Bind SmallTextFontWeight}"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"/>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Left" />
-                        <TextBlock Text="{x:Bind Date}" HorizontalAlignment="Left" FontSize="12" />
+                        <TextBlock Text="{x:Bind DisplayName}" FontWeight="{x:Bind SmallTextFontWeight}" HorizontalAlignment="Left" />
+                        <TextBlock Text="{x:Bind Date}" FontWeight="{x:Bind SmallTextFontWeight}" HorizontalAlignment="Left" FontSize="12" />
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -35,12 +35,12 @@
         <!--HEAD-->
         <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <controls:PageHeader Text="Attendance" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
-                <controls:PageHeader.PrimaryCommands>
+              <!--  <controls:PageHeader.PrimaryCommands>
                     <AppBarButton 
                         Icon="Refresh" 
                         Label="Refresh" 
                         Click="Refresh_But_Click" />
-                </controls:PageHeader.PrimaryCommands>
+                </controls:PageHeader.PrimaryCommands> -->
             </controls:PageHeader>
         </RelativePanel>
         <Image Name="NoAttendanceImg" Visibility="Collapsed" Source="/Assets/perfect_attendance.png" Width="250" Height="250" Stretch="Uniform" />
