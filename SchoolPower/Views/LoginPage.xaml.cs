@@ -95,11 +95,21 @@ namespace SchoolPower.Views {
                     await StudentData.SaveJSON(studata, StudentData.NewOrOld.New);
                     localSettings.Values["IsFirstTimeLogin"] = false;
 
-                    // new StudentData
-                    StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
-                    
-                    // navigate
-                    Frame.Navigate(typeof(SubjectsAssignmentsPage));
+                    try {
+                        // new StudentData
+                        StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
+                        // navigate
+                        Frame.Navigate(typeof(SubjectsAssignmentsPage));
+                    } catch (Exception e) {
+                        await Windows.Storage.ApplicationData.Current.ClearAsync();
+                        localSettings.Values["UsrName"] = username;
+                        localSettings.Values["Passwd"] = password;
+                        ContentDialog ErrorContentDialog = new ContentDialog {
+                            Title = "ERROR",
+                            Content = e.ToString(),
+                            CloseButtonText = "哦。",
+                        }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
+                    }
                 }
                 Views.Busy.SetBusy(false);
             }
