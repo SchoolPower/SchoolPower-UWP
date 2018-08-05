@@ -26,12 +26,7 @@ namespace SchoolPower.Views {
 
             try { UsernameTextBox.Text = localSettings.Values["UsrName"].ToString(); } catch (System.NullReferenceException) { } 
             try { PasswordTextBox.Password = localSettings.Values["Passwd"].ToString(); } catch (System.NullReferenceException) { }
-
-            try { if (UsernameTextBox.Text != "" && PasswordTextBox.Password != "") {
-                    Login();
-                }
-            } catch (System.NullReferenceException) { }
-
+            
         }
         
         private void SignInButton_Click(object sender, RoutedEventArgs e) {
@@ -92,12 +87,13 @@ namespace SchoolPower.Views {
 
                     // save student data to new
                     studataOld = studata;
-                    await StudentData.SaveJSON(studata, StudentData.NewOrOld.New);
+                    await StudentData.SaveStudentData(studata, StudentData.NewOrOld.New);
                     localSettings.Values["IsFirstTimeLogin"] = false;
 
                     try {
                         // new StudentData
                         StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
+                        StudentData.SaveHistoryData(StudentData.CollectCurrentHistoryData());
                         // navigate
                         Frame.Navigate(typeof(SubjectsAssignmentsPage));
                     } catch (Exception e) {

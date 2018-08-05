@@ -1,16 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
-
+    
 namespace SchoolPower.Models {
     public class StudentData {
 
-        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         internal const string APIURL = "http://127.0.0.1:8000/";
         // internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
@@ -20,9 +21,9 @@ namespace SchoolPower.Models {
 
         public static List<Subject> subjects                = new List<Subject>();
         public static List<AttendanceItem> attendances      = new List<AttendanceItem>();
+        public static List<HistoryData> historyDatas        = new List<HistoryData>();
         public static Info info;
         public static String SelectedSubjectName;
-
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
 
@@ -91,6 +92,19 @@ namespace SchoolPower.Models {
                     }
                 } catch (System.ArgumentOutOfRangeException) {}
             }
+
+
+            // get a list of dates that has history
+            string[] dateArray = ((string)localSettings.Values["dates"]).Split(' ');
+
+            // add every history to List<HistoryData>
+            foreach (var date in dateArray) {
+                historyDatas.Add(new HistoryData(date));
+            }
+
+            // remove null data
+            if (historyDatas[0].Date == null && historyDatas[0].HistoryDataItems == null)
+                historyDatas.RemoveAt(0);
         }
 
         public static async Task<string> Kissing(string username, string password) {
@@ -104,7 +118,7 @@ namespace SchoolPower.Models {
             return await response.Content.ReadAsStringAsync();
         }
 
-        public static async Task<string> GetJSON(NewOrOld NoO) {
+        public static async Task<string> GetStudentData(NewOrOld NoO) {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             switch (NoO) {
                 case NewOrOld.New: 
@@ -125,7 +139,7 @@ namespace SchoolPower.Models {
             return ret;
         }
 
-        public async static Task SaveJSON(string json, NewOrOld NoO) {
+        public async static Task SaveStudentData(string json, NewOrOld NoO) {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             switch (NoO) {
                 case NewOrOld.New:
@@ -241,11 +255,11 @@ namespace SchoolPower.Models {
             else {
                 
                 // move previous studata to old
-                studataOld = await GetJSON(NewOrOld.New);
-                await SaveJSON(studataOld, NewOrOld.Old);
+                studataOld = await GetStudentData(NewOrOld.New);
+                await SaveStudentData(studataOld, NewOrOld.Old);
 
                 // save current studata to new
-                await SaveJSON(studata, NewOrOld.New);
+                await SaveStudentData(studata, NewOrOld.New);
 
                 // clear history
                 for (int i = subjects.Count; i >= 1; i--) {
@@ -257,6 +271,9 @@ namespace SchoolPower.Models {
 
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
+                SaveHistoryData(CollectCurrentHistoryData());
+                string s = GetHistoryData(DateTime.Now.ToString("yyyy-MM-dd"));
+                Debug.WriteLine(s);
                 return "okey dokey";
             }
         }
@@ -274,7 +291,6 @@ namespace SchoolPower.Models {
                 case "C-":
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 211, 47, 47));
 
-                    // I E H 
                 case "E":
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 0, 121, 107));
                 case "2":
@@ -285,10 +301,66 @@ namespace SchoolPower.Models {
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 87, 34));
                 case "I":
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 211, 47, 47));
-
                 default:
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 30, 30, 30));
             }
+        }
+
+        public static string CollectCurrentHistoryData() {
+
+            dynamic json = new JObject();
+            json.date = DateTime.Now.ToString("yyyy-MM-dd");
+
+            JArray subjectItemArray = new JArray();
+
+            foreach (var subject in subjects) {
+
+                dynamic subjectItem = new JObject();
+                JArray peroidInfoArray = new JArray();
+                subjectItem.name = subject.Name;
+                subjectItem.peroids = peroidInfoArray;
+
+                foreach (var peroid in subject.Peroids) {
+
+                    if (peroid.IsActive) {
+
+                        dynamic peroidInfo = new JObject();
+                        peroidInfo.time = peroid.Time;
+                        peroidInfo.percent = peroid.Percent;
+                        peroidInfoArray.Add(peroidInfo);
+
+                    }
+                }
+                subjectItemArray.Add(subjectItem);
+            }
+            json.subjects = subjectItemArray;
+            return json.ToString();
+        }
+
+        public static void SaveHistoryData(string json) {
+
+            // get today date
+            string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // save json
+            localSettings.Values[currentDate] = json;
+
+            // add date to localSettings.dates
+            // get current datelist
+            var date = (string)localSettings.Values["dates"];
+            // datalist -> []
+            string[] dateArray = null;
+            dateArray = date.Split(' ');
+            // add today, avoid duplication
+            if (dateArray[dateArray.Length - 1] != currentDate) {
+                date += " ";
+                date += currentDate;
+                localSettings.Values["dates"] = date;
+            }
+        }
+
+        public static string GetHistoryData(string date) {
+            return (string)localSettings.Values[date];
         }
     }
 }

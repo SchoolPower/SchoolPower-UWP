@@ -5,6 +5,8 @@ using Windows.ApplicationModel.Core;
 using SchoolPower.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
 
 namespace SchoolPower.Views {
     public sealed partial class SettingsPage : Page {

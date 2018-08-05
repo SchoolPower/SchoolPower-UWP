@@ -79,17 +79,19 @@ namespace SchoolPower {
                 IsLogin = (bool)localSettings.Values["IsFirstTimeLogin"];
                 bool b = (bool)localSettings.Values["showInactive"];
                 b = (bool)localSettings.Values["DashboardShowGradeOfTERM"];
+                var v = (string)localSettings.Values["dates"];
             } catch (System.NullReferenceException) {
                 localSettings.Values["IsFirstTimeLogin"] = true;
                 localSettings.Values["showInactive"] = false;
                 localSettings.Values["DashboardShowGradeOfTERM"] = true;
-            }
+                localSettings.Values["dates"] = "";
 
+            }
 
             if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                 await NavigationService.NavigateAsync(typeof(Views.LoginPage));
             } else {
-                Task<string> getHistoryJSON = StudentData.GetJSON(StudentData.NewOrOld.New);
+                Task<string> getHistoryJSON = StudentData.GetStudentData(StudentData.NewOrOld.New);
                 String studataOld = await getHistoryJSON;
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studataOld), StudentData.ParseJSON(studataOld));
                 App.SetUIBlue();
@@ -132,8 +134,12 @@ namespace SchoolPower {
             titleBar.ButtonHoverForegroundColor = Windows.UI.Colors.White;
         }
 
-        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs) {
-            await Windows.Storage.ApplicationData.Current.ClearAsync();
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs) {
+            string username = (string)localSettings.Values["UsrName"];
+            string password = (string)localSettings.Values["Passwd"];
+            Windows.Storage.ApplicationData.Current.ClearAsync(); // do not await 
+            localSettings.Values["UsrName"] = username;
+            localSettings.Values["Passwd"] = password;
         }
     }
 }
