@@ -38,6 +38,11 @@ namespace SchoolPower.Views {
                             if (!IsKissing)
                                 await KissingAsync();
                             break;
+                        case VirtualKey.F6:
+                            try {
+                                await new SchoolPower.Views.Dialogs.GPADialog().ShowAsync();
+                            } catch (Exception) { } 
+                            break;
                     }
                 };
 
@@ -144,8 +149,7 @@ namespace SchoolPower.Views {
         }
 
         private async void GPA_But_Click(object sender, RoutedEventArgs e) {
-            SchoolPower.Views.Dialogs.GPADialog dialog = new SchoolPower.Views.Dialogs.GPADialog();
-            await dialog.ShowAsync();
+            await new SchoolPower.Views.Dialogs.GPADialog().ShowAsync();
         }
 
         private async void Refresh_But_Click(object sender, RoutedEventArgs e) {

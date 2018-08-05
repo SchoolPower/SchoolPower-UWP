@@ -212,6 +212,8 @@
                     <AppBarButton 
                         Icon="Favorite" 
                         Label="GPA" 
+                        ToolTipService.ToolTip="GPA (F6)" 
+                        AutomationProperties.AcceleratorKey="F6"
                         Click="GPA_But_Click" />
                     <AppBarButton 
                         Icon="Edit" 
