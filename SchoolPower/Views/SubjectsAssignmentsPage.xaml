@@ -123,7 +123,7 @@
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KissingBar" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
                 <EasingDoubleKeyFrame KeyTime="00:00:00" Value="28"/>
-                <EasingDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.1500000" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="KissingBarRow" Storyboard.TargetProperty="Height" Duration="0">
                 <DiscreteObjectKeyFrame KeyTime="00:00:01.0000000" Value="28"/>
@@ -132,7 +132,7 @@
 
         <Storyboard x:Name="HideKissingBar">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KissingBar" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="28"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.2000000" Value="28"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
