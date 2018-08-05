@@ -21,7 +21,7 @@ namespace SchoolPower.Models {
 
         public static List<Subject> subjects                = new List<Subject>();
         public static List<AttendanceItem> attendances      = new List<AttendanceItem>();
-        public static List<HistoryData> historyDatas        = new List<HistoryData>();
+        public static List<HistoryData> historyDatas;
         public static Info info;
         public static String SelectedSubjectName;
         public static IList<object> SubjectListViewRemovedItems;
@@ -29,8 +29,11 @@ namespace SchoolPower.Models {
 
         public StudentData(dynamic data, dynamic dataOld) {
 
+            // init variables
             List<Subject> subjectsOld = new List<Subject>();
             List<AttendanceItem> attendancesOld = new List<AttendanceItem>();
+            historyDatas = null;
+            historyDatas = new List<HistoryData>();
 
             info = new Info(data.information);
 
@@ -78,8 +81,8 @@ namespace SchoolPower.Models {
                 }
                 if (subject.IsNew) {
                     subject.DisplayName += " *";
-                    subject.LargeTextFontWeight = FontWeights.SemiBold;
-                    subject.SmallTextFontWeight = FontWeights.Bold;
+                    subject.LargeTextFontWeight = FontWeights.Normal;
+                    subject.SmallTextFontWeight = FontWeights.SemiBold;
                 }
             }
 
@@ -93,7 +96,7 @@ namespace SchoolPower.Models {
                 } catch (System.ArgumentOutOfRangeException) {}
             }
 
-
+            // history data
             // get a list of dates that has history
             string[] dateArray = ((string)localSettings.Values["dates"]).Split(' ');
 
