@@ -38,20 +38,14 @@
 
             <!--  settings  -->
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Line">
-                <WebView Source="https://www.bilibili.com"/>
-                <!--
-                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
-                    <RelativePanel HorizontalAlignment="Left">
-                        <TextBlock Text="Not Avaliable ヽ( * ﾟдﾟ)ノ"/>
-                    </RelativePanel>
-                </ScrollViewer>-->
+                <Charting:Chart x:Name="LineChart">
+                    
+                </Charting:Chart>
+
             </PivotItem>
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Radar">
                 <WebView Source="https://www.bilibili.com"/>
             </PivotItem>
-
         </Pivot>
-
-
     </Grid>
 </Page>

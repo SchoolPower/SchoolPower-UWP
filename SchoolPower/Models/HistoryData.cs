@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SchoolPower.Models {
     public class HistoryData {
         public string Date { get; set; }
-        public List<HistoryDataItem> HistoryDataItems { get; set; }
+        public List<SubjectHistoryData> SubjectHistoryData { get; set; }
 
         static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -17,7 +17,7 @@ namespace SchoolPower.Models {
             if (date != "") {
 
                 // init
-                HistoryDataItems = new List<HistoryDataItem>();
+                SubjectHistoryData = new List<SubjectHistoryData>();
 
                 var data = StudentData.ParseJSON((string)localSettings.Values[date]);
                 Date = data.date;
@@ -33,7 +33,7 @@ namespace SchoolPower.Models {
                         peroidItems.Add(new PeroidItem((string)peroidItem.time, (int)peroidItem.percent));
                     }
 
-                    HistoryDataItems.Add(new HistoryDataItem(subject, peroidItems));
+                    SubjectHistoryData.Add(new SubjectHistoryData(subject, peroidItems));
                 }
             }
         }
@@ -43,11 +43,11 @@ namespace SchoolPower.Models {
         }
     }
 
-    public class HistoryDataItem {
+    public class SubjectHistoryData {
         public string Subject { get; set; }
         public List<PeroidItem> Peroids { get; set; }
 
-        public HistoryDataItem(string subject, List<PeroidItem> peroids) {
+        public SubjectHistoryData(string subject, List<PeroidItem> peroids) {
             Subject = subject;
             Peroids = peroids;
         }

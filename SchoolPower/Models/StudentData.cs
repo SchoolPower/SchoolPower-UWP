@@ -13,8 +13,7 @@ namespace SchoolPower.Models {
 
         static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-        internal const string APIURL = "http://127.0.0.1:8000/";
-        // internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
+        internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
         // internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
 
         public enum NewOrOld { New, Old };
@@ -97,6 +96,7 @@ namespace SchoolPower.Models {
             }
 
             // history data
+            SaveHistoryData(CollectCurrentHistoryData());
             // get a list of dates that has history
             string[] dateArray = ((string)localSettings.Values["dates"]).Split(' ');
 
@@ -106,10 +106,10 @@ namespace SchoolPower.Models {
             }
 
             // remove null data
-            if (historyDatas[0].Date == null && historyDatas[0].HistoryDataItems == null)
+            if (historyDatas[0].Date == null && historyDatas[0].SubjectHistoryData == null)
                 historyDatas.RemoveAt(0);
         }
-
+        
         public static async Task<string> Kissing(string username, string password) {
             HttpClient client = new HttpClient();
             var content = new FormUrlEncodedContent(
@@ -274,9 +274,6 @@ namespace SchoolPower.Models {
 
                 // new StudentData
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
-                SaveHistoryData(CollectCurrentHistoryData());
-                string s = GetHistoryData(DateTime.Now.ToString("yyyy-MM-dd"));
-                Debug.WriteLine(s);
                 return "okey dokey";
             }
         }

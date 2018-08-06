@@ -125,7 +125,11 @@ namespace SchoolPower.Views {
 
             if (App.isMainPageFirstTimeInit) {
                 App.isMainPageFirstTimeInit = !App.isMainPageFirstTimeInit;
-                await KissingAsync();
+                try {
+                    await KissingAsync();
+                } catch(Exception) {
+                    // todo error
+                }
             }
 
             if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex >= 0) {
