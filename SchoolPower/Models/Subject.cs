@@ -133,11 +133,14 @@ namespace SchoolPower.Models {
                 time.Sort();
                 time.Reverse();
 
-                foreach (var p in Peroids) 
-                    if (p.Date == time[0])
-                        if ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4")) 
-                            p.IsActive = true;
-                
+                foreach (var p in Peroids)
+                    try {
+                        if (p.Date == time[0])
+                            if ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))
+                                p.IsActive = true;
+                    } catch(Exception) {
+                        IsActive = true;
+                    }
 
                 //semasters
                 time = null;
