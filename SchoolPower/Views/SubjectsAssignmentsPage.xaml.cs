@@ -214,7 +214,10 @@ namespace SchoolPower.Views {
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) { /*
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            if (StudentData.SelectedSubjectName != null) {
+                NoGradeIcnImg.Visibility = Visibility.Collapsed;
+            }/*
             if (StudentData.SelectedSubjectName != null) {
                 int index = 0;
                 foreach (var subject in this.subjects) {
@@ -227,6 +230,6 @@ namespace SchoolPower.Views {
                 //SubjectsListView.SelectedItem = SubjectsListView.Items[index];
                 SubjectsListView_SelectionChanged(this, new SelectionChangedEventArgs(StudentData.SubjectListViewRemovedItems, StudentData.SubjectListViewAddedItems));
             }*/
-        }
+            }
     }
 }
