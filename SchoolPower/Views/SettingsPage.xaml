@@ -137,10 +137,10 @@
 
                     </ScrollViewer>
                     </PivotItem>
-                
+                <!--
                 <PivotItem Header="Notification">
                 </PivotItem>
-                
+                -->
                 <PivotItem Header="Logout">
                     <Grid>
                         <TextBlock Text="Logout" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42"/>

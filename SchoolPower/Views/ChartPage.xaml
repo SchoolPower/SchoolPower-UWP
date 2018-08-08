@@ -38,14 +38,16 @@
 
             <!--  settings  -->
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Line">
+                
                 <Charting:Chart x:Name="LineChart">
-                    
                 </Charting:Chart>
-
+                
             </PivotItem>
+            <!--
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Radar">
                 <WebView Source="https://www.bilibili.com"/>
             </PivotItem>
+            -->
         </Pivot>
     </Grid>
 </Page>
