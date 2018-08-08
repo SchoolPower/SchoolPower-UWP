@@ -113,49 +113,46 @@ namespace SchoolPower.Models {
 
             String[] peroidList = { "T1", "T2", "X1", "S1", "T3", "T4", "X2", "S2", "Y1" };
 
-            foreach (var time in peroidList) {
+            foreach (var peroid in peroidList) {
                 try {
-                    if (data.finalGrades[time].percent != null)
-                        Peroids.Add(new Peroid(time, data.finalGrades[time]));
+                    if (data.finalGrades[peroid].percent != null)
+                        Peroids.Add(new Peroid(peroid, data.finalGrades[peroid]));
                 } catch (Exception) { }
             }
             
-            //activity
-            if (true) {
-            //if (IsActive) {
+            // activity
+            // terms
+            var time = new List<DateTime>();
+            foreach (var p in Peroids) 
+                if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4")) 
+                    time.Add(p.Date);
 
-                // terms
-                var time = new List<DateTime>();
-                foreach (var p in Peroids) 
-                    if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4")) 
-                        time.Add(p.Date);
-                
-                time.Sort();
-                time.Reverse();
+            time.Sort();
+            time.Reverse();
 
-                foreach (var p in Peroids)
-                    try {
-                        if (p.Date == time[0])
-                            if ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))
-                                p.IsActive = true;
-                    } catch(Exception) {
-                        IsActive = true;
-                    }
-
-                //semasters
-                time = null;
-                time = new List<DateTime>();
-                foreach (var p in Peroids) 
-                    if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "S1") || (p.Time == "S2")) 
-                        time.Add(p.Date);
-                time.Sort();
-                time.Reverse();
-                foreach (var p in Peroids)
-                    if ((p.Time == "S1") || (p.Time == "S2"))
-                        if (p.Date == time[0])
+            foreach (var p in Peroids)
+                try {
+                    if (p.Date == time[0])
+                       if ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))
                             p.IsActive = true;
-               
-            }
+                }
+                catch (Exception) {
+                    p.IsActive = true;
+                }
+
+            //semasters
+            time = null;
+            time = new List<DateTime>();
+            foreach (var p in Peroids)
+                if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "S1") || (p.Time == "S2"))
+                    time.Add(p.Date);
+            time.Sort();
+            time.Reverse();
+            foreach (var p in Peroids)
+                if ((p.Time == "S1") || (p.Time == "S2"))
+                    if (p.Date == time[0])
+                        p.IsActive = true;
+
 
             // sort
             Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));

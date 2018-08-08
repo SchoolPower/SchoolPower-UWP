@@ -38,15 +38,16 @@ namespace SchoolPower.Views {
                     foreach (var subjectData in Day.SubjectHistoryData) { // for each subject 
                         if (subjectName == subjectData.Subject) {
                             foreach (var peroid in subjectData.Peroids) { // for each peroid 
-                                if (showGradeOfTerm) {
-                                    if ((peroid.Peroid == "T1") || (peroid.Peroid == "T2") || (peroid.Peroid == "T3") || (peroid.Peroid == "T4")) {
+                                if (showGradeOfTerm) 
+                                    if ((peroid.Peroid == "T1") || (peroid.Peroid == "T2") || (peroid.Peroid == "T3") || (peroid.Peroid == "T4")) 
                                         percent = peroid.Percent;
-                                    }
-                                } else {
-                                    if ((peroid.Peroid == "S1") || (peroid.Peroid == "S2")) {
+                                else
+                                    if ((peroid.Peroid == "S1") || (peroid.Peroid == "S2")) 
                                         percent = peroid.Percent;
-                                    }
-                                }
+                                    
+                                if (percent == 0) 
+                                    if (peroid.Peroid == "Y1") 
+                                        percent = peroid.Percent;
                             }
                         }
                     }
