@@ -97,15 +97,14 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Hamburger_TemporaryKey.pfx" />
-    <None Include="SchoolPower_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Localization\LocalizedResources.cs" />
+    <Compile Include="Localization\LocalizedResourcesConverter.cs" />
     <Compile Include="Models\AssignmentItem.cs" />
-    <Compile Include="Models\Attendances.cs" />
+    <Compile Include="Models\AttendanceItem.cs" />
+    <Compile Include="Models\HistoryData.cs" />
     <Compile Include="Models\Info.cs" />
     <Compile Include="Models\StudentData.cs" />
     <Compile Include="Models\Subject.cs" />
@@ -234,7 +233,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PRIResource Include="Strings\en-US\Resources.resw" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.2.3</Version>
@@ -251,6 +252,9 @@
     <PackageReference Include="WinRTXamlToolkit.Controls.DataVisualization.UWP">
       <Version>2.3.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\fr-FR\Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
