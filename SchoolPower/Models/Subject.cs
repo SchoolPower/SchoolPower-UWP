@@ -155,7 +155,10 @@ namespace SchoolPower.Models {
 
 
             // sort
-            Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            //Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            Assignments.Sort((x, y) => DateTime.Compare
+                (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
+                 DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
             Assignments.Reverse();
 
             // OnDashboard

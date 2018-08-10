@@ -55,9 +55,13 @@ namespace SchoolPower.Models {
             }
 
             // sort
-            attendances.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            attendances.Sort((x, y) => DateTime.Compare
+                (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
+                DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
             attendances.Reverse();
-            attendancesOld.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            attendancesOld.Sort((x, y) => DateTime.Compare
+                (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
+                DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
             attendancesOld.Reverse();
 
             // new assignments 
