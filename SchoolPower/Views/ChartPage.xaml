@@ -24,30 +24,22 @@
         
         <!--HEAD-->
         <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <controls:PageHeader Text="Chart" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
-              <!--  <controls:PageHeader.PrimaryCommands>
-                    <AppBarButton 
-                        Icon="Refresh" 
-                        Label="Refresh" 
-                        Click="Refresh_But_Click" />
-                </controls:PageHeader.PrimaryCommands> -->
+            <controls:PageHeader Text="Chart" x:Uid="chart" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
             </controls:PageHeader>
         </RelativePanel>
 
         <Pivot x:Name="MyPivot" Grid.Row="1" Grid.Column="0" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="pageHeader">
 
-            <!--  settings  -->
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Line">
-                
-                <Charting:Chart x:Name="LineChart">
-                </Charting:Chart>
-                
+            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Line" x:Uid="line">
+                <Charting:Chart x:Name="LineChart"> </Charting:Chart>
             </PivotItem>
+            
             <!--
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Radar">
                 <WebView Source="https://www.bilibili.com"/>
             </PivotItem>
             -->
+            
         </Pivot>
     </Grid>
 </Page>

@@ -190,6 +190,7 @@
         <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
             <controls:PageHeader 
                 Text="Dashboard" 
+                x:Uid="dashboard"
                 x:Name="pageHeader" 
                 RelativePanel.AlignLeftWithPanel="True" 
                 RelativePanel.AlignRightWithPanel="True" 
@@ -198,12 +199,14 @@
                     <AppBarButton 
                         Icon="Forward" 
                         Label="More" 
+                        x:Uid="LeapButton"
                         Name="GoToDetailButton"
                         Click="Leap" 
                         Visibility="Collapsed"/>
                     <AppBarButton 
                         Icon="Refresh" 
                         ToolTipService.ToolTip="Refresh (F5)" 
+                        x:Uid="RefreshButton"
                         Label="Refresh" 
                         AutomationProperties.AcceleratorKey="F5"
                         Click="Refresh_But_Click" />
@@ -212,6 +215,7 @@
                     <AppBarButton 
                         Icon="Favorite" 
                         Label="GPA" 
+                        x:Uid="GPAbutton"
                         ToolTipService.ToolTip="GPA (F6)" 
                         AutomationProperties.AcceleratorKey="F6"
                         Click="GPA_But_Click" />

@@ -30,17 +30,17 @@
                 <ComboBoxItem Content="S2"/>
                 <ComboBoxItem Content="Y1"/>
             </ComboBox>
-            <TextBlock Text="has a GPA of" RelativePanel.RightOf="comboBox" RelativePanel.AlignVerticalCenterWith="comboBox" Margin="10,0,0,0"/>
+            <TextBlock Text="has a GPA of" x:Uid="hasGPA" RelativePanel.RightOf="comboBox" RelativePanel.AlignVerticalCenterWith="comboBox" Margin="10,0,0,0"/>
         </RelativePanel>
 
         <TextBlock x:Name="GPA" Text="NaN%" Grid.Row="2" FontSize="56" FontWeight="Light" Margin="0,0,0,0"/>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5,0,5">
-            <RadioButton Content="All" Tag="All" Checked="RadioButton_Checked" IsChecked="True"/>
-            <RadioButton Content="Custom" Tag="Custom" Checked="RadioButton_Checked" Margin="-36,0,0,0" Width="156"/>
-            <RadioButton Content="Official" Tag="Official" Checked="RadioButton_Checked" Margin="-51,0,0,0" Width="81" />
+            <RadioButton Content="All" x:Uid="allll" Tag="All" Checked="RadioButton_Checked" IsChecked="True"/>
+            <RadioButton Content="Custom" x:Uid="custom" Tag="Custom" Checked="RadioButton_Checked" Margin="-36,0,0,0" Width="156"/>
+            <RadioButton Content="Official" x:Uid="official" Tag="Official" Checked="RadioButton_Checked" Margin="-51,0,0,0" Width="81" />
         </StackPanel>
 
-        <Button Grid.Row="4" Content="Sweet _(:зゝ∠)_" Margin="0,5,0,0" Click="Button_Click"/>
+        <Button Grid.Row="4" Content="Sweet _(:зゝ∠)_" Margin="0,5,0,0" Click="Button_Click" x:Uid="sweetGPA"/>
     </Grid>
 </ContentDialog>

@@ -9,20 +9,20 @@
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="320" MaxHeight="320">
 
-        <TextBlock Name="Percent" HorizontalAlignment="Right" FontWeight="SemiLight" FontSize="42" Text="Percent" Margin="0,0,0,-30"/>
-        <TextBlock Name="Time" Text="Time"/>
-        <TextBlock Name="Letter" Text="Letter"/>
+        <TextBlock Name="Percent" HorizontalAlignment="Right" FontWeight="SemiLight" FontSize="42" Text="Sample Percent" Margin="0,0,0,-30"/>
+        <TextBlock Name="Time" Text="Sample Time"/>
+        <TextBlock Name="Letter" Text="Sample Letter"/>
 
-        <TextBlock Text="Evaluation: " FontSize="22" Margin="0,10,0,0"/>
-        <TextBlock Name="Eval" Text="M"/>
+        <TextBlock Text="Evaluation" x:Uid="EVA" FontSize="22" Margin="0,10,0,0"/>
+        <TextBlock Name="Eval" Text="Sample Evaluation"/>
 
-        <TextBlock Text="Comment" FontSize="22" Margin="0,10,0,0" />
+        <TextBlock Text="Comment" x:Uid="comment" FontSize="22" Margin="0,10,0,0" />
 
         <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto" MaxHeight="100" >
-            <TextBlock Name="Comment" Text="Trouble maker" TextWrapping="WrapWholeWords" />
+            <TextBlock Name="Comment" Text="Trouble maker" TextWrapping="WrapWholeWords"/>
         </ScrollViewer>
 
-        <Button Grid.Row="4" Content="Sweet _(:зゝ∠)_" Margin="0,15,0,0" Click="Button_Click"/>
+        <Button Grid.Row="4" Content="Sweet _(:зゝ∠)_" Margin="0,15,0,0" Click="Button_Click" x:Uid="sweetGradeInfoDialog"/>
 
     </StackPanel>
 </ContentDialog>

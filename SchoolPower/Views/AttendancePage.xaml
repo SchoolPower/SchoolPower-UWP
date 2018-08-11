@@ -34,13 +34,8 @@
 
         <!--HEAD-->
         <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <controls:PageHeader Text="Attendance" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
-              <!--  <controls:PageHeader.PrimaryCommands>
-                    <AppBarButton 
-                        Icon="Refresh" 
-                        Label="Refresh" 
-                        Click="Refresh_But_Click" />
-                </controls:PageHeader.PrimaryCommands> -->
+            <controls:PageHeader Text="Attendance" x:Uid="attendance" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
+
             </controls:PageHeader>
         </RelativePanel>
         <Image Name="NoAttendanceImg" Visibility="Collapsed" Source="/Assets/perfect_attendance.png" Width="250" Height="250" Stretch="Uniform" />

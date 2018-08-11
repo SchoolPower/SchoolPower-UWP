@@ -8,26 +8,18 @@
       xmlns:converter="using:Template10.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:SchoolPower.Views"
+      xmlns:localization="using:SchoolPower.Localization" 
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:SchoolPower.ViewModels"
       xmlns:data="using:SchoolPower.Models" 
       mc:Ignorable="d">
 
     <Page.Resources>
-        <converter:ValueWhenConverter x:Name="FalseWhenTrueConverter">
-            <converter:ValueWhenConverter.When>
-                <x:Boolean>True</x:Boolean>
-            </converter:ValueWhenConverter.When>
-            <converter:ValueWhenConverter.Value>
-                <x:Boolean>False</x:Boolean>
-            </converter:ValueWhenConverter.Value>
-            <converter:ValueWhenConverter.Otherwise>
-                <x:Boolean>True</x:Boolean>
-            </converter:ValueWhenConverter.Otherwise>
-        </converter:ValueWhenConverter>
+
+        <localization:LocalizedResourcesConverter x:Key="LocalizedResourcesConverter" />
+
         <DataTemplate x:Key="SubjectListCheckBoxDataTemplate" x:DataType="data:Subject">
             <StackPanel Orientation="Horizontal">
-                <CheckBox Content="{x:Bind Name}" Click="CheckBox_Click" Tapped="CheckBox_Click" Loaded="CheckBox_Loaded"/>
+                <CheckBox Content="{x:Bind Name}" Click="SubjectList_CheckBox_Click" Tapped="SubjectList_CheckBox_Click" Loaded="SelectSubject_CheckBox_Loaded"/>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -63,7 +55,7 @@
         <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
             <!--  header  -->
-            <controls:PageHeader x:Name="pageHeader" Content="Settings" Frame="{x:Bind Frame}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
+            <controls:PageHeader x:Name="pageHeader" x:Uid="settings" Content="Settings" Frame="{x:Bind Frame}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
 
             <!--  content  -->
             <Pivot 
@@ -74,43 +66,51 @@
                 RelativePanel.AlignRightWithPanel="True" 
                 RelativePanel.Below="pageHeader">
 
-                <PivotItem Header="Display">
+                <PivotItem Header="Display" x:Uid="display">
                     <StackPanel Orientation="Vertical">
 
                         <ToggleSwitch 
                             Margin="0,15,0,15"
                             Header="Show inactive subjects" 
+                            x:Uid="inactive"
                             Toggled="InactiveSubjects_ToggleSwitch"
                             Loaded="InactiveSubjects_Loaded"
                             OnContent="Show subjects that you are not currently taking"
                             OffContent="Hide subjects that you are not currently taking"/>
 
                         <TextBlock 
+                            x:Uid="dashboardDisplay"
                             Text="Dashboard displays the score of " 
                             Margin="0,0,0,5"/>
                         <RadioButton 
                             Margin="0,0,0,0" 
+                            x:Uid="tTerm"
                             Content="This term" Tag="term" 
                             Loaded="TermRadioButtonLoaded"
                             Checked="DisplayScoreOfRadioButtonCheck"/>
                         <RadioButton 
                             Margin="0,0,0,15" 
+                            x:Uid="tSem"
                             Loaded="SemRadioButtonLoaded"
                             Content="This semester" Tag="sem" 
                             Checked="DisplayScoreOfRadioButtonCheck"/>
 
-                        <TextBlock Text="Language" Margin="0,0,0,5"/>
-                        <ComboBox Margin="0,5,0,10" SelectionChanged="Language_ComboBox_SelectionChanged" Loaded="Language_ComboBox_Loaded">
-                            <ComboBoxItem Content="System default"/>
-                            <ComboBoxItem Content="English"/>
-                            <ComboBoxItem Content="正體中文"/>
-                            <ComboBoxItem Content="简体中文"/>
+                        <TextBlock Text="Language" Margin="0,0,0,5" x:Uid="lang"/>
+                        <ComboBox 
+                            Name="Language_ComboBox"
+                            Margin="0,5,0,10" 
+                            SelectionChanged="Language_ComboBox_SelectionChanged" 
+                            Loaded="Language_ComboBox_Loaded">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource LocalizedResourcesConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
-
                     </StackPanel>
                 </PivotItem>
 
-                <PivotItem Header="Customize GPA"
+                <PivotItem Header="Customize GPA" x:Uid="customGPA"
                     DataContext="{Binding SettingsPartViewModel}">
 
                     <ScrollViewer Margin="0,12,-12,0"
@@ -119,18 +119,18 @@
                         
                         <StackPanel HorizontalAlignment="Left">
 
-                            <TextBlock Text="Select Subjects" Margin="0,5,0,5"/>
+                            <TextBlock Text="Select Subjects" x:Uid="selectSubject" Margin="0,5,0,5"/>
                             <ListView 
                                 ItemsSource="{x:Bind subjects}"
                                 IsItemClickEnabled="False"
                                 ItemTemplate="{StaticResource SubjectListCheckBoxDataTemplate}"/>
 
-                            <TextBlock Text="Calculate Rule" Margin="0,5,0,5"/>
-                            <ComboBox x:Name="comboBox" Margin="0,5,0,15" SelectionChanged="ComboBox_SelectionChanged" Loaded="ComboBox_Loaded">
-                                <ComboBoxItem Content="Calculate all subjects in your selections"/>
-                                <ComboBoxItem Content="Heighest 3"/>
-                                <ComboBoxItem Content="Heighest 4"/>
-                                <ComboBoxItem Content="Heighest 5"/>
+                            <TextBlock Text="Calculate Rule" x:Uid="calcRule" Margin="0,5,0,5"/>
+                            <ComboBox x:Name="comboBox" Margin="0,5,0,15" SelectionChanged="CalcRule_ComboBox_SelectionChanged" Loaded="CalcRule_ComboBox_Loaded">
+                                <ComboBoxItem Content="Calculate all subjects in your selections" x:Uid="all"/>
+                                <ComboBoxItem Content="Heighest 3" x:Uid="h3"/>
+                                <ComboBoxItem Content="Heighest 4" x:Uid="h4"/>
+                                <ComboBoxItem Content="Heighest 5" x:Uid="h5"/>
                             </ComboBox>
 
                         </StackPanel>
@@ -141,16 +141,16 @@
                 <PivotItem Header="Notification">
                 </PivotItem>
                 -->
-                <PivotItem Header="Logout">
+                <PivotItem Header="Logout" x:Uid="logout">
                     <Grid>
-                        <TextBlock Text="Logout" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42"/>
+                        <TextBlock Text="Logout" x:Uid="logoutTxt" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42"/>
                         <RelativePanel DataContext="{Binding LogoutPartViewModel}">
-                            <Button Margin="20,20,20,20"  Name="LogoutButtonClick" Click="LogoutButtonClick_Click" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Width="600" Height="400">
+                            <Button Margin="20,20,20,20" Name="LogoutButtonClick" Click="LogoutButtonClick_Click" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Width="600" Height="400">
                                 <Button.Flyout>
                                     <Flyout x:Name="mFlyout">
                                         <StackPanel Margin="5,5,5,5">
-                                            <TextBlock Text="Are you sure?" Margin="0,0,0,0"/>
-                                            <Button Name="InnerFlyoutButton" Margin="0,10,0,0" HorizontalAlignment="Right" Content="Yes" Click="InnerFlyoutButton_Click"/>
+                                            <TextBlock Text="Are you sure?" x:Uid="sure" Margin="0,0,0,0"/>
+                                            <Button Name="InnerFlyoutButton" x:Uid="yes" Margin="0,10,0,0" HorizontalAlignment="Right" Content="Yes" Click="InnerFlyoutButton_Click"/>
                                         </StackPanel>
                                     </Flyout>
                                 </Button.Flyout>

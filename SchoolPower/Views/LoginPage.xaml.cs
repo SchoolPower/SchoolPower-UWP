@@ -5,6 +5,7 @@ using System.Net.Http;
 using SchoolPower.Models;
 using Windows.UI.ViewManagement;
 using Windows.UI.Core;
+using SchoolPower.Localization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -49,9 +50,9 @@ namespace SchoolPower.Views {
             // when empty box
             if (username == "" || password == "") {
                 ContentDialog ErrorEmptyContentDialog = new ContentDialog {
-                    Title = "ERROR",
-                    Content = "Please input user name and/or password.",
-                    CloseButtonText = "哦。",
+                    Title = LocalizedResources.GetString("/Text"),
+                    Content = LocalizedResources.GetString("pleaseInput/Text"),
+                    CloseButtonText = LocalizedResources.GetString("yesInput/Text"),
                 }; ContentDialogResult result = await ErrorEmptyContentDialog.ShowAsync();
             }
             
@@ -67,19 +68,19 @@ namespace SchoolPower.Views {
                 // bad network or server
                 if (studata == "") {
                     ContentDialog ErrorContentDialog = new ContentDialog {
-                        Title = "ERROR",
-                        Content = "Network error. Please try again later.",
-                        CloseButtonText = "哦。",
+                        Title = LocalizedResources.GetString("error/Text"),
+                        Content = LocalizedResources.GetString("netError/Text"),
+                        CloseButtonText = LocalizedResources.GetString("yesNet/Text"),
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
                 } 
 
                 // wrong account info
-                else if (studata.Contains("Something went wrong! Invalid Username or password")) {
+                else if (studata.Contains("Something went wrong!")) {
                     PasswordTextBox.PlaceholderText = "";
                     ContentDialog ErrorContentDialog = new ContentDialog {
-                        Title = "ERROR",
-                        Content = "Wrong username and/or password.",
-                        CloseButtonText = "哦。",
+                        Title = LocalizedResources.GetString("error/Text"),
+                        Content = LocalizedResources.GetString("someError/Text"),
+                        CloseButtonText = LocalizedResources.GetString("yesAcc/Text"),
                     }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
                 }
 

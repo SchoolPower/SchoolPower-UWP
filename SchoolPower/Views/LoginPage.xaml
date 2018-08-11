@@ -37,9 +37,27 @@
                 <StackPanel x:Name="UsrInfoPanel" Margin="0,0,0,50" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
                     <Image x:Name="LogoImg" Source="/Assets/LoginPageIcon.png" Width="170" Height="170" Stretch="Uniform" Margin="20" />
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-                        <TextBox x:Name="UsernameTextBox" Margin="0,0,0,10" Width="250" PlaceholderText="User name"/>
-                        <PasswordBox Name="PasswordTextBox" Margin="0,0,0,20" Width="250" PlaceholderText="Password"/>
-                        <Button x:Name="SignInButton" Background="#FF0063B1" Foreground="White" Content="Login" Click="SignInButton_Click" Width="80" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                        <TextBox 
+                            x:Name="UsernameTextBox" 
+                            Margin="0,0,0,10" 
+                            Width="250" 
+                            PlaceholderText="Username" 
+                            x:Uid="username"/>
+                        <PasswordBox 
+                            Name="PasswordTextBox"
+                            Margin="0,0,0,20" Width="250" 
+                            PlaceholderText="Password" 
+                            x:Uid="password"/>
+                        <Button 
+                            x:Name="SignInButton" 
+                            Background="#FF0063B1" 
+                            Foreground="White" 
+                            Content="Login" 
+                            x:Uid="loginButton" 
+                            Click="SignInButton_Click" 
+                            Width="80" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,0,0,20"/>
                     </StackPanel>
                 </StackPanel>
                 <Grid>

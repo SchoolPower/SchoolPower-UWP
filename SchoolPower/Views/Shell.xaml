@@ -19,21 +19,21 @@
             <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:SubjectsAssignmentsPage">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE8F1;" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Dashboard" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Dashboard" x:Uid="dddashboard" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
             <!--Chart-->
             <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:ChartPage">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE9D9;" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Chart" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Chart" x:Uid="ccchart" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
             <!--Attendence-->
             <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:AttendancePage">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE7EE;" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Attendance" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Attendance" x:Uid="aaattendance"/>
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
         </Controls:HamburgerMenu.PrimaryButtons>
@@ -41,12 +41,12 @@
         <Controls:HamburgerMenu.SecondaryButtons>
             <!--setting-->
             <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0" PageType="views:SettingsPage">
-                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+             <!--   <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                     <SuppressNavigationTransitionInfo />
-                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>-->
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE713;" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Settings" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" x:Uid="seeeeting" Text="&#160;Settings" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
             <!--about-->
@@ -56,7 +56,7 @@
                 </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE946;" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;About" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" x:Uid="aboooout" Text="&#160;About" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
 

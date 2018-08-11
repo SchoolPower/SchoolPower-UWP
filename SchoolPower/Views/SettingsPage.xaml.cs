@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
+using SchoolPower.Localization;
+using System.Linq;
 
 namespace SchoolPower.Views {
     public sealed partial class SettingsPage : Page {
@@ -16,23 +18,39 @@ namespace SchoolPower.Views {
 
         public SettingsPage() {
             InitializeComponent();
+
+            Language_ComboBox.ItemsSource = LocalizedResources.SupportedLanguages;
+            Language_ComboBox.SelectedIndex = Array.IndexOf(LocalizedResources.SupportedLanguages.ToArray(), LocalizedResources.Language);
+
         }
 
         private void LogoutButtonClick_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
         }
 
-        private void InnerFlyoutButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            localSettings.Values.Remove("UsrName");
-            localSettings.Values.Remove("Passwd");
+        private async void InnerFlyoutButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+            string username = (string)localSettings.Values["UsrName"];
+            string password = (string)localSettings.Values["Passwd"];
+            await Windows.Storage.ApplicationData.Current.ClearAsync();
+            localSettings.Values["UsrName"] = username;
+            localSettings.Values["Passwd"] = password;
+
+            // init default settings
             localSettings.Values["IsFirstTimeLogin"] = true;
+            localSettings.Values["showInactive"] = false;
+            localSettings.Values["DashboardShowGradeOfTERM"] = true;
+            localSettings.Values["lang"] = 0;
+            localSettings.Values["dates"] = "";
 
             // clear history
-            for (int i = StudentData.subjects.Count; i >= 1; i--) { StudentData.subjects.RemoveAt(i - 1); }
-            for (int j = StudentData.attendances.Count; j >= 1; j--) { StudentData.attendances.RemoveAt(j - 1); }
+            StudentData.subjects = null;
+            StudentData.attendances = null;
+            StudentData.subjects = new List<Subject>();
+            StudentData.attendances = new List<AttendanceItem>();
+
             Frame.Navigate(typeof(LoginPage));
         }
 
-        private void CheckBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void SelectSubject_CheckBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             CheckBox checkBox = sender as CheckBox;
             try {
                 bool b = (bool)localSettings.Values[checkBox.Content.ToString()];
@@ -44,12 +62,12 @@ namespace SchoolPower.Views {
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void CalcRule_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var combo = sender as ComboBox;
             localSettings.Values["CalculateRule"] = combo.SelectedIndex;
         }
 
-        private void ComboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void CalcRule_ComboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             var combo = sender as ComboBox;
             try {
                 int i = (int)localSettings.Values["CalculateRule"];
@@ -59,7 +77,7 @@ namespace SchoolPower.Views {
             combo.SelectedIndex = (int)localSettings.Values["CalculateRule"];
         }
 
-        private void CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void SubjectList_CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             var checkBox = sender as CheckBox;
             checkBox.IsChecked = !checkBox.IsChecked;
             if ((bool)checkBox.IsChecked) {
@@ -75,18 +93,25 @@ namespace SchoolPower.Views {
         }
 
         private void Language_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var combo = sender as ComboBox;
-            localSettings.Values["lang"] = combo.SelectedIndex;
+
+            if (Language_ComboBox.SelectedItem != null) {
+
+                if (Language_Combo_IsLoaded)
+                    localSettings.Values["lang"] = Language_ComboBox.SelectedIndex;
+
+                var language = Language_ComboBox.SelectedItem as string;
+                LocalizedResources.Language = language;
+
+                InitializeComponent();
+            }
         }
 
+        private bool Language_Combo_IsLoaded = false;
+
         private void Language_ComboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            var combo = sender as ComboBox;
-            try {
-                int i = (int)localSettings.Values["lang"];
-            } catch (System.NullReferenceException) {
-                localSettings.Values["lang"] = 0;
-            }
-            combo.SelectedIndex = (int)localSettings.Values["lang"];
+            var index = (int)localSettings.Values["lang"];
+            Language_ComboBox.SelectedIndex = index;
+            Language_Combo_IsLoaded = true;
         }
 
         private void InactiveSubjects_ToggleSwitch(object sender, Windows.UI.Xaml.RoutedEventArgs e) {

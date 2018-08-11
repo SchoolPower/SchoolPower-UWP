@@ -118,36 +118,35 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 
-
 	<!-- Shell.xaml -->
+	<data name="aaattendance.Text" xml:space="preserve">
+		<value> 出勤</value>
+	</data>
 	<data name="ccchart.Text" xml:space="preserve">
-		<value> Chart</value>
+		<value> 圖表</value>
 	</data>
 	<data name="dddashboard.Text" xml:space="preserve">
-		<value> Dashboard</value>
-	</data>
-	<data name="aaattendance.Text" xml:space="preserve">
-		<value> Attendance</value>
+		<value> 儀表板</value>
 	</data>
 	<data name="seeeeting.Text" xml:space="preserve">
-		<value> Settings</value>
+		<value> 設定</value>
 	</data>
 	<data name="aboooout.Text" xml:space="preserve">
-		<value> About</value>
+		<value> 关于</value>
 	</data>
 
 	<!-- SubjectsAssignmentsPage.xaml -->
 	<data name="dashboard.Text" xml:space="preserve">
-		<value>Dashboard</value>
+		<value>儀表板</value>
 	</data>
 	<data name="LeapButton.Label" xml:space="preserve">
-		<value>More</value>
+		<value>更多</value>
 	</data>
 	<data name="RefreshButton.Label" xml:space="preserve">
-		<value>Refresh</value>
+		<value>刷新</value>
 	</data>
 	<data name="RefreshButton.ToolTipService.ToolTip" xml:space="preserve">
-		<value>Refresh (F5)</value>
+		<value>刷新 (F5)</value>
 	</data>
 	<data name="GPAbutton.Label" xml:space="preserve">
 		<value>GPA</value>
@@ -158,205 +157,204 @@
 
 	<!-- LoginPage.xaml -->
 	<data name="username.PlaceholderText" xml:space="preserve">
-		<value>Username</value>
+		<value>用戶名</value>
 	</data>
 	<data name="password.PlaceholderText" xml:space="preserve">
-		<value>Password</value>
+		<value>密碼</value>
 	</data>
 	<data name="loginButton.Content" xml:space="preserve">
-		<value>Login</value>
+		<value>登入</value>
 	</data>
 
 	<!-- ChartPage.xaml -->
 	<data name="chart.Content" xml:space="preserve">
-		<value>Chart</value>
+		<value>图表</value>
 	</data>
 	<data name="line.Header" xml:space="preserve">
-		<value>Line</value>
+		<value>折線圖</value>
 	</data>
+
 
 	<!-- AttendancePage.Xaml -->
 	<data name="attendance.Content" xml:space="preserve">
-		<value>Attendance</value>
+		<value>出勤</value>
 	</data>
 
 	<!-- SettingsPage.xaml -->
 	<data name="settings.Content" xml:space="preserve">
-		<value>Settings</value>
+		<value>設定</value>
 	</data>
 
 	<data name="display.Header" xml:space="preserve">
-		<value>Display</value>
+		<value>顯示</value>
 	</data>
 	<data name="customGPA.Header" xml:space="preserve">
-		<value>Customize GPA</value>
+		<value>自定義 GPA</value>
 	</data>
 	<data name="logout.Header" xml:space="preserve">
-		<value>Logout</value>
+		<value>登出</value>
 	</data>
 
 	<data name="inactive.Header" xml:space="preserve">
-		<value>Show inactive subjects</value>
+		<value>顯示不活動的科目</value>
 	</data>
 	<data name="inactive.OnContent" xml:space="preserve">
-		<value>Show subjects that you are not currently taking</value>
+		<value>顯示當前不在上的課</value>
 	</data>
 	<data name="inactive.OffContent" xml:space="preserve">
-		<value>Hide subjects that you are not currently taking</value>
+		<value>隱藏當前不在上的課</value>
 	</data>
 
 	<data name="dashboardDisplay.Text" xml:space="preserve">
-		<value>Dashboard displays the score of </value>
+		<value>在儀表板上顯示 </value>
 	</data>
 	<data name="tTerm.Content" xml:space="preserve">
-		<value>This term</value>
+		<value>這個 term 的分數</value>
 	</data>
 	<data name="tSem.Content" xml:space="preserve">
-		<value>This semester</value>
+		<value>這個 semester 的分數</value>
 	</data>
 
 	<data name="lang.Text" xml:space="preserve">
-		<value>Language</value>
+		<value>語言</value>
 	</data>
 
 	<data name="selectSubject.Text" xml:space="preserve">
-		<value>Select Subjects</value>
+		<value>選擇科目</value>
 	</data>
 
 	<data name="calcRule.Text" xml:space="preserve">
-		<value>Calculate Rule</value>
+		<value>計算規則</value>
 	</data>
 	<data name="all.Content" xml:space="preserve">
-		<value>Calculate all subjects in your selections</value>
+		<value>計算所有的科目</value>
 	</data>
 	<data name="h3.Content" xml:space="preserve">
-		<value>Heighest 3</value>
+		<value>最高的3個</value>
 	</data>
 	<data name="h4.Content" xml:space="preserve">
-		<value>Heighest 4</value>
+		<value>最高的4個</value>
 	</data>
 	<data name="h5.Content" xml:space="preserve">
-		<value>Heighest 5</value>
+		<value>最高的5個</value>
 	</data>
 
 	<data name="logoutTxt.Text" xml:space="preserve">
-		<value>Logout</value>
+		<value>登出</value>
 	</data>
 	<data name="sure.Text" xml:space="preserve">
-		<value>Are you sure?</value>
+		<value>真的要登出？ </value>
 	</data>
 	<data name="yes.Content" xml:space="preserve">
-		<value>Yes</value>
+		<value>真的</value>
 	</data>
 
 	<!-- AssInfoDialog.xaml -->
 	<data name="date.Text" xml:space="preserve">
-		<value>Date</value>
+		<value>日期</value>
 	</data>
 	<data name="score.Text" xml:space="preserve">
-		<value>Score</value>
+		<value>分數</value>
 	</data>
 	<data name="weight.Text" xml:space="preserve">
-		<value>Weight</value>
+		<value>權重</value>
 	</data>
 	<data name="sweetAssInfoDialog.Content" xml:space="preserve">
-		<value>Sweet _(:зゝ∠)_</value>
+		<value>喵！ _(:зゝ∠)_</value>
 	</data>
 
 	<!-- GradeInfoDialog -->
 	<data name="EVA.Text" xml:space="preserve">
-		<value>Evaluation</value>
+		<value>評估</value>
 	</data>
 	<data name="comment.Text" xml:space="preserve">
-		<value>Comment</value>
+		<value>評語</value>
 	</data>
 	<data name="sweetGradeInfoDialog.Content" xml:space="preserve">
-		<value>Sweet _(:зゝ∠)_</value>
+		<value>喵！ _(:зゝ∠)_</value>
 	</data>
 
 	<!-- GPADialog -->
 	<data name="hasGPA.Text" xml:space="preserve">
-		<value>has a GPA of</value>
+		<value>的 GPA 是</value>
 	</data>
 	<data name="allll.Content" xml:space="preserve">
-		<value>All</value>
+		<value>全部</value>
 	</data>
 	<data name="custom.Content" xml:space="preserve">
-		<value>Custom</value>
+		<value>自定義</value>
 	</data>
 	<data name="official.Content" xml:space="preserve">
-		<value>Official</value>
+		<value>官方</value>
 	</data>
 	<data name="sweetGPA.Content" xml:space="preserve">
-		<value>Sweet _(:зゝ∠)_</value>
+		<value>喵！ _(:зゝ∠)_</value>
 	</data>
 
 	<!-- AboutPage.xaml -->
 	<data name="about.Content" xml:space="preserve">
-		<value>About</value>
+		<value>關於</value>
 	</data>
 
 	<data name="abouuuut.Header" xml:space="preserve">
-		<value>About</value>
+		<value>關於</value>
 	</data>
 	<data name="support.Header" xml:space="preserve">
-		<value>Support</value>
+		<value>支持</value>
 	</data>
 
 	<data name="dmail.Text" xml:space="preserve">
-		<value>Report a bug to developers with D-Mail.</value>
+		<value>通過 D-Mail 向開發者提交 bug。 </value>
 	</data>
 	<data name="send.Content" xml:space="preserve">
-		<value>Send!</value>
+		<value>發送!</value>
 	</data>
 	<data name="feedback.Text" xml:space="preserve">
-		<value>Feedback Forum</value>
+		<value>論壇</value>
 	</data>
 	<data name="feeeeeedback.Text" xml:space="preserve">
-		<value>View announcements, give suggestions or report bugs via our forum.</value>
+		<value>通過論壇讀通知，提建議和反饋bug。 </value>
 	</data>
 	<data name="visit.Content" xml:space="preserve">
-		<value>Visit</value>
+		<value>訪問</value>
 	</data>
 	<data name="more.Text" xml:space="preserve">
-		<value>More</value>
+		<value>更多</value>
 	</data>
 	<data name="web.Content" xml:space="preserve">
-		<value>Visit website</value>
+		<value>訪問網站</value>
 	</data>
 	<data name="code.Content" xml:space="preserve">
-		<value>Get sourse code</value>
+		<value>獲取源碼</value>
 	</data>
 
 	<!-- LoginPage.xaml.cs -->
-	
+
 	<data name="error.Text" xml:space="preserve">
-		<value>ERROR</value>
+		<value>错误</value>
 	</data>
 	<data name="pleaseInput.Text" xml:space="preserve">
-		<value>Please input username and/or password.</value>
+		<value>请输入用户名和密码。</value>
 	</data>
 	<data name="yesInput.Text" xml:space="preserve">
-		<value>Okay</value>
+		<value>哦</value>
 	</data>
 
 	<data name="netError.Text" xml:space="preserve">
-		<value>Network error. Please try again later.</value>
+		<value>网络错误。</value>
 	</data>
 	<data name="yesNet.Text" xml:space="preserve">
-		<value>Too bad too sad</value>
+		<value>哦</value>
 	</data>
 
 	<data name="someError.Text" xml:space="preserve">
-		<value>Wrong username and/or password.</value>
+		<value>错误的用户名和密码。</value>
 	</data>
 	<data name="yesAcc.Text" xml:space="preserve">
-		<value>Okay</value>
+		<value>哦</value>
 	</data>
 
-	<!-- SubjectsAssignmentsPage.xaml.cs -->
 	<data name="cannotConnect.Text" xml:space="preserve">
-		<value>Cannot connect to server.</value>
+		<value>无法连接至服务器。</value>
 	</data>
-	 
 </root>

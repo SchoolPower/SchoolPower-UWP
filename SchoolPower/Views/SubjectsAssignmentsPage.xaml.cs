@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Media;
 using Windows.System;
+using SchoolPower.Localization;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
@@ -99,7 +100,7 @@ namespace SchoolPower.Views {
                     StatusTextBlock.Text = "Kissed!";
                     break;
                 case "error":
-                    StatusTextBlock.Text = "Cannot connect to server. ";
+                    StatusTextBlock.Text = LocalizedResources.GetString("cannotConnect/Text");
                     // Tawny
                     KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
                     break;

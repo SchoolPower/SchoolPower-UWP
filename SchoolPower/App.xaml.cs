@@ -80,11 +80,14 @@ namespace SchoolPower {
                 bool b = (bool)localSettings.Values["showInactive"];
                 b = (bool)localSettings.Values["DashboardShowGradeOfTERM"];
                 var v = (string)localSettings.Values["dates"];
-            } catch (System.NullReferenceException) {
+                v = localSettings.Values["lang"].ToString();
+            }
+            catch (System.NullReferenceException) {
                 localSettings.Values["IsFirstTimeLogin"] = true;
                 localSettings.Values["showInactive"] = false;
                 localSettings.Values["DashboardShowGradeOfTERM"] = true;
                 localSettings.Values["dates"] = "";
+                localSettings.Values["lang"] = 0;
 
             }
 

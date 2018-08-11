@@ -21,7 +21,7 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>CBBF556C31848EB5EEEEA71671037D600E7C1542</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>8281FCA6BF8B33352E4513ED8E98B55E87183CB8</PackageCertificateThumbprint>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
@@ -254,7 +254,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\fr-FR\Resources.resw" />
+    <PRIResource Include="Strings\zh-Hans\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-Hant\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SchoolPower_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
