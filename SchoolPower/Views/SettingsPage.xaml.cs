@@ -28,25 +28,7 @@ namespace SchoolPower.Views {
         }
 
         private async void InnerFlyoutButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            string username = (string)localSettings.Values["UsrName"];
-            string password = (string)localSettings.Values["Passwd"];
-            await Windows.Storage.ApplicationData.Current.ClearAsync();
-            localSettings.Values["UsrName"] = username;
-            localSettings.Values["Passwd"] = password;
-
-            // init default settings
-            localSettings.Values["IsFirstTimeLogin"] = true;
-            localSettings.Values["showInactive"] = false;
-            localSettings.Values["DashboardShowGradeOfTERM"] = true;
-            localSettings.Values["lang"] = 0;
-            localSettings.Values["dates"] = "";
-
-            // clear history
-            StudentData.subjects = null;
-            StudentData.attendances = null;
-            StudentData.subjects = new List<Subject>();
-            StudentData.attendances = new List<AttendanceItem>();
-
+            await StudentData.MagicLogout(StudentData.MagicNumber);
             Frame.Navigate(typeof(LoginPage));
         }
 

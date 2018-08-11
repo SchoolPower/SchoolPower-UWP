@@ -16,7 +16,6 @@ using SchoolPower.Localization;
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
         private List<Subject> subjects;
-        public static string selectedSubjectName;
         private bool IsKissing = false;
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 

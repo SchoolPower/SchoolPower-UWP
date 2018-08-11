@@ -25,6 +25,7 @@ namespace SchoolPower.Models {
         public static String SelectedSubjectName;
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
+        public static int MagicNumber = 114514;
 
         public StudentData(dynamic data, dynamic dataOld) {
 
@@ -365,6 +366,30 @@ namespace SchoolPower.Models {
 
         public static string GetHistoryData(string date) {
             return (string)localSettings.Values[date];
+        }
+
+        public static async Task MagicLogout(int MagicNumber) {
+            if (MagicNumber == StudentData.MagicNumber) {
+                string username = (string)localSettings.Values["UsrName"];
+                string password = (string)localSettings.Values["Passwd"];
+                await Windows.Storage.ApplicationData.Current.ClearAsync();
+                localSettings.Values["UsrName"] = username;
+                localSettings.Values["Passwd"] = password;
+
+                // init default settings
+                localSettings.Values["IsFirstTimeLogin"] = true;
+                localSettings.Values["showInactive"] = false;
+                localSettings.Values["DashboardShowGradeOfTERM"] = true;
+                localSettings.Values["lang"] = 0;
+                localSettings.Values["dates"] = "";
+
+                // clear history
+                SelectedSubjectName = null;
+                subjects = null;
+                attendances = null;
+                subjects = new List<Subject>();
+                attendances = new List<AttendanceItem>();
+            }
         }
     }
 }
