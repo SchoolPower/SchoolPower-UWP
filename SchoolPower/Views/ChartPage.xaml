@@ -30,15 +30,18 @@
 
         <Pivot x:Name="MyPivot" Grid.Row="1" Grid.Column="0" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="pageHeader">
 
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Line" x:Uid="line">
+            <PivotItem Header="Line" x:Uid="line">
                 <Charting:Chart x:Name="LineChart"> </Charting:Chart>
             </PivotItem>
             
-            <!--
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Radar">
-                <WebView Source="https://www.bilibili.com"/>
+            <PivotItem Header="Column">
+                <Charting:Chart x:Name="ColumnChart">
+                    
+                    <Charting:ColumnSeries Title=" " IndependentValuePath="Subject" DependentValuePath="Percent" IsSelectionEnabled="True" />
+                </Charting:Chart>
+
+
             </PivotItem>
-            -->
             
         </Pivot>
     </Grid>
