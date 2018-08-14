@@ -296,6 +296,10 @@
 		<value>關於</value>
 	</data>
 
+	<data name="agree.Content" xml:space="preserve">
+		<value>用戶協議</value>
+	</data>
+
 	<data name="abouuuut.Header" xml:space="preserve">
 		<value>關於</value>
 	</data>

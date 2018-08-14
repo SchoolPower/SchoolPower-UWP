@@ -296,6 +296,10 @@
 		<value>About</value>
 	</data>
 
+	<data name="agree.Content" xml:space="preserve">
+		<value>User Agreement</value>
+	</data>
+
 	<data name="abouuuut.Header" xml:space="preserve">
 		<value>About</value>
 	</data>
