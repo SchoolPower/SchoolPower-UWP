@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
 using SchoolPower.Localization;
 using System.Linq;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace SchoolPower.Views {
     public sealed partial class SettingsPage : Page {
@@ -75,16 +76,19 @@ namespace SchoolPower.Views {
         }
 
         private void Language_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-
+            
             if (Language_ComboBox.SelectedItem != null) {
 
-                if (Language_Combo_IsLoaded)
+                if (Language_Combo_IsLoaded) 
                     localSettings.Values["lang"] = Language_ComboBox.SelectedIndex;
 
                 var language = Language_ComboBox.SelectedItem as string;
                 LocalizedResources.Language = language;
 
-                InitializeComponent();
+                if (Language_Combo_IsLoaded) {
+                    Frame.Navigate(typeof(Views.SettingsPage), null, new SuppressNavigationTransitionInfo());
+                    Frame.GoBack();
+                }
             }
         }
 
