@@ -34,15 +34,11 @@
                 <Charting:Chart x:Name="LineChart"> </Charting:Chart>
             </PivotItem>
             
-            <PivotItem Header="Column">
+            <PivotItem Header="Column" x:Uid="column">
                 <Charting:Chart x:Name="ColumnChart">
-                    
-                    <Charting:ColumnSeries Title=" " IndependentValuePath="Subject" DependentValuePath="Percent" IsSelectionEnabled="True" />
+                    <Charting:ColumnSeries Title=" "  IndependentValuePath="Subject" DependentValuePath="Percent" IsSelectionEnabled="True" />
                 </Charting:Chart>
-
-
             </PivotItem>
-            
         </Pivot>
     </Grid>
 </Page>
