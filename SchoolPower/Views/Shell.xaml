@@ -52,7 +52,7 @@
             <!--about-->
             <Controls:HamburgerButtonInfo x:Name="AboutButton" PageParameter="0" PageType="views:AboutPage">
                 <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                    <SuppressNavigationTransitionInfo />
+                    <EntranceNavigationTransitionInfo />
                 </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                 <StackPanel Orientation="Horizontal">
                     <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xE946;" />
