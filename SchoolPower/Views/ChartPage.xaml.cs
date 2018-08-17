@@ -1,4 +1,5 @@
 ﻿using SchoolPower.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.Core;
@@ -15,9 +16,8 @@ namespace SchoolPower.Views {
     public sealed partial class ChartPage: Page {
 
         public ChartPage() {
+
             this.InitializeComponent();
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => { };
 
             showGradeOfTerm = (bool)localSettings.Values["DashboardShowGradeOfTERM"];
 
@@ -61,10 +61,11 @@ namespace SchoolPower.Views {
                     DependentValuePath = "Percent",
                     IsSelectionEnabled = true,
                     ItemsSource = itemSource,
-                    Title = subjectName
+                    Title = ShortenSubjectName(subjectName)
                 };
 
                 this.LineChart.Series.Add(series);
+
             } // end of foreach subject 
             /*
             if (LineChart.Series.Count >= 1) 
@@ -99,10 +100,40 @@ namespace SchoolPower.Views {
                         if (peroid.Peroid == "Y1")
                             percent = peroid.Percent;
                 }
-                itemSource.Add(new ColumnData(data.Subject, percent));
+                if (percent != 0) 
+                    itemSource.Add(new ColumnData(ShortenSubjectName(data.Subject), percent));
+            }
+            (this.ColumnChart.Series[0] as ColumnSeries).ItemsSource = itemSource;
+        }
+
+        string ShortenSubjectName(string FullSubjectName) {
+            var ret = "";
+            int length = FullSubjectName.Length;
+            foreach (char c in FullSubjectName) {
+                if (char.IsUpper(c)) {
+                    ret += c;
+                }
             }
 
-            (this.ColumnChart.Series[0] as ColumnSeries).ItemsSource = itemSource;
+            if (ret.Length == 0)
+                ret = FullSubjectName;
+            else if (ret.Length == 1) {
+                if (length < 3)
+                    ret = FullSubjectName;
+                else { // take 3 char 
+                    for (int i = 1; i < 3; i++) {
+                        ret += FullSubjectName[i];
+                    }
+                }
+                // get number
+                string finalChar = FullSubjectName[length - 2].ToString() + FullSubjectName[length - 1].ToString();
+                bool isNumber = Int32.TryParse(finalChar, out int o);
+                if (isNumber) {
+                    ret += " ";
+                    ret += finalChar;
+                }
+            }
+            return ret;
         }
     }
 
