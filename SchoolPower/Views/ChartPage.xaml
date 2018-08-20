@@ -28,17 +28,24 @@
             </controls:PageHeader>
         </RelativePanel>
 
-        <Pivot x:Name="MyPivot" Grid.Row="1" Grid.Column="0" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="pageHeader">
+        <Pivot 
+            Grid.Row="1" Grid.Column="0" 
+            SelectionChanged="Pivot_SelectionChanged"
+            RelativePanel.AlignBottomWithPanel="True"
+            RelativePanel.AlignLeftWithPanel="True" 
+            RelativePanel.AlignRightWithPanel="True" 
+            RelativePanel.Below="pageHeader">
 
-            <PivotItem Header="Line" x:Uid="line">
-                <Charting:Chart x:Name="LineChart"> </Charting:Chart>
-            </PivotItem>
-            
-            <PivotItem Header="Column" x:Uid="column">
-                <Charting:Chart x:Name="ColumnChart">
+            <PivotItem Header="Column" x:Uid="column" Tag="Column" >
+                <Charting:Chart x:Name="ColumnChart" >
                     <Charting:ColumnSeries Title=" "  IndependentValuePath="Subject" DependentValuePath="Percent" IsSelectionEnabled="True" />
                 </Charting:Chart>
             </PivotItem>
+
+            <PivotItem Header="Line" x:Uid="line" Tag="Line" >
+                <Charting:Chart x:Name="LineChart"></Charting:Chart>
+            </PivotItem>
+            
         </Pivot>
     </Grid>
 </Page>

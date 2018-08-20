@@ -135,6 +135,25 @@ namespace SchoolPower.Views {
             }
             return ret;
         }
+
+        private bool columnIsLoaded = false;
+        private bool lineIsLoaded = false;
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            var pivot = (PivotItem)(sender as Pivot).SelectedItem;
+            switch (pivot.Tag.ToString()) {
+                case "Column":
+                    if (!columnIsLoaded)
+                        InitColumnChartContent();
+                    columnIsLoaded = true;
+                    break;
+                case "Line":
+                    if (!lineIsLoaded)
+                        InitLineChartContent();
+                    lineIsLoaded = true;
+                    break;
+            }
+        }
     }
 
 
