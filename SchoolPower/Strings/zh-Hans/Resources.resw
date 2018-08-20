@@ -176,6 +176,9 @@
 	<data name="column.Header" xml:space="preserve">
 		<value>柱状图</value>
 	</data>
+	<data name="blob.Header" xml:space="preserve">
+		<value>泡泡</value>
+	</data>
 
 	<!-- AttendancePage.Xaml -->
 	<data name="attendance.Content" xml:space="preserve">

@@ -78,9 +78,9 @@ namespace SchoolPower.Views {
                 */
         } // end of this function
 
-        void InitColumnChartContent() {
+        void InitTodayChartContent() {
 
-            List<ColumnData> itemSource = new List<ColumnData>();
+            List<TodayData> itemSource = new List<TodayData>();
 
             // today only
             var todayData = StudentData.historyDatas[StudentData.historyDatas.Count - 1];
@@ -99,9 +99,10 @@ namespace SchoolPower.Views {
                             percent = peroid.Percent;
                 }
                 if (percent != 0)
-                    itemSource.Add(new ColumnData(ShortenSubjectName(data.Subject), percent));
+                    itemSource.Add(new TodayData(ShortenSubjectName(data.Subject), percent));
             }
             (this.ColumnChart.Series[0] as ColumnSeries).ItemsSource = itemSource;
+            (this.BlobChart.Series[0] as BubbleSeries).ItemsSource = itemSource;
         }
 
         string ShortenSubjectName(string FullSubjectName) {
@@ -136,16 +137,16 @@ namespace SchoolPower.Views {
             return ret;
         }
 
-        private bool columnIsLoaded = false;
+        private bool todayIsLoaded = false;
         private bool lineIsLoaded = false;
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var pivot = (PivotItem)(sender as Pivot).SelectedItem;
             switch (pivot.Tag.ToString()) {
                 case "Column":
-                    if (!columnIsLoaded)
-                        InitColumnChartContent();
-                    columnIsLoaded = true;
+                    if (!todayIsLoaded)
+                        InitTodayChartContent();
+                    todayIsLoaded = true;
                     break;
                 case "Line":
                     if (!lineIsLoaded)
@@ -169,9 +170,9 @@ namespace SchoolPower.Views {
         public int Percent { get; set; }
     }
 
-    class ColumnData {
+    class TodayData {
 
-        public ColumnData(string subject, int percent) {
+        public TodayData(string subject, int percent) {
             Subject = subject;
             Percent = percent;
         }

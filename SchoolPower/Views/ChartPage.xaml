@@ -42,6 +42,12 @@
                 </Charting:Chart>
             </PivotItem>
 
+            <PivotItem Header="Bubble" x:Uid="blob" Tag="Blob" >
+                <Charting:Chart x:Name="BlobChart" >
+                    <Charting:BubbleSeries Title=" "  IndependentValuePath="Subject" DependentValuePath="Percent" IsSelectionEnabled="True" />
+                </Charting:Chart>
+            </PivotItem>
+
             <PivotItem Header="Line" x:Uid="line" Tag="Line" >
                 <Charting:Chart x:Name="LineChart"></Charting:Chart>
             </PivotItem>
