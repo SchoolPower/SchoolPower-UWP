@@ -21,8 +21,6 @@ namespace SchoolPower.Views {
 
             showGradeOfTerm = (bool)localSettings.Values["DashboardShowGradeOfTERM"];
 
-            InitLineChartContent();
-            InitColumnChartContent();
         }
 
         private Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -30,7 +28,7 @@ namespace SchoolPower.Views {
 
         void InitLineChartContent() {
 
-            foreach (var subject in StudentData.subjects) {
+            foreach (var subject in StudentData.subjects) { // foreach StudentData.subject 
 
                 List<LineData> itemSource = new List<LineData>();
                 string subjectName = subject.Name;
@@ -40,16 +38,17 @@ namespace SchoolPower.Views {
                     foreach (var subjectData in Day.SubjectHistoryData) { // for each subject 
                         if (subjectName == subjectData.Subject) {
                             foreach (var peroid in subjectData.Peroids) { // for each peroid 
-                                if (showGradeOfTerm)
-                                    if ((peroid.Peroid == "T1") || (peroid.Peroid == "T2") || (peroid.Peroid == "T3") || (peroid.Peroid == "T4"))
-                                        percent = peroid.Percent;
-                                    else
-                                    if ((peroid.Peroid == "S1") || (peroid.Peroid == "S2"))
-                                        percent = peroid.Percent;
 
-                                if (percent == 0)
-                                    if (peroid.Peroid == "Y1")
+                                if (showGradeOfTerm) {
+                                    if (peroid.Peroid.Contains("T"))
                                         percent = peroid.Percent;
+                                } else {
+                                    if (peroid.Peroid.Contains("S"))
+                                        percent = peroid.Percent;
+                                }
+
+                                if (percent == 0 && peroid.Peroid == "Y1") // summer school
+                                    percent = peroid.Percent;
                             }
                         }
                     }
@@ -89,18 +88,17 @@ namespace SchoolPower.Views {
             foreach (var data in todayData.SubjectHistoryData) {
                 int percent = 0;
                 foreach (var peroid in data.Peroids) {
-                    if (showGradeOfTerm)
+                    if (showGradeOfTerm) {
                         if ((peroid.Peroid == "T1") || (peroid.Peroid == "T2") || (peroid.Peroid == "T3") || (peroid.Peroid == "T4"))
                             percent = peroid.Percent;
-                        else
-                        if ((peroid.Peroid == "S1") || (peroid.Peroid == "S2"))
-                            percent = peroid.Percent;
+                    } else if ((peroid.Peroid == "S1") || (peroid.Peroid == "S2"))
+                        percent = peroid.Percent;
 
                     if (percent == 0)
                         if (peroid.Peroid == "Y1")
                             percent = peroid.Percent;
                 }
-                if (percent != 0) 
+                if (percent != 0)
                     itemSource.Add(new ColumnData(ShortenSubjectName(data.Subject), percent));
             }
             (this.ColumnChart.Series[0] as ColumnSeries).ItemsSource = itemSource;
@@ -125,14 +123,16 @@ namespace SchoolPower.Views {
                         ret += FullSubjectName[i];
                     }
                 }
-                // get number
-                string finalChar = FullSubjectName[length - 2].ToString() + FullSubjectName[length - 1].ToString();
-                bool isNumber = Int32.TryParse(finalChar, out int o);
-                if (isNumber) {
-                    ret += " ";
-                    ret += finalChar;
-                }
             }
+
+            // get number
+            string finalChar = FullSubjectName[length - 2].ToString() + FullSubjectName[length - 1].ToString();
+            bool isNumber = Int32.TryParse(finalChar, out int o);
+            if (isNumber) {
+                ret += " ";
+                ret += finalChar;
+            }
+
             return ret;
         }
 
