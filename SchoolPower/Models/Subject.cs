@@ -161,30 +161,6 @@ namespace SchoolPower.Models {
                  DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
             Assignments.Reverse();
 
-            // OnDashboard
-            if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
-                foreach (var p in this.Peroids) {
-                    if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
-                        this.LetterGradeOnDashboard = p.LetterGrade;
-                        this.PercentageGradeOnDashboard = p.Percent;
-                        break;
-                    }
-                }
-            } else {
-                foreach (var p in this.Peroids) {
-                    if ((p.IsActive) && ((p.Time == "S1") || (p.Time == "S2"))) {
-                        this.LetterGradeOnDashboard = p.LetterGrade;
-                        this.PercentageGradeOnDashboard = p.Percent;
-                        break;
-                    } else if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
-                        this.LetterGradeOnDashboard = p.LetterGrade;
-                        this.PercentageGradeOnDashboard = p.Percent;
-                        break;
-                    }
-                }
-            }
-
-            ColorOnDashboard = StudentData.GetColor(LetterGradeOnDashboard);
         }
 
         bool GetActivity (DateTime start, DateTime end) {

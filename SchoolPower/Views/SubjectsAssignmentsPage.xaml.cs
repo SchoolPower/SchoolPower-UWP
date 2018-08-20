@@ -41,14 +41,14 @@ namespace SchoolPower.Views {
                         case VirtualKey.F6:
                             try {
                                 await new SchoolPower.Views.Dialogs.GPADialog().ShowAsync();
-                            } catch (Exception) { } 
+                            } catch (Exception) { }
                             break;
                     }
                 };
 
             InitializeComponent();
 
-           // Application.Current.Resources["SystemAccentColor"] = new SolidColorBrush(Windows.UI.Colors.Transparent);
+            // Application.Current.Resources["SystemAccentColor"] = new SolidColorBrush(Windows.UI.Colors.Transparent);
 
             subjects = null;
             subjects = new List<Subject>();
@@ -62,6 +62,38 @@ namespace SchoolPower.Views {
             }
 
             SubjectsListView.ItemsSource = subjects;
+
+            // term or sem
+            foreach (var subject in StudentData.subjects) {
+
+                if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
+                    foreach (var p in subject.Peroids) {
+                        if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
+                            subject.LetterGradeOnDashboard = p.LetterGrade;
+                            subject.PercentageGradeOnDashboard = p.Percent;
+                            break;
+                        }
+                    }
+                } else {
+                    foreach (var p in subject.Peroids) {
+                        if ((p.IsActive) && ((p.Time == "S1") || (p.Time == "S2"))) {
+                            subject.LetterGradeOnDashboard = p.LetterGrade;
+                            subject.PercentageGradeOnDashboard = p.Percent;
+                            break;
+                        }
+                    }
+                    if (subject.PercentageGradeOnDashboard == "--") {
+                        foreach (var p in subject.Peroids) {
+                            if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
+                                subject.LetterGradeOnDashboard = p.LetterGrade;
+                                subject.PercentageGradeOnDashboard = p.Percent;
+                                break;
+                             }
+                        }
+                    } 
+                }
+                subject.ColorOnDashboard = StudentData.GetColor(subject.LetterGradeOnDashboard);
+            }
 
             // assignments
             // normal -> navigate 
