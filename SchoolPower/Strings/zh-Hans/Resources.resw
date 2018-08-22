@@ -308,6 +308,9 @@
 	<data name="chLog.Content" xml:space="preserve">
 		<value>更新日志</value>
 	</data>
+	<data name="lic.Content" xml:space="preserve">
+		<value>开源协议</value>
+	</data>
 
 	<data name="abouuuut.Header" xml:space="preserve">
 		<value>关于</value>

@@ -114,7 +114,14 @@
                             Foreground="Cyan" 
                             NavigateUri="https://schoolpower.tech/eula.html"
                             RelativePanel.Below="ChangeLog"/>
-                        
+
+                        <HyperlinkButton x:Name="Licenses"
+                            Content="Licenses"
+                            x:Uid="lic"
+                            Foreground="Cyan" 
+                            NavigateUri="https://github.com/SchoolPower/SchoolPower-UWP/tree/master/licenses"
+                            RelativePanel.Below="UserAgreement"/>
+
                     </RelativePanel>
                 </PivotItem>
 

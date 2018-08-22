@@ -308,6 +308,9 @@
 	<data name="chLog.Content" xml:space="preserve">
 		<value>Change Log</value>
 	</data>
+	<data name="lic.Content" xml:space="preserve">
+		<value>Licenses</value>
+	</data>
 
 	<data name="abouuuut.Header" xml:space="preserve">
 		<value>About</value>
