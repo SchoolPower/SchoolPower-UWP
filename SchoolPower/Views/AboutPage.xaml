@@ -10,7 +10,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:SchoolPower.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:SchoolPower.ViewModels"
     xmlns:data="using:SchoolPower.Models" 
     mc:Ignorable="d">
 
@@ -101,12 +100,20 @@
                                 <Run Text="{x:Bind Version}" />
                         </TextBlock>
 
+                        <HyperlinkButton x:Name="ChangeLog"
+                            Margin="0,5,0,0"
+                            Content="Change Log"
+                            x:Uid="chLog"
+                            Foreground="Cyan" 
+                            NavigateUri="https://github.com/SchoolPower/SchoolPower-UWP/releases"
+                            RelativePanel.Below="VersionTextBlock"/>
+
                         <HyperlinkButton x:Name="UserAgreement"
                             Content="User Agreement"
                             x:Uid="agree"
                             Foreground="Cyan" 
                             NavigateUri="https://schoolpower.tech/eula.html"
-                            RelativePanel.Below="VersionTextBlock"/>
+                            RelativePanel.Below="ChangeLog"/>
                         
                     </RelativePanel>
                 </PivotItem>
