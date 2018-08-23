@@ -180,6 +180,15 @@
 	<data name="blob.Header" xml:space="preserve">
 		<value>Bubble</value>
 	</data>
+	<data name="ColNoData.Text" xml:space="preserve">
+		<value>No chart data availiable. </value>
+	</data>
+	<data name="blobNoData.Text" xml:space="preserve">
+		<value>No chart data availiable. </value>
+	</data>
+	<data name="LineNoData.Text" xml:space="preserve">
+		<value>No chart data availiable. </value>
+	</data>
 
 	<!-- AttendancePage.Xaml -->
 	<data name="attendance.Content" xml:space="preserve">

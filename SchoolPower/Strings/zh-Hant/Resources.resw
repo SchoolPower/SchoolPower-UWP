@@ -179,6 +179,15 @@
 	<data name="blob.Header" xml:space="preserve">
 		<value>泡泡</value>
 	</data>
+	<data name="ColNoData.Text" xml:space="preserve">
+		<value>沒有可用的圖表數據。</value>
+	</data>
+	<data name="blobNoData.Text" xml:space="preserve">
+		<value>沒有可用的圖表數據。</value>
+	</data>
+	<data name="LineNoData.Text" xml:space="preserve">
+		<value>沒有可用的圖表數據。</value>
+	</data>
 
 	<!-- AttendancePage.Xaml -->
 	<data name="attendance.Content" xml:space="preserve">

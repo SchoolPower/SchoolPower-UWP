@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 using WinRTXamlToolkit.Controls.DataVisualization.Charting;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -77,6 +78,10 @@ namespace SchoolPower.Views {
                     ShowGridLines = true,
                 };
                 */
+            if (LineChart.Series.Count == 0) {
+                LineChart.Visibility = Visibility.Collapsed;
+                LineNoData.Visibility = Visibility.Visible;
+            }
         } // end of this function
 
         void InitTodayChartContent() {
@@ -106,6 +111,12 @@ namespace SchoolPower.Views {
             }
             (this.ColumnChart.Series[0] as ColumnSeries).ItemsSource = itemSource;
             (this.BlobChart.Series[0] as BubbleSeries).ItemsSource = itemSource;
+            if (itemSource.Count == 0) {
+                ColumnChart.Visibility = Visibility.Collapsed;
+                ColNoData.Visibility = Visibility.Visible;
+                BlobChart.Visibility = Visibility.Collapsed;
+                BlobNoData.Visibility = Visibility.Visible;
+            }
         }
 
         private bool todayIsLoaded = false;
