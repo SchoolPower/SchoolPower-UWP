@@ -32,39 +32,47 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
         <!--HEAD-->
-        <RelativePanel Grid.Row="0" Grid.Column="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <RelativePanel Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <controls:PageHeader Text="Attendance" x:Uid="attendance" x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
-
             </controls:PageHeader>
         </RelativePanel>
-        <Image Name="NoAttendanceImg" Visibility="Collapsed" Source="/Assets/perfect_attendance.png" Width="250" Height="250" Stretch="Uniform" />
+        
+        <Grid Grid.Row="1">
+            <RelativePanel Width="250" Height="250" >
+                <Image Name="NoAttendanceImg" Visibility="Collapsed" Source="/Assets/perfect_attendance.png" Width="250" Height="250" Stretch="Uniform" />
+            </RelativePanel>
 
-        <ScrollViewer Margin="16,60,0,0"
-            HorizontalScrollBarVisibility="Auto"
-            HorizontalScrollMode="Enabled"
-            VerticalScrollBarVisibility="Hidden"
-            VerticalScrollMode="Disabled">
-            <GridView 
-                Name="AttendanceDetailGridView"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.HorizontalScrollMode="Enabled"
-                ItemsSource="{x:Bind attendanceItems}" 
-                IsItemClickEnabled="True" 
-                ItemClick="GridView_ItemClick"
-                Loaded="AttendanceDetailGrid_Loaded"
-                SizeChanged="AttendanceDetailGrid_SizeChanged"
-                ItemTemplate="{StaticResource AttendanceGridDataTemplate}">
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid 
-                            Name="AttendanceDetailGrid" 
-                            Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-            </GridView>
-        </ScrollViewer>
-
+            <ScrollViewer Margin="10,10,0,0"
+                HorizontalScrollBarVisibility="Auto"
+                HorizontalScrollMode="Enabled"
+                VerticalScrollBarVisibility="Hidden"
+                VerticalScrollMode="Disabled">
+                <GridView 
+                    Name="AttendanceDetailGridView"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.HorizontalScrollMode="Enabled"
+                    ItemsSource="{x:Bind attendanceItems}" 
+                    IsItemClickEnabled="True" 
+                    ItemClick="GridView_ItemClick"
+                    Loaded="AttendanceDetailGrid_Loaded"
+                    SizeChanged="AttendanceDetailGrid_SizeChanged"
+                    ItemTemplate="{StaticResource AttendanceGridDataTemplate}">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid 
+                                Name="AttendanceDetailGrid" 
+                                Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>
