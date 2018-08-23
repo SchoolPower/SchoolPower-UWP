@@ -206,7 +206,7 @@
 		<value>顯示</value>
 	</data>
 	<data name="customGPA.Header" xml:space="preserve">
-		<value>自定義 GPA</value>
+		<value>客制化 GPA</value>
 	</data>
 	<data name="logout.Header" xml:space="preserve">
 		<value>登出</value>
@@ -299,7 +299,7 @@
 		<value>全部</value>
 	</data>
 	<data name="custom.Content" xml:space="preserve">
-		<value>自定義</value>
+		<value>客制化</value>
 	</data>
 	<data name="official.Content" xml:space="preserve">
 		<value>官方</value>

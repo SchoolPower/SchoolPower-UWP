@@ -47,12 +47,18 @@ namespace SchoolPower.Views.Dialogs {
                         case "3":
                             GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 5).ToString() + "%";
                             break;
+                        default:
+                            GPA.Text = "N/A";
+                            break;
                     }
                     break;
                 case "Official":
                     try {
-                        if (StudentData.info.GPA == null) { }
-                        GPA.Text = StudentData.info.GPA + "%";
+                        var v = StudentData.info.GPA;
+                        if (StudentData.info.GPA == null) 
+                            GPA.Text = "N/A";
+                        else 
+                            GPA.Text = StudentData.info.GPA + "%";
                     } catch (System.NullReferenceException) {
                         GPA.Text = "NaN%";
                     } break;
