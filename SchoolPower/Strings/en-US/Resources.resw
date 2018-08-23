@@ -155,6 +155,9 @@
 	<data name="GPAbutton.ToolTipService.ToolTip" xml:space="preserve">
 		<value>GPA (F6)</value>
 	</data>
+	<data name="nothing.Text" xml:space="preserve">
+		<value>Nothing Here.</value>
+	</data>
 
 	<!-- LoginPage.xaml -->
 	<data name="username.PlaceholderText" xml:space="preserve">

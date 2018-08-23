@@ -109,6 +109,11 @@ namespace SchoolPower.Views {
                     AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
                 }
             }
+
+            // nothing here
+            if (subjects.Count == 0) {
+                nothing.Visibility = Visibility.Visible;
+            }
         }
 
         private async Task KissingAsync() {
