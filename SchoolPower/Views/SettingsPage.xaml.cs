@@ -86,7 +86,8 @@ namespace SchoolPower.Views {
                 LocalizedResources.Language = language;
 
                 if (Language_Combo_IsLoaded) {
-                    Frame.Navigate(typeof(Views.SettingsPage), null, new SuppressNavigationTransitionInfo());
+                    // await CoreApplication.RequestRestartAsync("");
+                    Frame.Navigate(typeof(Views.SettingsPage), null, new DrillInNavigationTransitionInfo());
                     Frame.GoBack();
                 }
             }
