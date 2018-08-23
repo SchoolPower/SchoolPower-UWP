@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="SchoolPower" Publisher="CN=SchoolPower Studio" Version="0.8.0.0" />
-  <mp:PhoneIdentity PhoneProductId="92211ab1-5481-4a1a-9111-a3dd87b81b72" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="58761VoidUniversalObserve.SchoolPower" Publisher="CN=AF509DF3-20F9-44DA-8F0C-99829E7E4AA6" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="5d81fe43-411d-4691-a2ac-3d8b56599fae" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>SchoolPower</DisplayName>
-    <PublisherDisplayName>SchoolPower Studio</PublisherDisplayName>
+    <PublisherDisplayName>Void Universal Observer</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
