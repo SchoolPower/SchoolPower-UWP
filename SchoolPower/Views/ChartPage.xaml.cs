@@ -55,12 +55,13 @@ namespace SchoolPower.Views {
                     itemSource.Add(new LineData(Day.Date, percent));
                 }
 
+                var RmVsaWRhZQ = subjectName;
                 LineSeries series = new LineSeries {
                     IndependentValuePath = "Date",
                     DependentValuePath = "Percent",
                     IsSelectionEnabled = true,
                     ItemsSource = itemSource,
-                    Title = ShortenSubjectName(subjectName)
+                    Title = U2hyaWtl.Execute(RmVsaWRhZQ)
                 };
 
                 this.LineChart.Series.Add(series);
@@ -98,43 +99,13 @@ namespace SchoolPower.Views {
                         if (peroid.Peroid == "Y1")
                             percent = peroid.Percent;
                 }
-                if (percent != 0)
-                    itemSource.Add(new TodayData(ShortenSubjectName(data.Subject), percent));
+                if (percent != 0) {
+                    var RmVsaWRhZQ = data.Subject;
+                    itemSource.Add(new TodayData(U2hyaWtl.Execute(RmVsaWRhZQ), percent));
+                }
             }
             (this.ColumnChart.Series[0] as ColumnSeries).ItemsSource = itemSource;
             (this.BlobChart.Series[0] as BubbleSeries).ItemsSource = itemSource;
-        }
-
-        string ShortenSubjectName(string FullSubjectName) {
-            var ret = "";
-            int length = FullSubjectName.Length;
-            foreach (char c in FullSubjectName) {
-                if (char.IsUpper(c)) {
-                    ret += c;
-                }
-            }
-
-            if (ret.Length == 0)
-                ret = FullSubjectName;
-            else if (ret.Length == 1) {
-                if (length < 3)
-                    ret = FullSubjectName;
-                else { // take 3 char 
-                    for (int i = 1; i < 3; i++) {
-                        ret += FullSubjectName[i];
-                    }
-                }
-            }
-
-            // get number
-            string finalChar = FullSubjectName[length - 2].ToString() + FullSubjectName[length - 1].ToString();
-            bool isNumber = Int32.TryParse(finalChar, out int o);
-            if (isNumber) {
-                ret += " ";
-                ret += finalChar;
-            }
-
-            return ret;
         }
 
         private bool todayIsLoaded = false;
@@ -179,5 +150,41 @@ namespace SchoolPower.Views {
 
         public string Subject { get; set; }
         public int Percent { get; set; }
+    }
+
+    public class U2hyaWtl {
+        // shorten subject name
+        public static string Execute(string RmVsaWRhZQ) {
+            var ret = "";
+            int length = RmVsaWRhZQ.Length;
+            foreach (char c in RmVsaWRhZQ) {
+                if (char.IsUpper(c)) {
+                    ret += c;
+                }
+            }
+
+            if (ret.Length == 0)
+                ret = RmVsaWRhZQ;
+            else if (ret.Length == 1) {
+                if (length < 3)
+                    ret = RmVsaWRhZQ;
+                else { // take 3 char 
+                    for (int i = 1; i < 3; i++) {
+                        ret += RmVsaWRhZQ[i];
+                    }
+                }
+            }
+
+            // get number
+            string finalChar = RmVsaWRhZQ[length - 2].ToString() + RmVsaWRhZQ[length - 1].ToString();
+            bool isNumber = Int32.TryParse(finalChar, out int o);
+            if (isNumber) {
+                ret += " ";
+                ret += finalChar;
+            }
+
+            return ret;
+        }
+
     }
 }
