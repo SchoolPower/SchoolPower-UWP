@@ -4,7 +4,6 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SchoolPower.Models;
-using System.Diagnostics;
 
 namespace SchoolPower.Views {
 

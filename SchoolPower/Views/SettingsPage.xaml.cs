@@ -1,15 +1,11 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Windows.ApplicationModel.Core;
 using SchoolPower.Models;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml;
 using SchoolPower.Localization;
 using System.Linq;
 using Windows.UI.Xaml.Media.Animation;
+using System.Diagnostics;
 
 namespace SchoolPower.Views {
     public sealed partial class SettingsPage : Page {
@@ -18,11 +14,11 @@ namespace SchoolPower.Views {
         List<Subject> subjects = StudentData.subjects;
 
         public SettingsPage() {
+            
             InitializeComponent();
 
             Language_ComboBox.ItemsSource = LocalizedResources.SupportedLanguages;
             Language_ComboBox.SelectedIndex = Array.IndexOf(LocalizedResources.SupportedLanguages.ToArray(), LocalizedResources.Language);
-
         }
 
         private void LogoutButtonClick_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
@@ -35,28 +31,19 @@ namespace SchoolPower.Views {
 
         private void SelectSubject_CheckBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             CheckBox checkBox = sender as CheckBox;
-            try {
-                bool b = (bool)localSettings.Values[checkBox.Content.ToString()];
-            } catch (System.NullReferenceException) {
-                localSettings.Values[checkBox.Content.ToString()] = false;
-            }
-            if ((bool)localSettings.Values[checkBox.Content.ToString()]) {
+            string subjectName = checkBox.Content.ToString();
+            if (StudentData.GPASelectedSubject[subjectName]) {
                 checkBox.IsChecked = true;
             }
         }
 
-        private void CalcRule_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void CalcRule_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) { 
             var combo = sender as ComboBox;
             localSettings.Values["CalculateRule"] = combo.SelectedIndex;
         }
 
-        private void CalcRule_ComboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
+        private void CalcRule_ComboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) { 
             var combo = sender as ComboBox;
-            try {
-                int i = (int)localSettings.Values["CalculateRule"];
-            } catch (System.NullReferenceException) {
-                localSettings.Values["CalculateRule"] = 0;
-            }
             combo.SelectedIndex = (int)localSettings.Values["CalculateRule"];
         }
 

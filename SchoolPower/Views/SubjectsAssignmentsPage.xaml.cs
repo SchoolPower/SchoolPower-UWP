@@ -3,13 +3,9 @@ using Windows.UI.Xaml.Controls;
 using SchoolPower.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.UI.Core;
 using System;
 using SchoolPower.Views.Dialogs;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using System.Collections.ObjectModel;
-using Windows.UI.Xaml.Media;
 using Windows.System;
 using SchoolPower.Localization;
 

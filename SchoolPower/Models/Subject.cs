@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
@@ -67,36 +63,36 @@ using Windows.UI.Xaml.Media;
 namespace SchoolPower.Models {
 
     public class Subject {
-        public String Name { get; set; }
-        public String DisplayName { get; set; }
-        public String TeacherName { get; set; }
-        public String TeacherEmail { get; set; }
-        public String BlockLetter { get; set; }
-        public String RoomNumber { get; set; }
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public string TeacherName { get; set; }
+        public string TeacherEmail { get; set; }
+        public string BlockLetter { get; set; }
+        public string RoomNumber { get; set; }
         public List<AssignmentItem> Assignments = new List<AssignmentItem>();
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<Peroid> Peroids = new List<Peroid>();
-        public String LetterGradeOnDashboard { get; set; }
-        public String PercentageGradeOnDashboard { get; set; }
+        public string LetterGradeOnDashboard { get; set; }
+        public string PercentageGradeOnDashboard { get; set; }
         public SolidColorBrush ColorOnDashboard { get; set; }
         public bool IsActive { get; set; }
         public bool IsNew { get; set; }
         public FontWeight LargeTextFontWeight { get; set; }
         public FontWeight SmallTextFontWeight { get; set; }
 
-        public Subject(dynamic data) {
+        public Subject(JObject data) {
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
-            Name         = data.name;
-            DisplayName  = data.name;
-            TeacherName  = data.teacher.firstName + " " + data.teacher.lastName;
-            TeacherEmail = data.teacher.email;
-            BlockLetter  = data.expression;
-            RoomNumber   = data.roomName;
-            StartDate    = data.startDate;
-            EndDate      = data.endDate;
+            Name         = data["name"].ToString();
+            DisplayName  = data["name"].ToString();
+            TeacherEmail = data["teacher"]["email"].ToString();
+            TeacherName  = data["teacher"]["firstName"].ToString() + " " + data["teacher"]["lastName"].ToString();
+            BlockLetter  = data["expression"].ToString();
+            RoomNumber   = data["roomName"].ToString();
+            StartDate    = (DateTime)data["startDate"];
+            EndDate      = (DateTime)data["endDate"];
             IsNew        = false;
             LetterGradeOnDashboard = "--";
             PercentageGradeOnDashboard  = "--";
@@ -104,19 +100,18 @@ namespace SchoolPower.Models {
             SmallTextFontWeight = FontWeights.Normal;
             IsActive = GetActivity(StartDate, EndDate);
 
-            JArray assignmentsJarray = (JArray)data.assignments;
+            JArray assignmentsJarray = (JArray)data["assignments"];
             try {
                 for (int index = 0; index < assignmentsJarray.Count; index++) 
-                    Assignments.Add(new AssignmentItem(assignmentsJarray[index]));
-                
+                    Assignments.Add(new AssignmentItem((JObject)assignmentsJarray[index]));
             } catch (System.NullReferenceException) { }
 
-            String[] peroidList = { "T1", "T2", "X1", "S1", "T3", "T4", "X2", "S2", "Y1" };
+            string[] peroidList = { "T1", "T2", "X1", "S1", "T3", "T4", "X2", "S2", "Y1" };
 
             foreach (var peroid in peroidList) {
                 try {
-                    if (data.finalGrades[peroid].percent != null)
-                        Peroids.Add(new Peroid(peroid, data.finalGrades[peroid]));
+                    if (data["finalGrades"][peroid]["percent"] != null)
+                        Peroids.Add(new Peroid(peroid, (JObject)data["finalGrades"][peroid]));
                 } catch (Exception) { }
             }
             
@@ -172,32 +167,31 @@ namespace SchoolPower.Models {
     }
 
     public class Peroid {
-        public String Time { get; set; }
-        public String Percent { get; set; }
-        public String LetterGrade { get; set; }    
-        public String Comment { get; set; }
-        public String Eval { get; set; }
+        public string Time { get; set; }
+        public string Percent { get; set; }
+        public string LetterGrade { get; set; }    
+        public string Comment { get; set; }
+        public string Eval { get; set; }
         public DateTime Date { get; set; }
         public SolidColorBrush Color { get; set; }
         public bool IsActive { get; set; }
 
-        public Peroid(String time, dynamic data) {
-            Time = time;
-            Percent = data.percent;
-            Percent = Percent.Substring(0, Percent.IndexOf("."));
-            LetterGrade = data.letter;
-            Eval = data.eval;
-            IsActive = false;
-            Color = StudentData.GetColor(LetterGrade);
+        public Peroid(string time, JObject data) {
+            Time            = time;
+            Percent         = data["percent"].ToString();
+            Percent         = Percent.Substring(0, Percent.IndexOf("."));
+            LetterGrade     = data["letter"].ToString();
+            Eval            = data["eval"].ToString();
+            IsActive        = false;
+            Color           = StudentData.GetColor(LetterGrade);
 
             DateTime Genesis = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            Date = Genesis.AddSeconds((double)data.startDate).ToLocalTime();
+            Date = Genesis.AddSeconds((double)data["startDate"]).ToLocalTime();
 
-            if (data.comment == null) 
+            if (data["comment"].ToString() == null) 
                 Comment = "--";
             else 
-                Comment = data.comment;
-            
+                Comment = data["comment"].ToString();
         }
     }
 }

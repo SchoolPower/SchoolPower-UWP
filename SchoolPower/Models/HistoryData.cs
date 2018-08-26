@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SchoolPower.Models {
     public class HistoryData {
@@ -20,17 +16,17 @@ namespace SchoolPower.Models {
                 SubjectHistoryData = new List<SubjectHistoryData>();
 
                 var data = StudentData.ParseJSON((string)localSettings.Values[date]);
-                Date = data.date;
+                Date = data["date"].ToString();
                 JArray historyDataArray = (JArray)data["subjects"];
 
-                foreach (dynamic historyDataItem in historyDataArray) {
+                foreach (JObject historyDataItem in historyDataArray) {
                      
-                    string subject = historyDataItem.name;
+                    string subject = historyDataItem["name"].ToString();
                     List<PeroidItem> peroidItems = new List<PeroidItem>();
 
                     JArray peroidArray = (JArray)historyDataItem["peroids"];
-                    foreach (dynamic peroidItem in peroidArray) {
-                        peroidItems.Add(new PeroidItem((string)peroidItem.time, (int)peroidItem.percent));
+                    foreach (JObject peroidItem in peroidArray) {
+                        peroidItems.Add(new PeroidItem((string)peroidItem["time"], (int)peroidItem["percent"]));
                     }
 
                     SubjectHistoryData.Add(new SubjectHistoryData(subject, peroidItems));

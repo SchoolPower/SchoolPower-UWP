@@ -28,11 +28,9 @@ using SchoolPower.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Template10.Controls;
 using Template10.Common;
-using System;
 using Windows.UI.Xaml.Data;
 using Windows.Storage;
 using SchoolPower.Models;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 
 namespace SchoolPower {
@@ -80,7 +78,8 @@ namespace SchoolPower {
                 bool b = (bool)localSettings.Values["showInactive"];
                 b = (bool)localSettings.Values["DashboardShowGradeOfTERM"];
                 var v = (string)localSettings.Values["dates"];
-                v = localSettings.Values["lang"].ToString();
+                var vv = localSettings.Values["lang"].ToString();
+                var vvv = localSettings.Values["CalculateRule"];
             }
             catch (System.NullReferenceException) {
                 localSettings.Values["IsFirstTimeLogin"] = true;
@@ -88,14 +87,14 @@ namespace SchoolPower {
                 localSettings.Values["DashboardShowGradeOfTERM"] = true;
                 localSettings.Values["dates"] = "";
                 localSettings.Values["lang"] = 0;
-
+                localSettings.Values["CalculateRule"] = 0;
             }
 
             if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                 await NavigationService.NavigateAsync(typeof(Views.LoginPage));
             } else {
                 Task<string> getHistoryJSON = StudentData.GetStudentData(StudentData.NewOrOld.New);
-                String studataOld = await getHistoryJSON;
+                string studataOld = await getHistoryJSON;
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studataOld), StudentData.ParseJSON(studataOld));
                 App.SetUIBlue();
                 await NavigationService.NavigateAsync(typeof(Views.SubjectsAssignmentsPage));

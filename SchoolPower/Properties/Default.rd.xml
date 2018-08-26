@@ -6,9 +6,9 @@
     Runtime Directives are documented at http://go.microsoft.com/fwlink/?LinkID=391919
 
     To fully enable reflection for App1.MyClass and all of its public/private members
-    <Type Name="App1.MyClass" Dynamic="Required All"/>
+    <Type Name="App1.MyClass" JObject="Required All"/>
 
-    To enable dynamic creation of the specific instantiation of AppClass<T> over System.Int32
+    To enable JObject creation of the specific instantiation of AppClass<T> over System.Int32
     <TypeInstantiation Name="App1.AppClass" Arguments="System.Int32" Activate="Required Public" />
 
     Using the Namespace directive to apply reflection policy to all the types in a particular namespace
@@ -21,11 +21,21 @@
       An Assembly element with Name="*Application*" applies to all assemblies in
       the application package. The asterisks are not wildcards.
     -->
-    <Assembly Name="*Application*" Dynamic="Required All" />
+    <Assembly 
+      Name="*Application*" 
+      Dynamic="Required All" />
     
+    <Assembly 
+      Name="Newtonsoft.Json.Linq" 
+      Serialize="Required All" />
     
-    <!-- Add your application specific runtime directives here. -->
-
+    <Assembly 
+      Name="Newtonsoft.Json" 
+      Serialize="Required All" />
+    
+    <Namespace 
+      Name="SchoolPower.Models" 
+      Serialize="Required All" />
 
   </Application>
 </Directives>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,22 +26,22 @@ using System.Threading.Tasks;
 */
 namespace SchoolPower.Models {
     public class Info {
-        public String GPA { get; set; }
-        public String ID { get; set; }
-        public String Gender { get; set; }
-        public String DOB { get; set; }
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public String PhotoDate { get; set; }
+        public string GPA { get; set; }
+        public string ID { get; set; }
+        public string Gender { get; set; }
+        public string DOB { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhotoDate { get; set; }
 
-        public Info (dynamic data) {
-            GPA       = data.currentGPA;
-            ID        = data.id;
-            Gender    = data.gender;
-            DOB       = data.dob;
-            FirstName = data.middleName;
-            LastName  = data.lastName;
-            PhotoDate = data.photoDate;
+        public Info (JObject data) {
+            GPA       = data["currentGPA"].ToString();
+            ID        = data["id"].ToString();
+            Gender    = data["gender"].ToString();
+            DOB       = data["dob"].ToString();
+            FirstName = data["middleName"].ToString();
+            LastName  = data["lastName"].ToString();
+            PhotoDate = data["photoDate"].ToString();
         }
     }
 }

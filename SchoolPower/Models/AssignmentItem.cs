@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
+using Newtonsoft.Json.Linq;
 
 /*
 Sample:
@@ -32,37 +33,37 @@ Sample:
 
 namespace SchoolPower.Models {
     public class AssignmentItem : IEquatable<AssignmentItem> {
-        public String Name { get; set; }
-        public String DisplayName { get; set; }
-        public String Category { get; set; }
-        public String Description { get; set; }
-        public String Percentage { get; set; }
-        public String Score { get; set; }
-        public String LetterGrade { get; set; }
-        public String IncludeInFinalGrade { get; set; }
-        public String MaximumScore { get; set; }
-        public String Date { get; set; }
-        public String Weight { get; set; }
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public string Category { get; set; }
+        public string Description { get; set; }
+        public string Percentage { get; set; }
+        public string Score { get; set; }
+        public string LetterGrade { get; set; }
+        public string IncludeInFinalGrade { get; set; }
+        public string MaximumScore { get; set; }
+        public string Date { get; set; }
+        public string Weight { get; set; }
         public string[] Terms { get; set; }
         public bool IsNew { get; set; }
         public FontWeight LargeTextFontWeight { get; set; }
         public FontWeight SmallTextFontWeight { get; set; }
         public SolidColorBrush Color { get; set; }
 
-        public AssignmentItem(dynamic data) {
-            Name                = data.name;
-            DisplayName         = data.name;
-            Date                = data.date;
+        public AssignmentItem(JObject data) {
+            Name                = data["name"].ToString();
+            DisplayName         = data["name"].ToString();
+            Date                = data["date"].ToString();
             Date                = Date.Substring(0, Date.IndexOf(" "));
-            Percentage          = data.percent;
-            Score               = data.score;
-            MaximumScore        = data.pointsPossible;
+            Percentage          = data["percent"].ToString();
+            Score               = data["score"].ToString();
+            MaximumScore        = data["pointsPossible"].ToString();
             MaximumScore        = MaximumScore.Substring(0, MaximumScore.IndexOf("."));
-            LetterGrade         = data.letterGrade;
-            Category            = data.category;
-            IncludeInFinalGrade = data.includeInFinalGrade;
-            Weight              = data.weight;
-            Terms               = data.terms.ToObject<string[]>();
+            LetterGrade         = data["letterGrade"].ToString();
+            Category            = data["category"].ToString();
+            IncludeInFinalGrade = data["includeInFinalGrade"].ToString();
+            Weight              = data["weight"].ToString();
+            Terms               = data["terms"].ToObject<string[]>();
             IsNew               = false;
             LargeTextFontWeight = FontWeights.SemiLight;
             SmallTextFontWeight = FontWeights.Normal;

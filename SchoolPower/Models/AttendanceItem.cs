@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Text;
 
@@ -21,23 +17,23 @@ Sample:
 namespace SchoolPower.Models {
     public class AttendanceItem : IEquatable<AttendanceItem> { 
 
-        public String Code { get; set; }
-        public String Description { get; set; }
-        public String Date { get; set; }
-        public String Peroid { get; set; }
-        public String Name { get; set; }
-        public String DisplayName { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public string Date { get; set; }
+        public string Peroid { get; set; }
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
         public bool IsNew { get; set; }
         public SolidColorBrush Color { get; set; }
         public FontWeight SmallTextFontWeight { get; set; }
 
-        public AttendanceItem(dynamic data) {
-            Code        = data.code;
-            Description = data.description;
-            Date        = data.date;
+        public AttendanceItem(JObject data) {
+            Code        = data["code"].ToString();
+            Description = data["description"].ToString();
+            Date        = data["date"].ToString();
             Date        = Date.Substring(0, Date.IndexOf(" "));
-            Peroid      = data.peroid;
-            Name        = data.name;
+            Peroid      = data["period"].ToString();
+            Name        = data["name"].ToString();
             DisplayName = Name;
             Color       = StudentData.GetColor(Code);
             SmallTextFontWeight = FontWeights.Normal;

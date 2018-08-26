@@ -42,8 +42,8 @@ namespace SchoolPower.Views {
             App.isMainPageFirstTimeInit = false;
 
             // get account info
-            String username = UsernameTextBox.Text;
-            String password = PasswordTextBox.Password;
+            string username = UsernameTextBox.Text;
+            string password = PasswordTextBox.Password;
             localSettings.Values["UsrName"] = username;
             localSettings.Values["Passwd"] = password;
 

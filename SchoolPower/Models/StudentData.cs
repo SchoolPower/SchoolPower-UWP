@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
-    
+
 namespace SchoolPower.Models {
     public class StudentData {
 
@@ -18,16 +17,20 @@ namespace SchoolPower.Models {
 
         public enum NewOrOld { New, Old };
 
-        public static List<Subject> subjects                = new List<Subject>();
-        public static List<AttendanceItem> attendances      = new List<AttendanceItem>();
+        public static List<Subject> subjects = new List<Subject>();
+        public static List<AttendanceItem> attendances = new List<AttendanceItem>();
         public static List<HistoryData> historyDatas;
         public static Info info;
-        public static String SelectedSubjectName;
+        public static string SelectedSubjectName;
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
         public static int MagicNumber = 114514;
 
-        public StudentData(dynamic data, dynamic dataOld) {
+        public static Dictionary<string, bool> GPASelectedSubject = new Dictionary<string, bool>();
+
+        public StudentData(JObject data, JObject dataOld) {
+
+            info = new Info((JObject)data["information"]);
 
             // init variables
             List<Subject> subjectsOld = new List<Subject>();
@@ -35,24 +38,22 @@ namespace SchoolPower.Models {
             historyDatas = null;
             historyDatas = new List<HistoryData>();
 
-            info = new Info(data.information);
-
             // parse
             JArray sectionsJarray = (JArray)data["sections"];
             foreach (var section in sectionsJarray) {
-                subjects.Add(new Subject(section));
+                subjects.Add(new Subject((JObject)section));
             }
             JArray sectionsJarrayOld = (JArray)dataOld["sections"];
             foreach (var sectionOld in sectionsJarrayOld) {
-                subjectsOld.Add(new Subject(sectionOld));
+                subjectsOld.Add(new Subject((JObject)sectionOld));
             }
             JArray attendancesJarray = (JArray)data["attendances"];
             foreach (var attendence in attendancesJarray) {
-                attendances.Add(new AttendanceItem(attendence));
+                attendances.Add(new AttendanceItem((JObject)attendence));
             }
             JArray attendancesJarrayOld = (JArray)dataOld["attendances"];
             foreach (var attendenceOld in attendancesJarrayOld) {
-                attendancesOld.Add(new AttendanceItem(attendenceOld));
+                attendancesOld.Add(new AttendanceItem((JObject)attendenceOld));
             }
 
             // sort
@@ -113,6 +114,17 @@ namespace SchoolPower.Models {
             // remove null data
             if (historyDatas[0].Date == null && historyDatas[0].SubjectHistoryData == null)
                 historyDatas.RemoveAt(0);
+
+            // GPA selected subjects
+            foreach(var subject in subjects) {
+                bool b = false;
+                try {
+                    b = (bool)localSettings.Values[subject.Name];
+                } catch (System.NullReferenceException) {
+                    localSettings.Values[subject.Name] = false;
+                }
+                GPASelectedSubject.Add(subject.Name, b);
+            }
         }
         
         public static async Task<string> Kissing(string username, string password) {
@@ -142,8 +154,8 @@ namespace SchoolPower.Models {
             }
         }
 
-        public static dynamic ParseJSON(string json) {
-            dynamic ret = JObject.Parse(json);
+        public static JObject ParseJSON(string json) {
+            JObject ret = JObject.Parse(json);
             return ret;
         }
 
@@ -241,7 +253,7 @@ namespace SchoolPower.Models {
             return Math.Round(sum / total, 3);
         }
 
-        public static async Task<String> Refresh() {
+        public static async Task<string> Refresh() {
 
             string studata = "";
             string studataOld = "";
@@ -313,32 +325,33 @@ namespace SchoolPower.Models {
 
         public static string CollectCurrentHistoryData() {
 
-            dynamic json = new JObject();
-            json.date = DateTime.Now.ToString("yyyy-MM-dd");
+            JObject json = new JObject {
+                ["date"] = DateTime.Now.ToString("yyyy-MM-dd")
+            };
 
             JArray subjectItemArray = new JArray();
 
             foreach (var subject in subjects) {
 
-                dynamic subjectItem = new JObject();
+                JObject subjectItem = new JObject();
                 JArray peroidInfoArray = new JArray();
-                subjectItem.name = subject.Name;
-                subjectItem.peroids = peroidInfoArray;
+                subjectItem["name"] = subject.Name;
+                subjectItem["peroids"] = peroidInfoArray;
 
                 foreach (var peroid in subject.Peroids) {
 
                     if (peroid.IsActive) {
 
-                        dynamic peroidInfo = new JObject();
-                        peroidInfo.time = peroid.Time;
-                        peroidInfo.percent = peroid.Percent;
+                        JObject peroidInfo = new JObject();
+                        peroidInfo["time"] = peroid.Time;
+                        peroidInfo["percent"] = peroid.Percent;
                         peroidInfoArray.Add(peroidInfo);
 
                     }
                 }
                 subjectItemArray.Add(subjectItem);
             }
-            json.subjects = subjectItemArray;
+            json["subjects"] = subjectItemArray;
             return json.ToString();
         }
 
@@ -380,8 +393,9 @@ namespace SchoolPower.Models {
                 localSettings.Values["IsFirstTimeLogin"] = true;
                 localSettings.Values["showInactive"] = false;
                 localSettings.Values["DashboardShowGradeOfTERM"] = true;
-                localSettings.Values["lang"] = 0;
                 localSettings.Values["dates"] = "";
+                localSettings.Values["lang"] = 0;
+                localSettings.Values["CalculateRule"] = 0;
 
                 // clear history
                 SelectedSubjectName = null;
