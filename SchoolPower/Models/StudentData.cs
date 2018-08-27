@@ -57,13 +57,24 @@ namespace SchoolPower.Models {
             }
 
             // sort
-            attendances.Sort((x, y) => DateTime.Compare
-                (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
-                DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
+            try {
+                attendances.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            } catch (Exception) { }
+            try {
+                attendances.Sort((x, y) => DateTime.Compare
+                    (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
+                     DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
+            } catch (Exception) { }
             attendances.Reverse();
-            attendancesOld.Sort((x, y) => DateTime.Compare
-                (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
-                DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
+
+            try {
+                attendancesOld.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+            } catch (Exception) { }
+            try {
+                attendancesOld.Sort((x, y) => DateTime.Compare
+                    (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
+                     DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
+            } catch (Exception) { }
             attendancesOld.Reverse();
 
             // new assignments 
@@ -122,8 +133,11 @@ namespace SchoolPower.Models {
                     b = (bool)localSettings.Values[subject.Name];
                 } catch (System.NullReferenceException) {
                     localSettings.Values[subject.Name] = false;
+                } try {
+                    GPASelectedSubject[subject.Name] = b;
+                } catch (Exception) {
+                    GPASelectedSubject.Add(subject.Name, b);
                 }
-                GPASelectedSubject.Add(subject.Name, b);
             }
         }
         
