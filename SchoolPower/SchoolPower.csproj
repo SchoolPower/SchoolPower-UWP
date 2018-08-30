@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Localization\LocalizedResources.cs" />
     <Compile Include="Localization\LocalizedResourcesConverter.cs" />
+    <Compile Include="Cat.cs" />
     <Compile Include="Models\AssignmentItem.cs" />
     <Compile Include="Models\AttendanceItem.cs" />
     <Compile Include="Models\HistoryData.cs" />
@@ -161,7 +162,6 @@
     <Content Include="Assets\no_grades.png" />
     <Content Include="Assets\perfect_attendance.png" />
     <None Include="Package.StoreAssociation.xml" />
-    <None Include="miaw" />
     <Content Include="Properties\Default.rd.xml">
       <SubType>Designer</SubType>
     </Content>
