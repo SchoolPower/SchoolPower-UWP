@@ -97,6 +97,9 @@ namespace SchoolPower.Views {
                         StudentData.SaveHistoryData(StudentData.CollectCurrentHistoryData());
                         // navigate
                         Frame.Navigate(typeof(SubjectsAssignmentsPage));
+                        if (StudentData.DisabledMsgDialog != null) {
+                            await StudentData.DisabledMsgDialog.ShowAsync();
+                        }
                     } catch (Exception e) {
                         await Windows.Storage.ApplicationData.Current.ClearAsync();
                         localSettings.Values["UsrName"] = username;

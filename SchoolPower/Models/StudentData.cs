@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Text;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace SchoolPower.Models {
@@ -12,11 +13,12 @@ namespace SchoolPower.Models {
 
         static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-        internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
-        // internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
+        // internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
+        internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
+        // internal const string APIURL = "http://127.0.0.1:8000";
 
         public enum NewOrOld { New, Old };
-
+        
         public static List<Subject> subjects = new List<Subject>();
         public static List<AttendanceItem> attendances = new List<AttendanceItem>();
         public static List<HistoryData> historyDatas;
@@ -25,12 +27,23 @@ namespace SchoolPower.Models {
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
         public static int MagicNumber = 114514;
+        public static ContentDialog DisabledMsgDialog;
 
         public static Dictionary<string, bool> GPASelectedSubject = new Dictionary<string, bool>();
 
         public StudentData(JObject data, JObject dataOld) {
 
             info = new Info((JObject)data["information"]);
+
+            try{
+                DisabledMsgDialog = new ContentDialog {
+                    Title = data["disabled"]["title"],
+                    Content = data["disabled"]["message"],
+                    CloseButtonText = "吼哇"
+                };
+            } catch (Exception) {
+                DisabledMsgDialog = null;
+            }
 
             // init variables
             List<Subject> subjectsOld = new List<Subject>();
@@ -304,7 +317,12 @@ namespace SchoolPower.Models {
                 }
 
                 // new StudentData
-                StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
+                StudentData studentData = new StudentData(ParseJSON(studata), ParseJSON(studataOld));
+
+                if (DisabledMsgDialog != null) {
+                    await DisabledMsgDialog.ShowAsync();
+                }
+
                 return "okey dokey";
             }
         }
