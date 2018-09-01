@@ -387,4 +387,7 @@
 	<data name="unknownError.Text" xml:space="preserve">
 		<value>未知錯誤</value>
 	</data>
+	<data name="bad.Text" xml:space="preserve">
+		<value>有一些奇怪的東西出錯了。再刷新一次試試。如果我總是這樣，我可能被玩壞掉了。再啟動我，或者重置我可能可以解決這個問題。。</value>
+	</data>
 </root>

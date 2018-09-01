@@ -129,7 +129,7 @@ namespace SchoolPower.Views {
                 try {
                     ContentDialog ErrorContentDialog = new ContentDialog {
                         Title = LocalizedResources.GetString("unknownError/Text"),
-                        Content = e.ToString(),
+                        Content = LocalizedResources.GetString("bad/Text") + "\r\n\r\n" + e.ToString(),
                         CloseButtonText = LocalizedResources.GetString("yesNet/Text"),
                     };
                     await ErrorContentDialog.ShowAsync();

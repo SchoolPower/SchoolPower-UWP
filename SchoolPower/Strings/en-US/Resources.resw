@@ -389,4 +389,7 @@
 	<data name="unknownError.Text" xml:space="preserve">
 		<value>Unknown Error</value>
 	</data>
+	<data name="bad.Text" xml:space="preserve">
+		<value>Some thing went wrong. Try to refresh again. If me kept occur, restart or reset the app may help.</value>
+	</data>
 </root>
