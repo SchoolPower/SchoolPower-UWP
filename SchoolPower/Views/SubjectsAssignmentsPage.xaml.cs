@@ -32,7 +32,9 @@ namespace SchoolPower.Views {
                     switch (e.VirtualKey) {
                         case VirtualKey.F5:
                             if (!IsKissing)
-                                await KissingAsync();
+                                try {
+                                    await KissingAsync();
+                                } catch (Exception) { }
                             break;
                         case VirtualKey.F6:
                             try {
@@ -119,8 +121,20 @@ namespace SchoolPower.Views {
             // show
             ShowKissingBar.Begin();
 
+            string result = null;
             // refresh
-            string result = await StudentData.Refresh();
+            try {
+                result = await StudentData.Refresh();
+            } catch (Exception e) {
+                try {
+                    ContentDialog ErrorContentDialog = new ContentDialog {
+                        Title = LocalizedResources.GetString("unknownError/Text"),
+                        Content = e.ToString(),
+                        CloseButtonText = LocalizedResources.GetString("yesNet/Text"),
+                    };
+                    await ErrorContentDialog.ShowAsync();
+                } catch (Exception) { }
+            }
 
             // hide
             HideKissingBar.Begin();
@@ -133,6 +147,11 @@ namespace SchoolPower.Views {
                     break;
                 case "error":
                     StatusTextBlock.Text = LocalizedResources.GetString("cannotConnect/Text");
+                    // Tawny
+                    KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
+                    break;
+                case null:
+                    StatusTextBlock.Text = LocalizedResources.GetString("unknownError/Text");
                     // Tawny
                     KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
                     break;

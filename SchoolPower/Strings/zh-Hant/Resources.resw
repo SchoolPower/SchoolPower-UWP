@@ -384,4 +384,7 @@
 	<data name="cannotConnect.Text" xml:space="preserve">
 		<value>无法连接至服务器。</value>
 	</data>
+	<data name="unknownError.Text" xml:space="preserve">
+		<value>未知錯誤</value>
+	</data>
 </root>

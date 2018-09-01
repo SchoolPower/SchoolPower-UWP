@@ -386,5 +386,7 @@
 	<data name="cannotConnect.Text" xml:space="preserve">
 		<value>Cannot connect to server.</value>
 	</data>
-	 
+	<data name="unknownError.Text" xml:space="preserve">
+		<value>Unknown Error</value>
+	</data>
 </root>

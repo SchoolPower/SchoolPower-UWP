@@ -71,7 +71,7 @@ namespace SchoolPower.Views {
                         Title = LocalizedResources.GetString("error/Text"),
                         Content = LocalizedResources.GetString("netError/Text"),
                         CloseButtonText = LocalizedResources.GetString("yesNet/Text"),
-                    }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
+                    }; await ErrorContentDialog.ShowAsync();
                 } 
 
                 // wrong account info
