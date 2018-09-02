@@ -100,7 +100,10 @@ namespace SchoolPower.Models {
             SmallTextFontWeight = FontWeights.Normal;
             IsActive = GetActivity(StartDate, EndDate);
 
-            JArray assignmentsJarray = (JArray)data["assignments"];
+            JArray assignmentsJarray = new JArray();
+            try {
+                assignmentsJarray = (JArray)data["assignments"];
+            } catch (Exception) { }
             try {
                 for (int index = 0; index < assignmentsJarray.Count; index++) 
                     Assignments.Add(new AssignmentItem((JObject)assignmentsJarray[index]));
