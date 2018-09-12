@@ -94,6 +94,13 @@
             <controls:PageHeader 
                 Text="{x:Bind selectdeSubject}" x:Name="pageHeader" 
                 RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
+
+                <controls:PageHeader.PrimaryCommands>
+                    <AppBarButton
+                        Icon="Filter"
+                        Name="Filter"
+                        Label="Filter"/>
+                </controls:PageHeader.PrimaryCommands>
                 <controls:PageHeader.SecondaryCommands>
                     <AppBarButton 
                         Icon="Edit" 

@@ -8,6 +8,7 @@ using SchoolPower.Views.Dialogs;
 using Windows.UI.Xaml.Navigation;
 using Windows.System;
 using SchoolPower.Localization;
+using System.Diagnostics;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
@@ -187,12 +188,15 @@ namespace SchoolPower.Views {
             if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex >= 0) {
                 GoToDetailButton.Visibility = Visibility.Visible;
                 EditButton.Visibility = Visibility.Visible;
+                Filter.Visibility = Visibility.Visible;
             } else if (AdaptiveStates.CurrentState == Normal) {
                 GoToDetailButton.Visibility = Visibility.Collapsed;
                 EditButton.Visibility = Visibility.Collapsed;
+                Filter.Visibility = Visibility.Collapsed;
             } else if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex == -1) {
                 GoToDetailButton.Visibility = Visibility.Collapsed;
                 EditButton.Visibility = Visibility.Collapsed;
+                Filter.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -241,6 +245,7 @@ namespace SchoolPower.Views {
                 if (AdaptiveStates.CurrentState == Normal) {
                     AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
                     EditButton.Visibility = Visibility.Visible;
+                    Filter.Visibility = Visibility.Visible;
                 }
 
                 // narrow -> show button
@@ -259,10 +264,12 @@ namespace SchoolPower.Views {
             if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex >= 0) {
                 GoToDetailButton.Visibility = Visibility.Visible;
                 EditButton.Visibility = Visibility.Collapsed;
+                Filter.Visibility = Visibility.Collapsed;
             } else if (AdaptiveStates.CurrentState == Normal && SubjectsListView.SelectedIndex >= 0) {
                 AssignmentsFrame.Navigate(typeof(AssignmentsPage), subjects[SubjectsListView.SelectedIndex].Name);
                 GoToDetailButton.Visibility = Visibility.Collapsed;
                 EditButton.Visibility = Visibility.Visible;
+                Filter.Visibility = Visibility.Visible;
             }
         }
 

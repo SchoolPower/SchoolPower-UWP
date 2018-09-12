@@ -210,6 +210,10 @@
                         Label="Refresh" 
                         AutomationProperties.AcceleratorKey="F5"
                         Click="Refresh_But_Click" />
+                    <AppBarButton
+                        Icon="Filter"
+                        Name="Filter"
+                        Label="Filter"/>
                 </controls:PageHeader.PrimaryCommands>
                 <controls:PageHeader.SecondaryCommands>
                     <AppBarButton 
