@@ -154,11 +154,25 @@ namespace SchoolPower.Models {
             }
         }
         
-        public static async Task<string> Kissing(string username, string password) {
+        public static async Task<string> Kissing(string username, string password, bool isLogin) {
+
+            string action;
+            if (isLogin)
+                action = "login";
+            else
+                action = "manual_get_data";
+
+            var v = Windows.ApplicationModel.Package.Current.Id.Version;
+            var version = $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
+
             HttpClient client = new HttpClient();
             var content = new FormUrlEncodedContent(
                 new Dictionary<string, string> {
-                    { "username", username }, { "password", password }
+                    { "username", username },
+                    { "password", password },
+                    { "version", version },
+                    { "action", action },
+                    { "os", "uwp" }
                 }
             );
             var response = await client.PostAsync(APIURL, content);
@@ -291,7 +305,7 @@ namespace SchoolPower.Models {
             string password = (string)account.Values["Passwd"];
 
             // kissing
-            try { studata = await Kissing(username, password); } catch (Exception) { }
+            try { studata = await Kissing(username, password, false); } catch (Exception) { }
 
             // bad network or server error 
             if (studata == "") {

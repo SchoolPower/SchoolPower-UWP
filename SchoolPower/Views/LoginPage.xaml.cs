@@ -63,7 +63,7 @@ namespace SchoolPower.Views {
                 // kissing
                 Views.Busy.SetBusy(true, "Kissing");
 
-                try { studata = await StudentData.Kissing(username, password); } catch (Exception) { }
+                try { studata = await StudentData.Kissing(username, password, true); } catch (Exception) { }
 
                 // bad network or server
                 if (studata == "") {
