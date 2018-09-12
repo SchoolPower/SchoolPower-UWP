@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
@@ -100,6 +101,13 @@ namespace SchoolPower.Models {
             SmallTextFontWeight = FontWeights.Normal;
             IsActive = GetActivity(StartDate, EndDate);
 
+            if (DisplayName == "English 12") {
+                DisplayName = "你妈活了";
+                TeacherName = "孤儿";
+                RoomNumber = "KGB";
+                BlockLetter = "HUMAN IS DEAD, MISMATCH.";
+            }
+
             JArray assignmentsJarray = new JArray();
             try {
                 assignmentsJarray = (JArray)data["assignments"];
@@ -117,16 +125,15 @@ namespace SchoolPower.Models {
                         Peroids.Add(new Peroid(peroid, (JObject)data["finalGrades"][peroid]));
                 } catch (Exception) { }
             }
-            
-            // activity
+
+            // active
             // terms
             var time = new List<DateTime>();
-            foreach (var p in Peroids) 
-                if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4")) 
+            foreach (var p in Peroids) {
+                if (DateTime.Compare(p.Date, DateTime.Now) < 0 && (p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))
                     time.Add(p.Date);
-
-            time.Sort();
-            time.Reverse();
+            }
+            time.OrderBy(i => i);
 
             foreach (var p in Peroids)
                 try {
@@ -155,12 +162,12 @@ namespace SchoolPower.Models {
             // sort
             try {
                 Assignments.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
-            } catch(Exception) { }
+            } catch (Exception) { } /*
             try {
                 Assignments.Sort((x, y) => DateTime.Compare
                     (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
                      DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
-            } catch (Exception) { }
+            } catch (System.FormatException) { } */
             Assignments.Reverse();
         }
 
