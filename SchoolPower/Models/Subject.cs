@@ -101,7 +101,7 @@ namespace SchoolPower.Models {
             SmallTextFontWeight = FontWeights.Normal;
             IsActive = GetActivity(StartDate, EndDate);
 
-            if (DisplayName == "English 12") {
+            if (DisplayName == "English 12" ) {
                 DisplayName = "你妈活了";
                 TeacherName = "孤儿";
                 RoomNumber = "KGB";
