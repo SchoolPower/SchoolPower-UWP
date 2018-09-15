@@ -101,13 +101,6 @@ namespace SchoolPower.Models {
             SmallTextFontWeight = FontWeights.Normal;
             IsActive = GetActivity(StartDate, EndDate);
 
-            if (DisplayName == "English 12" ) {
-                DisplayName = "你妈活了";
-                TeacherName = "孤儿";
-                RoomNumber = "KGB";
-                BlockLetter = "HUMAN IS DEAD, MISMATCH.";
-            }
-
             JArray assignmentsJarray = new JArray();
             try {
                 assignmentsJarray = (JArray)data["assignments"];
