@@ -113,7 +113,7 @@
                     Margin="0,0,0,15"
                     IsEnabled="{x:Bind ViewModel.IsStayAtSchool, Mode=OneWay}"
                     IsOn="{x:Bind ViewModel.IsDate, Mode=TwoWay }"
-                    Header="是否外出约会？" 
+                    Header="是否外出？" 
                     OnContent="是"
                     OffContent="否"/>
 
