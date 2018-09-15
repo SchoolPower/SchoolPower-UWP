@@ -36,6 +36,13 @@
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Attendance" x:Uid="aaattendance"/>
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
+            <!--Home-->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:GoHomePage">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Margin="15,12,0,12" HorizontalAlignment="Left" Glyph="&#xEA79;" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="&#160;Home"/>
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
         </Controls:HamburgerMenu.PrimaryButtons>
         
         <Controls:HamburgerMenu.SecondaryButtons>

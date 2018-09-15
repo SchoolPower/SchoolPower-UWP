@@ -127,12 +127,16 @@
     <Compile Include="Views\Dialogs\AssInfoDialog.xaml.cs">
       <DependentUpon>AssInfoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\FilterDialog.xaml.cs">
+      <DependentUpon>FilterDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\GPADialog.xaml.cs">
       <DependentUpon>GPADialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\GradeInfoDialog.xaml.cs">
       <DependentUpon>GradeInfoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\GoHomeViewModel.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -150,6 +154,9 @@
     </Compile>
     <Compile Include="Views\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GoHomePage.xaml.cs">
+      <DependentUpon>GoHomePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +212,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\FilterDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\GPADialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Splash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GoHomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

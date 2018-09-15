@@ -74,14 +74,21 @@ namespace SchoolPower {
             bool IsLogin;
 
             try {
-                IsLogin = (bool)localSettings.Values["IsFirstTimeLogin"];
-                bool b = (bool)localSettings.Values["showInactive"];
-                b = (bool)localSettings.Values["DashboardShowGradeOfTERM"];
+                bool b = (bool)localSettings.Values["IsStayAtSchool"];
+                bool bb = (bool)localSettings.Values["IsBus"];
+                bool bbb = (bool)localSettings.Values["IsDate"];
+                bool bbbb = (bool)localSettings.Values["showInactive"];
+                bool bbbbb = (bool)localSettings.Values["DashboardShowGradeOfTERM"];
+                bool bbbbbb = (bool)localSettings.Values["FirstTimeDisplayHomeDialog"];
                 var v = (string)localSettings.Values["dates"];
                 var vv = localSettings.Values["lang"].ToString();
                 var vvv = localSettings.Values["CalculateRule"];
-            }
-            catch (System.NullReferenceException) {
+                IsLogin = (bool)localSettings.Values["IsFirstTimeLogin"];
+            } catch (System.NullReferenceException) {
+                localSettings.Values["FirstTimeDisplayHomeDialog"] = true;
+                localSettings.Values["IsStayAtSchool"] = true;
+                localSettings.Values["IsBus"] = false;
+                localSettings.Values["IsDate"] = false;
                 localSettings.Values["IsFirstTimeLogin"] = true;
                 localSettings.Values["showInactive"] = false;
                 localSettings.Values["DashboardShowGradeOfTERM"] = true;
