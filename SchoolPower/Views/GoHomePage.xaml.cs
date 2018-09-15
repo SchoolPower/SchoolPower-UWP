@@ -86,7 +86,7 @@ namespace SchoolPower.Views {
                     KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
                     break;
                 default:
-                    StatusTextBlock.Text = "留校信息更新失败。请检查网络连接后重试，或者联系有关部门。";
+                    StatusTextBlock.Text = "生死去来，棚头傀儡。一线断时，落落磊磊。";
                     txtIcn.Visibility = Visibility.Visible;
                     txtIcn.Glyph = "\uEA6A";
                     ProcesR.Visibility = Visibility.Collapsed;
