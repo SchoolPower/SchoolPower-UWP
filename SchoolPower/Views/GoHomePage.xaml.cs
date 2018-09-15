@@ -25,7 +25,6 @@ namespace SchoolPower.Views {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             if ((bool)localSettings.Values["FirstTimeDisplayHomeDialog"]) { 
                 ContentDialog contentDialog = new ContentDialog {
-                    Title = "帮助",
                     Content = "此功能仅支持部分学生。\n不提交默认不留校且不坐校车。\n服务器仅保存上一次提交的信息，若信息没有变更不必反复提交。",
                     CloseButtonText = "不再显示"
                 };
@@ -69,7 +68,7 @@ namespace SchoolPower.Views {
             // kiss
             result = "";
             try {
-                var v = await client.PostAsync("http://127.0.0.1:8000/student/", content);
+                var v = await client.PostAsync("http://35.187.217.44:4567/student/", content);
                 result = await v.Content.ReadAsStringAsync();
             } catch (Exception) { }
 
@@ -93,8 +92,6 @@ namespace SchoolPower.Views {
                     ProcesR.Visibility = Visibility.Collapsed;
                     KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
                     break;
-
-
             }
             ShowKissingBar.Begin();
         }
