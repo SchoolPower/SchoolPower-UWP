@@ -190,9 +190,11 @@ namespace SchoolPower.Views {
                 EditButton.Visibility = Visibility.Visible;
                 Filter.Visibility = Visibility.Visible;
             } else if (AdaptiveStates.CurrentState == Normal) {
-                GoToDetailButton.Visibility = Visibility.Collapsed;
-                EditButton.Visibility = Visibility.Collapsed;
-                Filter.Visibility = Visibility.Collapsed;
+                if (StudentData.SelectedSubjectName == null) {
+                    GoToDetailButton.Visibility = Visibility.Collapsed;
+                    EditButton.Visibility = Visibility.Collapsed;
+                    Filter.Visibility = Visibility.Collapsed;
+                }
             } else if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex == -1) {
                 GoToDetailButton.Visibility = Visibility.Collapsed;
                 EditButton.Visibility = Visibility.Collapsed;
@@ -214,6 +216,10 @@ namespace SchoolPower.Views {
 
         private async void Refresh_But_Click(object sender, RoutedEventArgs e) {
             await KissingAsync();
+        }
+
+        private async void Filter_Click(object sender, RoutedEventArgs e) {
+            await new SchoolPower.Views.Dialogs.FilterDialog().ShowAsync();
         }
 
         private void SubjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -274,21 +280,15 @@ namespace SchoolPower.Views {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
+            Debug.WriteLine(StudentData.SelectedSubjectName);
             if (StudentData.SelectedSubjectName != null) {
                 NoGradeIcnImg.Visibility = Visibility.Collapsed;
-            }/*
-            if (StudentData.SelectedSubjectName != null) {
-                int index = 0;
-                foreach (var subject in this.subjects) {
-                    if (subject.Name == StudentData.SelectedSubjectName) {
-                        break;
-                    }
-                    index += 1;
-                }
-                SubjectsListViewLastSelection = index;
-                //SubjectsListView.SelectedItem = SubjectsListView.Items[index];
-                SubjectsListView_SelectionChanged(this, new SelectionChangedEventArgs(StudentData.SubjectListViewRemovedItems, StudentData.SubjectListViewAddedItems));
-            }*/
+                EditButton.Visibility = Visibility.Visible;
+                Filter.Visibility = Visibility.Visible;
+            } else {
+                EditButton.Visibility = Visibility.Collapsed;
+                Filter.Visibility = Visibility.Collapsed;
             }
+        }
     }
 }

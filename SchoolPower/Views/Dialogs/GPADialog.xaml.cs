@@ -89,5 +89,9 @@ namespace SchoolPower.Views.Dialogs {
         private void Button_Click(object sender, RoutedEventArgs e) {
             Hide();
         }
+
+        private void ContentDialog_Loaded(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

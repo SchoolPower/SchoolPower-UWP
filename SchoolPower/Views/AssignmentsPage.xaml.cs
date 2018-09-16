@@ -84,5 +84,9 @@ namespace SchoolPower.Views {
             AssInfoDialog dialog = new AssInfoDialog(assignment);
             await dialog.ShowAsync();
         }
+
+        private async void Filter_Click(object sender, RoutedEventArgs e) {
+            await new SchoolPower.Views.Dialogs.FilterDialog().ShowAsync();
+        }
     }
 }
