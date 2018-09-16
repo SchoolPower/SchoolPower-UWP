@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="58761VoidUniversalObserve.40903E6DA9B74" Publisher="CN=AF509DF3-20F9-44DA-8F0C-99829E7E4AA6" Version="1.1.0.0" />
+  <Identity Name="58761VoidUniversalObserve.40903E6DA9B74" Publisher="CN=AF509DF3-20F9-44DA-8F0C-99829E7E4AA6" Version="1.1.1.0" />
   <mp:PhoneIdentity PhoneProductId="92dcfb89-0344-44f1-8d99-4207b4408b02" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>SchoolPower</DisplayName>
