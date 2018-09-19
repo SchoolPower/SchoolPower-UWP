@@ -89,7 +89,6 @@ namespace SchoolPower.Views {
                     // save student data to new
                     studataOld = studata;
                     await StudentData.SaveStudentData(studata, StudentData.NewOrOld.New);
-                    localSettings.Values["IsFirstTimeLogin"] = false;
 
                     try {
                         // new StudentData

@@ -28,6 +28,8 @@ namespace SchoolPower.Views {
 
         void Initialize() {
 
+            localSettings.Values["IsFirstTimeLogin"] = false;
+
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
                 async (window, e) => {
                     switch (e.VirtualKey) {
