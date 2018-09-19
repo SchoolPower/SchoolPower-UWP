@@ -69,6 +69,7 @@ namespace SchoolPower.Views {
             result = "";
             try {
                 var v = await client.PostAsync("http://35.187.217.44:4567/student/", content);
+                // var v = await client.PostAsync("http://127.0.0.1:8000/student/", content);
                 result = await v.Content.ReadAsStringAsync();
             } catch (Exception) { }
 
@@ -84,6 +85,13 @@ namespace SchoolPower.Views {
                     txtIcn.Glyph = "\uE73E";
                     ProcesR.Visibility = Visibility.Collapsed;
                     KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+                    break;
+                case "human is dead":
+                    StatusTextBlock.Text = "坏死。";
+                    txtIcn.Visibility = Visibility.Visible;
+                    txtIcn.Glyph = "\uEA6A";
+                    ProcesR.Visibility = Visibility.Collapsed;
+                    KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
                     break;
                 default:
                     StatusTextBlock.Text = "生死去来，棚头傀儡。一线断时，落落磊磊。";
