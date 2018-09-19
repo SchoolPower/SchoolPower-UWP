@@ -41,6 +41,6 @@
             <RadioButton Content="Official" x:Uid="official" Tag="Official" Checked="RadioButton_Checked" Margin="-51,0,0,0" Width="81" />
         </StackPanel>
 
-        <Button Grid.Row="4" Content="Sweet _(:зゝ∠)_" Margin="0,5,0,0" Click="Button_Click" x:Uid="sweetGPA"/>
+        <Button Grid.Row="4" Content="_(:зゝ∠)_" Margin="0,5,0,0" Click="Button_Click" x:Uid="sweetGPA"/>
     </Grid>
 </ContentDialog>

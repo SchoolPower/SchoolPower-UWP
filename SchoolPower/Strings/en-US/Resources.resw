@@ -278,7 +278,7 @@
 		<value>Weight</value>
 	</data>
 	<data name="sweetAssInfoDialog.Content" xml:space="preserve">
-		<value>Sweet _(:зゝ∠)_</value>
+		<value>_(:зゝ∠)_</value>
 	</data>
 
 	<!-- GradeInfoDialog -->
@@ -289,7 +289,7 @@
 		<value>Comment</value>
 	</data>
 	<data name="sweetGradeInfoDialog.Content" xml:space="preserve">
-		<value>Sweet _(:зゝ∠)_</value>
+		<value>_(:зゝ∠)_</value>
 	</data>
 
 	<!-- GPADialog -->
@@ -306,7 +306,7 @@
 		<value>Official</value>
 	</data>
 	<data name="sweetGPA.Content" xml:space="preserve">
-		<value>Sweet _(:зゝ∠)_</value>
+		<value>_(:зゝ∠)_</value>
 	</data>
 
 	<!-- AboutPage.xaml -->
