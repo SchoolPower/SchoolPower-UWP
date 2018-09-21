@@ -5,13 +5,42 @@
     xmlns:local="using:SchoolPower.Views.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="TITLE"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    mc:Ignorable="d">
 
+    <ContentDialog.Resources>
+    </ContentDialog.Resources>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock 
+                Text="By Time"/>
+            <ComboBox 
+                x:Name="TimeCombo" 
+                Margin="0,5,0,0"
+                SelectionChanged="TimeCombo_SelectionChanged" 
+                Loaded="TimeCombo_Loaded" 
+                PlaceholderText="Please Select">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="0,15,0,0">
+            <TextBlock
+                Text="By Catagory"/>
+            <ComboBox 
+                x:Name="CataCombo" 
+                Margin="0,5,0,0"
+                SelectionChanged="CataCombo_SelectionChanged" 
+                Loaded="CataCombo_Loaded" 
+                PlaceholderText="Please Select">
+            </ComboBox>
+        </StackPanel>
+
+        <Button Grid.Row="2" Content="_(:зゝ∠)_" Margin="0,15,0,0" Click="Button_Click" />
     </Grid>
 </ContentDialog>

@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SchoolPower.Views.Dialogs;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -13,7 +14,9 @@ namespace SchoolPower.Views {
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class AssignmentsPage : Page {
-        private List<AssignmentItem> assignments;
+        private ObservableCollection<AssignmentItem> assignments;
+        private List<string> CatagoryList;
+        private List<Peroid> TimeList;
         private string selectdeSubject = StudentData.SelectedSubjectName;
 
         int GetNumberOfRows() {
@@ -23,7 +26,7 @@ namespace SchoolPower.Views {
         public AssignmentsPage() {
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
+        void Init() {
             int index = 0;
             foreach (var subject in StudentData.subjects) {
                 if (subject.Name == selectdeSubject) {
@@ -31,9 +34,47 @@ namespace SchoolPower.Views {
                 }
                 index += 1;
             }
-            assignments = StudentData.subjects[index].Assignments;
+
+            assignments = new ObservableCollection<AssignmentItem>();
+            List<AssignmentItem> assss = StudentData.subjects[index].Assignments;
+
+            CatagoryList = StudentData.subjects[index].CatagoryList;
+            TimeList = StudentData.subjects[index].Peroids;
+
+            var AssignmentFilter = StudentData.AssignmentFilterParam;
+
+            if (AssignmentFilter["time"] != null || AssignmentFilter["cata"] != null) {
+                if (AssignmentFilter["time"] == null) {
+                    foreach (var ass in assss) {
+                        if (ass.Category == AssignmentFilter["cata"]) {
+                            assignments.Add(ass);
+                        }
+                    }
+                } else if (AssignmentFilter["cata"] == null) {
+                    foreach (var ass in assss) {
+                        if (new List<string>(ass.Terms).Contains(AssignmentFilter["time"])) {
+                            assignments.Add(ass);
+                        }
+                    }
+                } else {
+                    foreach (var ass in assss) {
+                        if (ass.Category == AssignmentFilter["cata"] && new List<string>(ass.Terms).Contains(AssignmentFilter["time"])) {
+                            assignments.Add(ass);
+                        }
+                    }
+                }
+            } else {
+                assignments = new ObservableCollection<AssignmentItem>(assss);
+            }
+            //foreach(var v in )
+
             InitializeComponent();
+            AssignmentsGridView.ItemsSource = assignments;
             Window.Current.SizeChanged += Current_SizeChanged;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            Init();
         }
 
         private void AssignmentsWarp_Loaded(object sender, RoutedEventArgs e) {
@@ -56,11 +97,11 @@ namespace SchoolPower.Views {
         int index = 0;
         private void Border_Loaded(object sender, RoutedEventArgs e) { 
             Border border = sender as Border;
-            if (assignments[this.index].IsNew) {
-                border.Background = StudentData.GetColor(assignments[index].LetterGrade);
+            // if (assignments[this.index].IsNew) {
+               //  border.Background = StudentData.GetColor(assignments[index].LetterGrade);
                 // new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
-            } 
-            this.index += 1; 
+            //} 
+            // this.index += 1; 
         }
 
         private void Head_Loaded(object sender, RoutedEventArgs e) {
@@ -86,7 +127,21 @@ namespace SchoolPower.Views {
         }
 
         private async void Filter_Click(object sender, RoutedEventArgs e) {
-            await new SchoolPower.Views.Dialogs.FilterDialog().ShowAsync();
+            int index = 0;
+            foreach (var subject in StudentData.subjects) {
+                if (subject.Name == StudentData.SelectedSubjectName) {
+                    break;
+                }
+                index += 1;
+            }
+
+            var dialog = new SchoolPower.Views.Dialogs.FilterDialog(StudentData.subjects[index].CatagoryList, StudentData.subjects[index].Peroids);
+            await dialog.ShowAsync();
+            StudentData.AssignmentFilterParam = dialog.Result;
+            Init();
+            // Frame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
+
+            // InitializeComponent();
         }
     }
 }

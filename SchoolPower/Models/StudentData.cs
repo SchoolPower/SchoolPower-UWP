@@ -23,7 +23,9 @@ namespace SchoolPower.Models {
         public static List<AttendanceItem> attendances = new List<AttendanceItem>();
         public static List<HistoryData> historyDatas;
         public static Info info;
+
         public static string SelectedSubjectName;
+        public static Dictionary<string, string> AssignmentFilterParam;
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
         public static int MagicNumber = 114514;
@@ -50,6 +52,10 @@ namespace SchoolPower.Models {
             List<AttendanceItem> attendancesOld = new List<AttendanceItem>();
             historyDatas = null;
             historyDatas = new List<HistoryData>();
+            AssignmentFilterParam = new Dictionary<string, string> {
+                { "time", null},
+                { "cata", null}
+            };
 
             // parse
             JArray sectionsJarray = (JArray)data["sections"];

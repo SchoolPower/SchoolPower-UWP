@@ -30,6 +30,9 @@ namespace SchoolPower.Views {
 
             localSettings.Values["IsFirstTimeLogin"] = false;
 
+            StudentData.AssignmentFilterParam["time"] = null;
+            StudentData.AssignmentFilterParam["cata"] = null;
+
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
                 async (window, e) => {
                     switch (e.VirtualKey) {
@@ -204,7 +207,6 @@ namespace SchoolPower.Views {
             }
         }
 
-
         private void Leap(object sender, RoutedEventArgs e) {
             if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex >= 0) {
                 StudentData.SelectedSubjectName = subjects[SubjectsListView.SelectedIndex].Name;
@@ -233,10 +235,13 @@ namespace SchoolPower.Views {
             await dialog.ShowAsync();
             StudentData.AssignmentFilterParam = dialog.Result;
             AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
-
         }
 
         private void SubjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+
+            // reset data
+            StudentData.AssignmentFilterParam["time"] = null;
+            StudentData.AssignmentFilterParam["cata"] = null;
 
             // remove img
             NoGradeIcnImg.Visibility = Visibility.Collapsed;

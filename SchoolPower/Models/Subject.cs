@@ -74,6 +74,7 @@ namespace SchoolPower.Models {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<Peroid> Peroids = new List<Peroid>();
+        public List<string> CatagoryList { get; set; }
         public string LetterGradeOnDashboard { get; set; }
         public string PercentageGradeOnDashboard { get; set; }
         public SolidColorBrush ColorOnDashboard { get; set; }
@@ -109,6 +110,13 @@ namespace SchoolPower.Models {
                 for (int index = 0; index < assignmentsJarray.Count; index++) 
                     Assignments.Add(new AssignmentItem((JObject)assignmentsJarray[index]));
             } catch (System.NullReferenceException) { }
+
+            // catagory
+            CatagoryList = new List<string>();
+            foreach (var ass in Assignments) {
+                if (!CatagoryList.Contains(ass.Category)) 
+                    CatagoryList.Add(ass.Category);
+            }
 
             string[] peroidList = { "T1", "T2", "X1", "S1", "T3", "T4", "X2", "S2", "Y1" };
 
@@ -162,6 +170,8 @@ namespace SchoolPower.Models {
                      DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
             } catch (System.FormatException) { } */
             Assignments.Reverse();
+
+
         }
 
         bool GetActivity (DateTime start, DateTime end) {
