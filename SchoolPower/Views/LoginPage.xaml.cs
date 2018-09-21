@@ -61,7 +61,7 @@ namespace SchoolPower.Views {
                 App.SetUIBlue();
 
                 // kissing
-                Views.Busy.SetBusy(true, "Kissing");
+                Views.Busy.SetBusy(true, "Synchronizing ...");
 
                 try { studata = await StudentData.Kissing(username, password, true); } catch (Exception) { }
 
@@ -90,7 +90,7 @@ namespace SchoolPower.Views {
                     studataOld = studata;
                     await StudentData.SaveStudentData(studata, StudentData.NewOrOld.New);
 
-                    try {
+                    if (System.Diagnostics.Debugger.IsAttached) {
                         // new StudentData
                         StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
                         StudentData.SaveHistoryData(StudentData.CollectCurrentHistoryData());
@@ -99,15 +99,27 @@ namespace SchoolPower.Views {
                         if (StudentData.DisabledMsgDialog != null) {
                             await StudentData.DisabledMsgDialog.ShowAsync();
                         }
-                    } catch (Exception e) {
-                        await Windows.Storage.ApplicationData.Current.ClearAsync();
-                        localSettings.Values["UsrName"] = username;
-                        localSettings.Values["Passwd"] = password;
-                        ContentDialog ErrorContentDialog = new ContentDialog {
-                            Title = "ERROR",
-                            Content = e.ToString(),
-                            CloseButtonText = "哦。",
-                        }; ContentDialogResult result = await ErrorContentDialog.ShowAsync();
+                    } else {
+                        try {
+                            // new StudentData
+                            StudentData studentData = new StudentData(StudentData.ParseJSON(studata), StudentData.ParseJSON(studataOld));
+                            StudentData.SaveHistoryData(StudentData.CollectCurrentHistoryData());
+                            // navigate
+                            Frame.Navigate(typeof(SubjectsAssignmentsPage));
+                            if (StudentData.DisabledMsgDialog != null) {
+                                await StudentData.DisabledMsgDialog.ShowAsync();
+                            }
+                        } catch (Exception e) {
+                            await Windows.Storage.ApplicationData.Current.ClearAsync();
+                            localSettings.Values["UsrName"] = username;
+                            localSettings.Values["Passwd"] = password;
+                            ContentDialog ErrorContentDialog = new ContentDialog {
+                                Title = "ERROR",
+                                Content = e.ToString(),
+                                CloseButtonText = "哦。",
+                            };
+                            ContentDialogResult result = await ErrorContentDialog.ShowAsync();
+                        }
                     }
                 }
                 Views.Busy.SetBusy(false);

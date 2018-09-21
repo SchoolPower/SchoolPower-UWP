@@ -146,7 +146,7 @@ namespace SchoolPower.Views {
 
             switch (result) {
                 case "okey dokey":
-                    StatusTextBlock.Text = "Kissed!";
+                    StatusTextBlock.Text = "Synchronized!";
                     break;
                 case "error":
                     StatusTextBlock.Text = LocalizedResources.GetString("cannotConnect/Text");
@@ -167,7 +167,7 @@ namespace SchoolPower.Views {
             await Task.Delay(300);
             HideKissingBarRow.Begin();
 
-            StatusTextBlock.Text = "Kissing...";
+            StatusTextBlock.Text = "Synchronizing ...";
             ProcesR.Visibility = Visibility.Visible;
             KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
 
@@ -221,7 +221,19 @@ namespace SchoolPower.Views {
         }
 
         private async void Filter_Click(object sender, RoutedEventArgs e) {
-            await new SchoolPower.Views.Dialogs.FilterDialog().ShowAsync();
+            int index = 0;
+            foreach (var subject in StudentData.subjects) {
+                if (subject.Name == StudentData.SelectedSubjectName) {
+                    break;
+                }
+                index += 1;
+            }
+
+            var dialog = new SchoolPower.Views.Dialogs.FilterDialog(StudentData.subjects[index].CatagoryList, StudentData.subjects[index].Peroids);
+            await dialog.ShowAsync();
+            StudentData.AssignmentFilterParam = dialog.Result;
+            AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
+
         }
 
         private void SubjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {

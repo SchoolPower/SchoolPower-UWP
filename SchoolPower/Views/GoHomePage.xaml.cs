@@ -59,7 +59,7 @@ namespace SchoolPower.Views {
 
             // show
             ShowKissingBar.Begin();
-            StatusTextBlock.Text = "Kissing...";
+            StatusTextBlock.Text = "Synchronizing ...";
             txtIcn.Visibility = Visibility.Collapsed;
             txtIcn.Glyph = "&#xE73E;";
             ProcesR.Visibility = Visibility.Visible;
