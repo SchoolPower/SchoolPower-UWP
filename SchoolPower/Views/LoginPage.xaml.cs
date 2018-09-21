@@ -61,7 +61,7 @@ namespace SchoolPower.Views {
                 App.SetUIBlue();
 
                 // kissing
-                Views.Busy.SetBusy(true, "Synchronizing ...");
+                Views.Busy.SetBusy(true, "Refreshing ...");
 
                 try { studata = await StudentData.Kissing(username, password, true); } catch (Exception) { }
 

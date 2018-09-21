@@ -149,7 +149,7 @@ namespace SchoolPower.Views {
 
             switch (result) {
                 case "okey dokey":
-                    StatusTextBlock.Text = "Synchronized!";
+                    StatusTextBlock.Text = "Refreshed!";
                     break;
                 case "error":
                     StatusTextBlock.Text = LocalizedResources.GetString("cannotConnect/Text");
@@ -170,7 +170,7 @@ namespace SchoolPower.Views {
             await Task.Delay(300);
             HideKissingBarRow.Begin();
 
-            StatusTextBlock.Text = "Synchronizing ...";
+            StatusTextBlock.Text = "Refreshing ...";
             ProcesR.Visibility = Visibility.Visible;
             KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
 
