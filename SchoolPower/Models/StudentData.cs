@@ -442,6 +442,10 @@ namespace SchoolPower.Models {
                 localSettings.Values["Passwd"] = password;
 
                 // init default settings
+                localSettings.Values["FirstTimeDisplayHomeDialog"] = true;
+                localSettings.Values["IsStayAtSchool"] = true;
+                localSettings.Values["IsBus"] = false;
+                localSettings.Values["IsDate"] = false;
                 localSettings.Values["IsFirstTimeLogin"] = true;
                 localSettings.Values["showInactive"] = false;
                 localSettings.Values["DashboardShowGradeOfTERM"] = true;
