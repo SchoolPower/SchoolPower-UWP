@@ -302,7 +302,7 @@
                     <TextBlock 
                         Name="StatusTextBlock" 
                         FontSize="12"
-                        Text="Refreshing ..."  
+                        Text="Loading ..."  
                         Margin="8,6,0,6" />
                     <ProgressRing 
                         x:Name="ProcesR"
