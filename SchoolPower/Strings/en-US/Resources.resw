@@ -275,7 +275,7 @@
 		<value>Score</value>
 	</data>
 	<data name="weight.Text" xml:space="preserve">
-		<value>Weight</value>
+		<value>Catagory &amp; Weight</value>
 	</data>
 	<data name="sweetAssInfoDialog.Content" xml:space="preserve">
 		<value>_(:зゝ∠)_</value>

@@ -10,13 +10,13 @@ namespace SchoolPower.Views.Dialogs {
             Name.Text     = ass.Name;
             Score.Text    = ass.Score + "/" + ass.MaximumScore;
             Weight.Text   = ass.Weight;
+            Cata.Text     = ass.Category;
 
             if (ass.Percentage == null) {
                 Percent.Text = "--";
             } else {
                 Percent.Text = ass.Percentage;
             }
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {

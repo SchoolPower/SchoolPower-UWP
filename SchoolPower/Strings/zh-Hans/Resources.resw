@@ -274,7 +274,7 @@
 		<value>分数</value>
 	</data>
 	<data name="weight.Text" xml:space="preserve">
-		<value>权重</value>
+		<value>分类和权重</value>
 	</data>
 	<data name="sweetAssInfoDialog.Content" xml:space="preserve">
 		<value>喵！ _(:зゝ∠)_</value>
