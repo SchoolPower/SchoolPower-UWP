@@ -279,9 +279,10 @@ namespace SchoolPower.Views {
             }
         }
 
-        private async void PeroidsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private async void PeroidsGridView_ItemClick(object sender, ItemClickEventArgs e) {
             GridView gridView = sender as GridView;
-            GradeInfoDialog dialog = new GradeInfoDialog(subjects[SubjectsListView.SelectedIndex].Peroids[gridView.SelectedIndex]);
+            Peroid p = (Peroid)e.ClickedItem;
+            GradeInfoDialog dialog = new GradeInfoDialog(p);
             await dialog.ShowAsync();
         }
 
@@ -309,5 +310,7 @@ namespace SchoolPower.Views {
                 Filter.Visibility = Visibility.Collapsed;
             }
         }
+
+
     }
 }

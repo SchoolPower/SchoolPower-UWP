@@ -76,7 +76,7 @@
                         ItemsSource="{x:Bind Peroids}" 
                    		IsItemClickEnabled="True"
                         ItemTemplate="{StaticResource PeroidsListTemplate}" 
-                        SelectionChanged="PeroidsGridView_SelectionChanged"
+                        ItemClick="PeroidsGridView_ItemClick"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         ScrollViewer.HorizontalScrollMode="Enabled"
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
