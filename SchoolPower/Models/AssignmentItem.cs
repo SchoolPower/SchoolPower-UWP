@@ -71,7 +71,14 @@ namespace SchoolPower.Models {
         }
 
         public bool Equals(AssignmentItem darling) {
-            return Name == darling.Name && Percentage == darling.Percentage && Date == darling.Date && Score == darling.Score && LetterGrade == darling.LetterGrade;
+            return
+                Name == darling.Name &&
+                Percentage == darling.Percentage &&
+                Date == darling.Date &&
+                Score == darling.Score &&
+                LetterGrade == darling.LetterGrade &&
+                Category == darling.Category &&
+                Weight == darling.Weight;
         }
     }
 }
