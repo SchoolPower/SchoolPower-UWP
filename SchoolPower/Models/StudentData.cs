@@ -24,7 +24,7 @@ namespace SchoolPower.Models {
         public static List<HistoryData> historyDatas;
         public static Info info;
 
-        public static string SelectedSubjectName;
+        public static Subject SelectedSubject;
         public static Dictionary<string, string> AssignmentFilterParam;
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
@@ -454,7 +454,7 @@ namespace SchoolPower.Models {
                 localSettings.Values["CalculateRule"] = 0;
 
                 // clear history
-                SelectedSubjectName = null;
+                SelectedSubject = null;
                 subjects = null;
                 attendances = null;
                 subjects = new List<Subject>();

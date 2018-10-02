@@ -101,16 +101,16 @@ namespace SchoolPower.Views {
 
             // assignments
             // normal -> navigate 
-            if (StudentData.SelectedSubjectName != null) {
+            if (StudentData.SelectedSubject != null) {
                 if (AdaptiveStates.CurrentState == Normal) {
                     int index = 0;
                     foreach (var subject in StudentData.subjects) {
-                        if (subject.Name == StudentData.SelectedSubjectName) {
+                        if (subject.Name == StudentData.SelectedSubject.Name) {
                             break;
                         }
                         index += 1;
                     }
-                    AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
+                    AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubject);
                 }
             }
 
@@ -195,7 +195,7 @@ namespace SchoolPower.Views {
                 EditButton.Visibility = Visibility.Visible;
                 Filter.Visibility = Visibility.Visible;
             } else if (AdaptiveStates.CurrentState == Normal) {
-                if (StudentData.SelectedSubjectName == null) {
+                if (StudentData.SelectedSubject == null) {
                     GoToDetailButton.Visibility = Visibility.Collapsed;
                     EditButton.Visibility = Visibility.Collapsed;
                     Filter.Visibility = Visibility.Collapsed;
@@ -209,7 +209,7 @@ namespace SchoolPower.Views {
 
         private void Leap(object sender, RoutedEventArgs e) {
             if (AdaptiveStates.CurrentState == Narrow && SubjectsListView.SelectedIndex >= 0) {
-                StudentData.SelectedSubjectName = subjects[SubjectsListView.SelectedIndex].Name;
+                StudentData.SelectedSubject = subjects[SubjectsListView.SelectedIndex];
                 Frame.Navigate(typeof(AssignmentsPage));
             }
         }
@@ -225,7 +225,7 @@ namespace SchoolPower.Views {
         private async void Filter_Click(object sender, RoutedEventArgs e) {
             int index = 0;
             foreach (var subject in StudentData.subjects) {
-                if (subject.Name == StudentData.SelectedSubjectName) {
+                if (subject.Name == StudentData.SelectedSubject.Name) {
                     break;
                 }
                 index += 1;
@@ -234,7 +234,7 @@ namespace SchoolPower.Views {
             var dialog = new SchoolPower.Views.Dialogs.FilterDialog(StudentData.subjects[index].CatagoryList, StudentData.subjects[index].Peroids);
             await dialog.ShowAsync();
             StudentData.AssignmentFilterParam = dialog.Result;
-            AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
+            AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubject);
         }
 
         private void SubjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -253,7 +253,7 @@ namespace SchoolPower.Views {
                 if (StudentData.SubjectListViewRemovedItems == null)
                     StudentData.SubjectListViewRemovedItems = e.RemovedItems;
 
-                StudentData.SelectedSubjectName = subjects[SubjectsListView.SelectedIndex].Name;
+                StudentData.SelectedSubject = subjects[SubjectsListView.SelectedIndex];
 
                 // Assign detail DataTemplate 
                 foreach (var item in e.AddedItems) {
@@ -268,7 +268,7 @@ namespace SchoolPower.Views {
 
                 // normal -> navigate 
                 if (AdaptiveStates.CurrentState == Normal) {
-                    AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
+                    AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubject);
                     EditButton.Visibility = Visibility.Visible;
                     Filter.Visibility = Visibility.Visible;
                 }
@@ -300,8 +300,7 @@ namespace SchoolPower.Views {
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            Debug.WriteLine(StudentData.SelectedSubjectName);
-            if (StudentData.SelectedSubjectName != null) {
+            if (StudentData.SelectedSubject != null) {
                 NoGradeIcnImg.Visibility = Visibility.Collapsed;
                 EditButton.Visibility = Visibility.Visible;
                 Filter.Visibility = Visibility.Visible;
@@ -310,7 +309,5 @@ namespace SchoolPower.Views {
                 Filter.Visibility = Visibility.Collapsed;
             }
         }
-
-
     }
 }

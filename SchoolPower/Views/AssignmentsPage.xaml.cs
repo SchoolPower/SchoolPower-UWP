@@ -17,7 +17,7 @@ namespace SchoolPower.Views {
         private ObservableCollection<AssignmentItem> assignments;
         private List<string> CatagoryList;
         private List<Peroid> TimeList;
-        private string selectdeSubject = StudentData.SelectedSubjectName;
+        private string selectdeSubject = StudentData.SelectedSubject.Name;
 
         int GetNumberOfRows() {
             return (int)(((Template10.Controls.ModalDialog)Window.Current.Content).ActualHeight / 75) -1;
@@ -27,19 +27,12 @@ namespace SchoolPower.Views {
         }
 
         void Init() {
-            int index = 0;
-            foreach (var subject in StudentData.subjects) {
-                if (subject.Name == selectdeSubject) {
-                    break;
-                }
-                index += 1;
-            }
 
             assignments = new ObservableCollection<AssignmentItem>();
-            List<AssignmentItem> assss = StudentData.subjects[index].Assignments;
+            List<AssignmentItem> assss = StudentData.SelectedSubject.Assignments;
 
             CatagoryList = StudentData.subjects[index].CatagoryList;
-            TimeList = StudentData.subjects[index].Peroids;
+            TimeList = StudentData.SelectedSubject.Peroids;//  subjects[index].Peroids;
 
             var AssignmentFilter = StudentData.AssignmentFilterParam;
 
@@ -129,7 +122,7 @@ namespace SchoolPower.Views {
         private async void Filter_Click(object sender, RoutedEventArgs e) {
             int index = 0;
             foreach (var subject in StudentData.subjects) {
-                if (subject.Name == StudentData.SelectedSubjectName) {
+                if (subject.Name == StudentData.SelectedSubject.Name) {
                     break;
                 }
                 index += 1;
