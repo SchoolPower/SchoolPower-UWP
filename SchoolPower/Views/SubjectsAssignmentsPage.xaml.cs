@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.System;
 using SchoolPower.Localization;
 using System.Diagnostics;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
@@ -314,6 +315,9 @@ namespace SchoolPower.Views {
             var txt = sender as TextBlock;
             if (txt.Text == StudentData.SelectedSubject.TeacherName && StudentData.SelectedSubject.TeacherEmail != "") {
                 txt.Text = StudentData.SelectedSubject.TeacherEmail;
+                var dataPackage = new DataPackage();
+                dataPackage.SetText(StudentData.SelectedSubject.TeacherEmail);
+                Clipboard.SetContent(dataPackage);
             } else if (txt.Text == StudentData.SelectedSubject.TeacherEmail) {
                 txt.Text = StudentData.SelectedSubject.TeacherName;
             }
