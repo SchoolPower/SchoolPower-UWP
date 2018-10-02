@@ -62,11 +62,14 @@
             <RelativePanel Margin="0,10,0,0" >
                 <TextBlock Name="Title" Text="{x:Bind DisplayName}" HorizontalAlignment="Left" FontSize="22" FontWeight="{x:Bind LargeTextFontWeight}" TextWrapping="Wrap"/>
                 <StackPanel RelativePanel.Below="Title" Name="InfoPanel" Margin="0,5,0,5">
-                    <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" FontWeight="{x:Bind SmallTextFontWeight}" />
-                    <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" FontWeight="{x:Bind SmallTextFontWeight}" />
-                    <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" FontWeight="{x:Bind SmallTextFontWeight}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Bind BlockLetter}" HorizontalAlignment="Left" FontWeight="{x:Bind SmallTextFontWeight}" Margin="0,0,4,0"/>
+                        <TextBlock Text="{x:Bind RoomNumber}" HorizontalAlignment="Left" FontWeight="{x:Bind SmallTextFontWeight}" />
+                    </StackPanel>
+                    <TextBlock Text="{x:Bind TeacherName}" HorizontalAlignment="Left" FontWeight="{x:Bind SmallTextFontWeight}" Tapped="TeacherNameTapped"/>
                 </StackPanel>
                 <ScrollViewer
+                    Margin="0,5,0,0"
                     RelativePanel.Below="InfoPanel"
                     HorizontalScrollBarVisibility="Auto"
                     HorizontalScrollMode="Enabled"

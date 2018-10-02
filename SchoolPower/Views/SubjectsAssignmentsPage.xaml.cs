@@ -309,5 +309,14 @@ namespace SchoolPower.Views {
                 Filter.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void TeacherNameTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            var txt = sender as TextBlock;
+            if (txt.Text == StudentData.SelectedSubject.TeacherName && StudentData.SelectedSubject.TeacherEmail != "") {
+                txt.Text = StudentData.SelectedSubject.TeacherEmail;
+            } else if (txt.Text == StudentData.SelectedSubject.TeacherEmail) {
+                txt.Text = StudentData.SelectedSubject.TeacherName;
+            }
+        }
     }
 }
