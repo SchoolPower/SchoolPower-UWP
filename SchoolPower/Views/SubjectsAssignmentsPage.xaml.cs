@@ -10,6 +10,7 @@ using Windows.System;
 using SchoolPower.Localization;
 using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml.Media;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
@@ -53,6 +54,7 @@ namespace SchoolPower.Views {
 
             InitializeComponent();
 
+
             // Application.Current.Resources["SystemAccentColor"] = new SolidColorBrush(Windows.UI.Colors.Transparent);
 
             subjects = null;
@@ -70,7 +72,6 @@ namespace SchoolPower.Views {
 
             // term or sem
             foreach (var subject in StudentData.subjects) {
-
                 if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
                     foreach (var p in subject.Peroids) {
                         if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
@@ -98,6 +99,58 @@ namespace SchoolPower.Views {
                     } 
                 }
                 subject.ColorOnDashboard = StudentData.GetColor(subject.LetterGradeOnDashboard);
+            }
+
+            foreach (var subjectOld in StudentData.subjectsOld) {
+                if ((bool)localSettings.Values["DashboardShowGradeOfTERM"]) {
+                    foreach (var p in subjectOld.Peroids) {
+                        if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
+                            subjectOld.PercentageGradeOnDashboard = p.Percent;
+                            break;
+                        }
+                    }
+                } else {
+                    foreach (var p in subjectOld.Peroids) {
+                        if ((p.IsActive) && ((p.Time == "S1") || (p.Time == "S2"))) {
+                            subjectOld.PercentageGradeOnDashboard = p.Percent;
+                            break;
+                        }
+                    }
+                    if (subjectOld.PercentageGradeOnDashboard == "--") {
+                        foreach (var p in subjectOld.Peroids) {
+                            if ((p.IsActive) && ((p.Time == "T1") || (p.Time == "T2") || (p.Time == "T3") || (p.Time == "T4"))) {
+                                subjectOld.PercentageGradeOnDashboard = p.Percent;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // +-
+            foreach (var subject in StudentData.subjects) {
+                foreach (var subjectOld in StudentData.subjectsOld) {
+                    if (subjectOld.Name == subject.Name) {
+                        var grade = 0;
+                        var gradeOld = 0;
+                        int.TryParse(subject.PercentageGradeOnDashboard, out grade);
+                        int.TryParse(subjectOld.PercentageGradeOnDashboard, out gradeOld);
+                        var result = grade - gradeOld;
+                        if (result == 0) {
+                            subject.ChangeInGrade = "0";
+                            subject.GradeChangePanelVisibility = Visibility.Collapsed;
+                            subject.GradeChangePanelColor = new SolidColorBrush(Windows.UI.Colors.Transparent);
+                        } else if (result > 0) {
+                            subject.ChangeInGrade = "+" + result.ToString();
+                            subject.GradeChangePanelVisibility = Visibility.Visible;
+                            subject.GradeChangePanelColor = new SolidColorBrush(Windows.UI.Colors.DarkCyan);
+                        } else if (result < 0) {
+                            subject.ChangeInGrade = result.ToString();
+                            subject.GradeChangePanelVisibility = Visibility.Visible;
+                            subject.GradeChangePanelColor = new SolidColorBrush(Windows.UI.Colors.DarkRed);
+                        }
+                    }
+                }
             }
 
             // assignments

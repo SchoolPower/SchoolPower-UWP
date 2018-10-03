@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
 using Windows.UI.Text;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 /*
@@ -82,6 +83,9 @@ namespace SchoolPower.Models {
         public bool IsNew { get; set; }
         public FontWeight LargeTextFontWeight { get; set; }
         public FontWeight SmallTextFontWeight { get; set; }
+        public string ChangeInGrade { get; set; }
+        public Visibility GradeChangePanelVisibility { get; set; }
+        public SolidColorBrush GradeChangePanelColor { get; set; }
 
         public Subject(JObject data) {
 
@@ -101,6 +105,9 @@ namespace SchoolPower.Models {
             LargeTextFontWeight = FontWeights.SemiLight;
             SmallTextFontWeight = FontWeights.Normal;
             IsActive = GetActivity(StartDate, EndDate);
+            ChangeInGrade = "0";
+            GradeChangePanelVisibility = Visibility.Collapsed;
+            GradeChangePanelColor = new SolidColorBrush(Windows.UI.Colors.Transparent);
 
             JArray assignmentsJarray = new JArray();
             try {
