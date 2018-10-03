@@ -12,7 +12,13 @@
     <Color x:Key="CustomColor">#FF0063b1</Color> <!--Main color and -->
     <Color x:Key="ContrastColor">White</Color> <!--Title bar text color-->
     <Color x:Key="SystemAccentColor">#FF0063b1</Color>
-
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="Transparent"/>
+    
     <ResourceDictionary.ThemeDictionaries>
 
         <ResourceDictionary x:Key="Light">
