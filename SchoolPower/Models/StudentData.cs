@@ -15,8 +15,8 @@ namespace SchoolPower.Models {
         static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         // internal const string APIURL = "https://schoolpower.harrynull.tech:8443/api/2.0/get_data.php";
-        // internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
-        internal const string APIURL = "http://10.0.0.17:8011";
+        internal const string APIURL = "https://api.schoolpower.tech/api/2.0/get_data.php";
+        // internal const string APIURL = "http://10.0.0.17:8011";
 
         public enum NewOrOld { New, Old };
         
