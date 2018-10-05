@@ -16,6 +16,7 @@ namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
         private List<Subject> subjects;
         private bool IsKissing = false;
+        private readonly object kissLock = new object();
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public SubjectsAssignmentsPage() {
@@ -39,10 +40,15 @@ namespace SchoolPower.Views {
                 async (window, e) => {
                     switch (e.VirtualKey) {
                         case VirtualKey.F5:
-                            if (!IsKissing)
+                            lock (kissLock) {
+                                KissingAsync();
+                            }/*
+                            if (!IsKissing) {
+                                IsKissing = true;
                                 try {
                                     await KissingAsync();
                                 } catch (Exception) { }
+                            }*/
                             break;
                         case VirtualKey.F6:
                             try {
@@ -176,64 +182,66 @@ namespace SchoolPower.Views {
 
         private async Task KissingAsync() {
 
-            IsKissing = true;
+            if (IsKissing) {
+                return;
+            } else {
 
-            // show
-            ShowKissingBar.Begin();
+                IsKissing = true;
 
-            string result = null;
-            // refresh
-            try {
-                result = await StudentData.Refresh();
-            } catch (Exception e) {
+                // show
+                ShowKissingBar.Begin();
+
+                string result = null;
+                ContentDialog ErrorContentDialog = new ContentDialog();
+                // refresh
                 try {
-                    ContentDialog ErrorContentDialog = new ContentDialog {
-                        Title = LocalizedResources.GetString("unknownError/Text"),
-                        Content = LocalizedResources.GetString("bad/Text") + "\r\n\r\n" + e.ToString(),
-                        CloseButtonText = LocalizedResources.GetString("yesNet/Text"),
-                    };
-                    await ErrorContentDialog.ShowAsync();
-                } catch (Exception) { }
-            }
+                    result = await StudentData.Refresh();
+                } catch (Exception e) {
+                    try {
+                        ErrorContentDialog.Title = LocalizedResources.GetString("unknownError/Text");
+                        ErrorContentDialog.Content = LocalizedResources.GetString("bad/Text") + "\r\n\r\n" + e.ToString();
+                        ErrorContentDialog.CloseButtonText = LocalizedResources.GetString("yesNet/Text");
+                    } catch (Exception) { }
+                }
 
-            // hide
-            HideKissingBar.Begin();
-            await Task.Delay(300);
-            HideKissingBarRow.Begin();
+                // hide
+                HideKissingBar.Begin();
+                await Task.Delay(100);
+                HideKissingBarRow.Begin();
 
-            switch (result) {
-                case "okey dokey":
-                    StatusTextBlock.Text = "Updated!";
-                    break;
-                case "error":
-                    StatusTextBlock.Text = LocalizedResources.GetString("cannotConnect/Text");
-                    // Tawny
-                    KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
-                    break;
-                case null:
-                    StatusTextBlock.Text = LocalizedResources.GetString("unknownError/Text");
-                    // Tawny
-                    KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
-                    break;
-            }
+                switch (result) {
+                    case "okey dokey":
+                        StatusTextBlock.Text = "Cat!";
+                        break;
+                    case "error":
+                        StatusTextBlock.Text = LocalizedResources.GetString("cannotConnect/Text");
+                        // Tawny
+                        KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
+                        // await ErrorContentDialog.ShowAsync();
+                        break;
+                    case null:
+                        StatusTextBlock.Text = LocalizedResources.GetString("unknownError/Text");
+                        // Tawny
+                        KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 202, 81, 0));
+                        // await ErrorContentDialog.ShowAsync();
+                        break;
+                }
 
-            ProcesR.Visibility = Visibility.Collapsed;
-            ShowKissingBar.Begin();
-            await Task.Delay(2000);
-            HideKissingBar.Begin();
-            await Task.Delay(300);
-            HideKissingBarRow.Begin();
+                ProcesR.Visibility = Visibility.Collapsed;
+                ShowKissingBar.Begin();
+                await Task.Delay(2000);
+                HideKissingBar.Begin();
+                await Task.Delay(200);
+                HideKissingBarRow.Begin();
 
-            StatusTextBlock.Text = "Loading ...";
-            ProcesR.Visibility = Visibility.Visible;
-            KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
                 StatusTextBlock.Text = "Purr ...";
                 ProcesR.Visibility = Visibility.Visible;
                 KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
 
-            Initialize();
+                Initialize();
 
-            IsKissing = false;
+                IsKissing = false;
+            }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
