@@ -49,11 +49,13 @@ namespace SchoolPower.Views {
 
         private void SubjectList_CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             var checkBox = sender as CheckBox;
-            checkBox.IsChecked = !checkBox.IsChecked;
+            //checkBox.IsChecked = !checkBox.IsChecked;
             if ((bool)checkBox.IsChecked) {
                 localSettings.Values[checkBox.Content.ToString()] = true;
+                StudentData.GPASelectedSubject[checkBox.Content.ToString()] = true;
             } else {
                 localSettings.Values[checkBox.Content.ToString()] = false;
+                StudentData.GPASelectedSubject[checkBox.Content.ToString()] = false;
             }
             System.Diagnostics.Debug.WriteLine(checkBox.Content.ToString() + " " + localSettings.Values[checkBox.Content.ToString()]);
         }

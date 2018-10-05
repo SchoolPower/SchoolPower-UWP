@@ -22,17 +22,18 @@ namespace SchoolPower.Views.Dialogs {
                     GPA.Text = StudentData.GetAllGPA(selectedCombo).ToString() + "%";
                     break;
                 case "Custom":
+                    var i = localSettings.Values["CalculateRule"];
                     switch (localSettings.Values["CalculateRule"]) {
-                        case "0":
+                        case 0:
                             GPA.Text = StudentData.GetSelectedGPA(selectedCombo).ToString() + "%";
                             break;
-                        case "1":
+                        case 1:
                             GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 3).ToString() + "%";
                             break;
-                        case "2":
+                        case 2:
                             GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 4).ToString() + "%";
                             break;
-                        case "3":
+                        case 3:
                             GPA.Text = StudentData.GetSelectedGPA(selectedCombo, 5).ToString() + "%";
                             break;
                         default:

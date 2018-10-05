@@ -258,9 +258,9 @@ namespace SchoolPower.Models {
                 System.Diagnostics.Debug.WriteLine(subject.Name);
                 foreach (var grade in subject.Peroids) {
 
-                    System.Diagnostics.Debug.WriteLine(grade.Time + " " + grade.Percent + " "+ localSettings.Values[subject.Name]);
+                    System.Diagnostics.Debug.WriteLine(grade.Time + " " + grade.Percent + " "+ GPASelectedSubject[subject.Name]);
 
-                    if (grade.Time == SelectedPeroid && grade.Percent != "0" && (bool)localSettings.Values[subject.Name]) {
+                    if (grade.Time == SelectedPeroid && grade.Percent != "0" && GPASelectedSubject[subject.Name]) {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
                     }
