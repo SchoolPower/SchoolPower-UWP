@@ -158,7 +158,7 @@
                     <TextBlock 
                         Name="StatusTextBlock" 
                         FontSize="12"
-                        Text="Loading ..."
+                        Text="Purr ..."
                         Margin="8,6,0,6" />
 
                     <FontIcon 

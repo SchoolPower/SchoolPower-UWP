@@ -227,6 +227,9 @@ namespace SchoolPower.Views {
             StatusTextBlock.Text = "Loading ...";
             ProcesR.Visibility = Visibility.Visible;
             KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+                StatusTextBlock.Text = "Purr ...";
+                ProcesR.Visibility = Visibility.Visible;
+                KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
 
             Initialize();
 
