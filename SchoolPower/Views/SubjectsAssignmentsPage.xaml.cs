@@ -11,6 +11,7 @@ using SchoolPower.Localization;
 using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace SchoolPower.Views {
     public sealed partial class SubjectsAssignmentsPage : Page {
@@ -23,10 +24,10 @@ namespace SchoolPower.Views {
             Views.Shell.HamburgerMenu.IsFullScreen = !true;
             Views.Shell.HamburgerMenu.HamburgerButtonVisibility = !false ? Visibility.Visible : Visibility.Collapsed;
             Initialize();
+            pageHeader.Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["CustomColor"]);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e) {
-            //Application.Current.Resources["SystemAccentColor"] = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
         }
 
         void Initialize() {
@@ -60,9 +61,14 @@ namespace SchoolPower.Views {
 
             InitializeComponent();
 
+            // apply theme
+            var accentColor = App.themes[(int)localSettings.Values["ColorBoardSelectedIndex"]].AccentColor;
+            Application.Current.Resources["SystemAccentColor"] = accentColor;
+            Application.Current.Resources["CustomColor"] = accentColor;
 
             // Application.Current.Resources["SystemAccentColor"] = new SolidColorBrush(Windows.UI.Colors.Transparent);
 
+            // data
             subjects = null;
             subjects = new List<Subject>();
 
@@ -188,6 +194,8 @@ namespace SchoolPower.Views {
 
                 IsKissing = true;
 
+                KissingBar.Background = new SolidColorBrush((Color)Application.Current.Resources["SystemAccentColor"]);
+
                 // show
                 ShowKissingBar.Begin();
 
@@ -211,7 +219,7 @@ namespace SchoolPower.Views {
 
                 switch (result) {
                     case "okey dokey":
-                        StatusTextBlock.Text = "Cat!";
+                        StatusTextBlock.Text = "Updated!";
                         break;
                     case "error":
                         StatusTextBlock.Text = LocalizedResources.GetString("cannotConnect/Text");
@@ -229,14 +237,14 @@ namespace SchoolPower.Views {
 
                 ProcesR.Visibility = Visibility.Collapsed;
                 ShowKissingBar.Begin();
-                await Task.Delay(2000);
+                await Task.Delay(1500);
                 HideKissingBar.Begin();
                 await Task.Delay(200);
                 HideKissingBarRow.Begin();
 
                 StatusTextBlock.Text = "Purr ...";
                 ProcesR.Visibility = Visibility.Visible;
-                KissingBar.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 99, 177));
+                KissingBar.Background = new SolidColorBrush((Color)Application.Current.Resources["SystemAccentColor"]);
 
                 Initialize();
 

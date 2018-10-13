@@ -8,10 +8,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:SchoolPower.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:data="using:SchoolPower.Models" 
+      xmlns:data="using:SchoolPower.Models"
+      xmlns:vm="using:SchoolPower.ViewModels"
       mc:Ignorable="d"
       Loaded="Page_Loaded">
 
+    <Page.DataContext>
+        <vm:PagesViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+    
     <Page.Resources>
 
         <DataTemplate x:Key="SubjectsListTemplate_Compact" x:DataType="data:Subject">
@@ -177,6 +182,7 @@
 
     <Grid
         x:Name="RootGrid"
+        Loaded="{x:Bind ViewModel.ApplyThemeOnStart}"
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>

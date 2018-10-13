@@ -40,7 +40,7 @@
                 <Grid>
                     <TextBlock Name="ColNoData" x:Uid="ColNoData" Text="No chart data availiable. " Margin="0,5,0,0" Visibility="Collapsed"/>
                     <Charting:Chart x:Name="ColumnChart" >
-                        <Charting:ColumnSeries Title=" "  IndependentValuePath="Subject" DependentValuePath="Percent" IsSelectionEnabled="True" />
+                        <Charting:ColumnSeries Title=" " IndependentValuePath="Subject" DependentValuePath="Percent" IsSelectionEnabled="True" />
                     </Charting:Chart>
                 </Grid>
             </PivotItem>

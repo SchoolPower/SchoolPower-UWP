@@ -10,8 +10,14 @@
       xmlns:local="using:SchoolPower.Views"
       xmlns:localization="using:SchoolPower.Localization" 
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:data="using:SchoolPower.Models" 
+      xmlns:vm="using:SchoolPower.ViewModels"
+      xmlns:data="using:SchoolPower.Models"
+      xmlns:AppData="using:SchoolPower"
       mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:SettingsPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
 
     <Page.Resources>
 
@@ -20,6 +26,12 @@
         <DataTemplate x:Key="SubjectListCheckBoxDataTemplate" x:DataType="data:Subject">
             <StackPanel Orientation="Horizontal">
                 <CheckBox Content="{x:Bind Name}" Click="SubjectList_CheckBox_Click" Tapped="SubjectList_CheckBox_Click" Loaded="SelectSubject_CheckBox_Loaded"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ColorBoardDataTemplate" x:DataType="AppData:Theme">
+            <StackPanel Orientation="Horizontal">
+                <Border Width="40" Height="40" Background="{x:Bind AccentColorBrush}" ToolTipService.ToolTip="{x:Bind Name}" BorderBrush="White" />
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -55,7 +67,15 @@
         <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
             <!--  header  -->
-            <controls:PageHeader x:Name="pageHeader" x:Uid="settings" Content="Settings" Frame="{x:Bind Frame}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" />
+            <controls:PageHeader 
+                x:Name="pageHeader" 
+                x:Uid="settings" 
+                Content="Settings" 
+                Frame="{x:Bind Frame}" 
+                Background="{x:Bind ViewModel.HeaderForeground, Mode=TwoWay }"
+                RelativePanel.AlignLeftWithPanel="True" 
+                RelativePanel.AlignRightWithPanel="True" 
+                RelativePanel.AlignTopWithPanel="True" />
 
             <!--  content  -->
             <Pivot 
@@ -111,7 +131,30 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                        </StackPanel>
+                        
+                            
+                            <TextBlock Text="Theme" Margin="0,10,0,5" />
+
+                            <GridView  
+                                Name="ColorBoradGridView" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollMode="Enabled"
+                                SelectedIndex="{x:Bind ViewModel.ColorBoardSelectedIndex, Mode=TwoWay}"
+                                SelectionChanged="{x:Bind ViewModel.ApplyTheme}"
+                                ItemsSource="{x:Bind AppData:App.themes}" 
+                                IsItemClickEnabled="True" 
+                                ItemTemplate="{StaticResource ColorBoardDataTemplate}" >
+                                <GridView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsWrapGrid 
+                                            x:Name="ColorBoradWarp" 
+                                            Orientation="Vertical"
+                                            MaximumRowsOrColumns="4" />
+                                    </ItemsPanelTemplate>
+                                </GridView.ItemsPanel>
+                            </GridView>
+                        </StackPanel> 
                     </ScrollViewer>
                 </PivotItem>
 

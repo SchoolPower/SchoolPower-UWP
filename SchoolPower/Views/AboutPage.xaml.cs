@@ -21,6 +21,7 @@ namespace SchoolPower.Views {
 
         public AboutPage() {
             this.InitializeComponent();
+            pageHeader.Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["CustomColor"]);
         }
 
         async Task LaunchWebsiteAsync() {

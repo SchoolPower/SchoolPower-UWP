@@ -23,7 +23,7 @@ namespace SchoolPower.Views {
 
             Views.Shell.HamburgerMenu.IsFullScreen = true; // set haumburger invisible
             Views.Shell.HamburgerMenu.HamburgerButtonVisibility = false ? Visibility.Visible : Visibility.Collapsed;  // set haumburger invisible
-            App.SetUIBlack();
+            App.SetTitleBarUI(Windows.UI.Colors.Black, Windows.UI.Colors.Black);
 
             try { UsernameTextBox.Text = localSettings.Values["UsrName"].ToString(); } catch (System.NullReferenceException) { } 
             try { PasswordTextBox.Password = localSettings.Values["Passwd"].ToString(); } catch (System.NullReferenceException) { }
@@ -58,7 +58,7 @@ namespace SchoolPower.Views {
             
             // load
             else {
-                App.SetUIBlue();
+                App.SetTitleBarUI(Windows.UI.Color.FromArgb(255, 0, 99, 177), Windows.UI.Color.FromArgb(0, 25, 114, 184));
 
                 // kissing
                 Views.Busy.SetBusy(true, "Purr ...");

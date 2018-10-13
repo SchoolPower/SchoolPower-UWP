@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using SchoolPower.Views.Dialogs;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -62,6 +63,7 @@ namespace SchoolPower.Views {
             //foreach(var v in )
 
             InitializeComponent();
+            pageHeader.Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["CustomColor"]);
             AssignmentsGridView.ItemsSource = assignments;
             Window.Current.SizeChanged += Current_SizeChanged;
         }

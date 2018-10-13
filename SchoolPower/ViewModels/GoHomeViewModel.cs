@@ -35,7 +35,8 @@ namespace SchoolPower.ViewModels {
                 } else if (!value) {
                     IsDate = false;
                 }
-                base.RaisePropertyChanged(); }
+                base.RaisePropertyChanged();
+            }
         }
 
         public bool IsBus {

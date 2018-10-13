@@ -4,6 +4,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SchoolPower.Models;
+using Windows.UI.Xaml.Media;
 
 namespace SchoolPower.Views {
 
@@ -17,6 +18,7 @@ namespace SchoolPower.Views {
 
         public AttendancePage() {
             this.InitializeComponent();
+            pageHeader.Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["CustomColor"]);
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => { };
             attendanceItems = StudentData.attendances;

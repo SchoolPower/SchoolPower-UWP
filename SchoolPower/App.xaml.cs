@@ -32,6 +32,12 @@ using Windows.UI.Xaml.Data;
 using Windows.Storage;
 using SchoolPower.Models;
 using Windows.UI.ViewManagement;
+using System.Collections.Generic;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
+using System.Reflection;
+using System.Linq;
+using System;
 
 namespace SchoolPower {
     /// Documentation on APIs used in this page:
@@ -41,7 +47,7 @@ namespace SchoolPower {
     sealed partial class App : BootStrapper {
 
         public static bool isMainPageFirstTimeInit = true;
-
+        public static List<Theme> themes = new List<Theme>(); 
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public App() {
@@ -71,9 +77,10 @@ namespace SchoolPower {
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args) {
 
+            // init value
             bool IsLogin;
-
             try {
+                int i = (int)localSettings.Values["ColorBoardSelectedIndex"];
                 bool b = (bool)localSettings.Values["IsStayAtSchool"];
                 bool bb = (bool)localSettings.Values["IsBus"];
                 bool bbb = (bool)localSettings.Values["IsDate"];
@@ -85,6 +92,7 @@ namespace SchoolPower {
                 var vvv = localSettings.Values["CalculateRule"];
                 IsLogin = (bool)localSettings.Values["IsFirstTimeLogin"];
             } catch (System.NullReferenceException) {
+                localSettings.Values["ColorBoardSelectedIndex"] = 0;
                 localSettings.Values["FirstTimeDisplayHomeDialog"] = true;
                 localSettings.Values["IsStayAtSchool"] = true;
                 localSettings.Values["IsBus"] = false;
@@ -97,49 +105,66 @@ namespace SchoolPower {
                 localSettings.Values["CalculateRule"] = 0;
             }
 
+            // init themes
+
+            /*
+            // init all colors
+            themes.Add(new Theme("Default", Windows.UI.Color.FromArgb(255, 0, 99, 177)));
+            var colors = GetStaticPropertyBag(typeof(Colors));
+            foreach (KeyValuePair<string, object> colorPair in colors) {
+                themes.Add(new Theme(colorPair.Key, (Color)colorPair.Value));
+            }
+            */
+
+            
+            themes.Add(new Theme("Liberty", Windows.UI.Color.FromArgb(255, 0, 99, 177)));
+            themes.Add(new Theme("Despair", Windows.UI.Colors.SteelBlue));
+            themes.Add(new Theme("Miku", Windows.UI.Colors.DarkCyan));
+            themes.Add(new Theme("Monika", Windows.UI.Colors.CadetBlue));
+
+            themes.Add(new Theme("Soviet", Windows.UI.Colors.Red));
+            themes.Add(new Theme("Krunch", Windows.UI.Color.FromArgb(255, 255, 117, 117)));
+            // themes.Add(new Theme("Doki", Windows.UI.Color.FromArgb(255, 255, 170, 213)));
+            // themes.Add(new Theme("Doki", Windows.UI.Color.FromArgb(255, 217, 179, 179)));
+
+        
+            
             if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                 await NavigationService.NavigateAsync(typeof(Views.LoginPage));
             } else {
                 Task<string> getHistoryJSON = StudentData.GetStudentData(StudentData.NewOrOld.New);
                 string studataOld = await getHistoryJSON;
                 StudentData studentData = new StudentData(StudentData.ParseJSON(studataOld), StudentData.ParseJSON(studataOld));
-                App.SetUIBlue();
+                SetTitleBarUI(Windows.UI.Color.FromArgb(255, 0, 99, 177), Windows.UI.Color.FromArgb(0, 25, 114, 184));
                 await NavigationService.NavigateAsync(typeof(Views.SubjectsAssignmentsPage));
             }
 
             // SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
         }
 
-        public static void SetUIBlue() {
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.ForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonBackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.ButtonForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(0, 25, 114, 184);
-            titleBar.ButtonPressedForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonInactiveBackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.ButtonInactiveForegroundColor = Windows.UI.Colors.LightGray;
-            titleBar.InactiveBackgroundColor = Windows.UI.Color.FromArgb(255, 0, 99, 177);
-            titleBar.InactiveForegroundColor = Windows.UI.Colors.LightGray;
-            titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(0, 25, 114, 184);
-            titleBar.ButtonHoverForegroundColor = Windows.UI.Colors.White;
+        public static Dictionary<string, object> GetStaticPropertyBag(Type t) {
+            const BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
+            var map = new Dictionary<string, object>();
+            foreach (var prop in t.GetProperties(flags)) {
+                map[prop.Name] = prop.GetValue(null, null);
+            }
+            return map;
         }
 
-        public static void SetUIBlack() {
+        public static void SetTitleBarUI(Windows.UI.Color color, Windows.UI.Color colorHover) {
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = Windows.UI.Colors.Black;
+            titleBar.BackgroundColor = color;
+            titleBar.ButtonBackgroundColor = color;
+            titleBar.ButtonPressedBackgroundColor = colorHover;
+            titleBar.ButtonInactiveBackgroundColor = color;
+            titleBar.InactiveBackgroundColor = color;
+            titleBar.ButtonHoverBackgroundColor = colorHover;
             titleBar.ForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonBackgroundColor = Windows.UI.Colors.Black;
             titleBar.ButtonForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonPressedBackgroundColor = Windows.UI.Colors.Black;
             titleBar.ButtonPressedForegroundColor = Windows.UI.Colors.White;
-            titleBar.ButtonInactiveBackgroundColor = Windows.UI.Colors.Black;
             titleBar.ButtonInactiveForegroundColor = Windows.UI.Colors.LightGray;
-            titleBar.InactiveBackgroundColor = Windows.UI.Colors.Black;
             titleBar.InactiveForegroundColor = Windows.UI.Colors.LightGray;
-            titleBar.ButtonHoverBackgroundColor = Windows.UI.Colors.Black;
             titleBar.ButtonHoverForegroundColor = Windows.UI.Colors.White;
         }
 
@@ -149,6 +174,18 @@ namespace SchoolPower {
             Windows.Storage.ApplicationData.Current.ClearAsync(); // do not await 
             localSettings.Values["UsrName"] = username;
             localSettings.Values["Passwd"] = password;
+        }
+    }
+
+    public class Theme {
+        public string Name { get; set; }
+        public Windows.UI.Color AccentColor { get; set; }
+        public SolidColorBrush AccentColorBrush { get; set; }
+
+        public Theme(string Name, Windows.UI.Color AccentColor) {
+            this.Name = Name;
+            this.AccentColor = AccentColor;
+            this.AccentColorBrush = new SolidColorBrush(AccentColor);
         }
     }
 }

@@ -6,17 +6,19 @@ using SchoolPower.Localization;
 using System.Linq;
 using Windows.UI.Xaml.Media.Animation;
 using System.Diagnostics;
+using SchoolPower.ViewModels;
 
 namespace SchoolPower.Views {
+
     public sealed partial class SettingsPage : Page {
 
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
         List<Subject> subjects = StudentData.subjects;
 
         public SettingsPage() {
-            
-            InitializeComponent();
 
+            SettingsPageViewModel._ColorBoardSelectedIndex = -1;
+            InitializeComponent();
             Language_ComboBox.ItemsSource = LocalizedResources.SupportedLanguages;
             Language_ComboBox.SelectedIndex = Array.IndexOf(LocalizedResources.SupportedLanguages.ToArray(), LocalizedResources.Language);
         }
