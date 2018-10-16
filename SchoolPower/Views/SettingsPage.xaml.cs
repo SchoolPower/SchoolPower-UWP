@@ -27,7 +27,7 @@ namespace SchoolPower.Views {
         }
 
         private async void InnerFlyoutButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
-            await StudentData.MagicLogout(StudentData.MagicNumber);
+            await StudentData.Logout();
             Frame.Navigate(typeof(LoginPage));
         }
 
@@ -40,13 +40,11 @@ namespace SchoolPower.Views {
         }
 
         private void CalcRule_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) { 
-            var combo = sender as ComboBox;
-            localSettings.Values["CalculateRule"] = combo.SelectedIndex;
+            localSettings.Values["CalculateRule"] = (sender as ComboBox).SelectedIndex;
         }
 
         private void CalcRule_ComboBox_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e) { 
-            var combo = sender as ComboBox;
-            combo.SelectedIndex = (int)localSettings.Values["CalculateRule"];
+            (sender as ComboBox).SelectedIndex = (int)localSettings.Values["CalculateRule"];
         }
 
         private void SubjectList_CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
@@ -59,7 +57,7 @@ namespace SchoolPower.Views {
                 localSettings.Values[checkBox.Content.ToString()] = false;
                 StudentData.GPASelectedSubject[checkBox.Content.ToString()] = false;
             }
-            System.Diagnostics.Debug.WriteLine(checkBox.Content.ToString() + " " + localSettings.Values[checkBox.Content.ToString()]);
+            Debug.WriteLine(checkBox.Content.ToString() + " " + localSettings.Values[checkBox.Content.ToString()]);
         }
 
         private void DashboardDisplayRadioButtonCheck(object sender, Windows.UI.Xaml.RoutedEventArgs e) {

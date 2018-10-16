@@ -116,7 +116,7 @@ namespace SchoolPower.Models {
             try {
                 for (int index = 0; index < assignmentsJarray.Count; index++) 
                     Assignments.Add(new AssignmentItem((JObject)assignmentsJarray[index]));
-            } catch (System.NullReferenceException) { }
+            } catch (NullReferenceException) { }
 
             // catagory
             CatagoryList = new List<string>();
@@ -181,11 +181,9 @@ namespace SchoolPower.Models {
 
         }
 
-        bool GetActivity (DateTime start, DateTime end) {
-            if (DateTime.Compare(start, DateTime.Now) < 0 && DateTime.Compare(DateTime.Now, end) < 0) 
-                return true;
-            else 
-                return false;
+        bool GetActivity(DateTime start, DateTime end)
+        {
+            return DateTime.Compare(start, DateTime.Now) < 0 && DateTime.Compare(DateTime.Now, end) < 0;
         }
     }
 
@@ -208,7 +206,7 @@ namespace SchoolPower.Models {
             IsActive        = false;
             Color           = StudentData.GetColor(LetterGrade);
 
-            DateTime Genesis = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            DateTime Genesis = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             Date = Genesis.AddSeconds((double)data["startDate"]).ToLocalTime();
 
             if (data["comment"].ToString() == null) 

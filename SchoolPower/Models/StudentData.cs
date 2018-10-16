@@ -10,7 +10,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace SchoolPower.Models {
-    public class StudentData {
+    public class StudentData
+    {
 
         static Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
@@ -19,7 +20,7 @@ namespace SchoolPower.Models {
         // internal const string APIURL = "http://127.0.0.1:8000";
 
         public enum NewOrOld { New, Old };
-        
+
         public static List<Subject> subjects = new List<Subject>();
         public static List<Subject> subjectsOld = new List<Subject>();
         public static List<AttendanceItem> attendances = new List<AttendanceItem>();
@@ -30,22 +31,26 @@ namespace SchoolPower.Models {
         public static Dictionary<string, string> AssignmentFilterParam;
         public static IList<object> SubjectListViewRemovedItems;
         public static IList<object> SubjectListViewAddedItems;
-        public static int MagicNumber = 114514;
         public static ContentDialog DisabledMsgDialog;
 
         public static Dictionary<string, bool> GPASelectedSubject = new Dictionary<string, bool>();
 
-        public StudentData(JObject data, JObject dataOld) {
+        public StudentData(JObject data, JObject dataOld)
+        {
 
             info = new Info((JObject)data["information"]);
 
-            try{
-                DisabledMsgDialog = new ContentDialog {
+            try
+            {
+                DisabledMsgDialog = new ContentDialog
+                {
                     Title = data["disabled"]["title"],
                     Content = data["disabled"]["message"],
                     CloseButtonText = "吼哇"
                 };
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 DisabledMsgDialog = null;
             }
 
@@ -61,62 +66,82 @@ namespace SchoolPower.Models {
 
             // parse
             JArray sectionsJarray = (JArray)data["sections"];
-            foreach (var section in sectionsJarray) {
+            foreach (var section in sectionsJarray)
+            {
                 subjects.Add(new Subject((JObject)section));
             }
             JArray sectionsJarrayOld = (JArray)dataOld["sections"];
-            foreach (var sectionOld in sectionsJarrayOld) {
+            foreach (var sectionOld in sectionsJarrayOld)
+            {
                 subjectsOld.Add(new Subject((JObject)sectionOld));
             }
             JArray attendancesJarray = (JArray)data["attendances"];
-            foreach (var attendence in attendancesJarray) {
+            foreach (var attendence in attendancesJarray)
+            {
                 attendances.Add(new AttendanceItem((JObject)attendence));
             }
             JArray attendancesJarrayOld = (JArray)dataOld["attendances"];
-            foreach (var attendenceOld in attendancesJarrayOld) {
+            foreach (var attendenceOld in attendancesJarrayOld)
+            {
                 attendancesOld.Add(new AttendanceItem((JObject)attendenceOld));
             }
 
             // sort
-            try {
+            try
+            {
                 attendances.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
-            } catch (Exception) { }
-            try {
+            }
+            catch (Exception) { }
+            try
+            {
                 attendances.Sort((x, y) => DateTime.Compare
                     (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
                      DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
-            } catch (Exception) { }
+            }
+            catch (Exception) { }
             attendances.Reverse();
 
-            try {
+            try
+            {
                 attendancesOld.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
-            } catch (Exception) { }
-            try {
+            }
+            catch (Exception) { }
+            try
+            {
                 attendancesOld.Sort((x, y) => DateTime.Compare
                     (DateTime.ParseExact(x.Date, "MM/dd/yyyy", null),
                      DateTime.ParseExact(x.Date, "MM/dd/yyyy", null)));
-            } catch (Exception) { }
+            }
+            catch (Exception) { }
             attendancesOld.Reverse();
 
             // new assignments 
-            foreach (var subject in subjects) {
-                foreach (var subjectOld in subjectsOld) {
-                    if (subjectOld.Name == subject.Name) {
-                        foreach (var assignment in subject.Assignments) {
-                            try {
-                                if (!subjectOld.Assignments.Contains(assignment)) {
+            foreach (var subject in subjects)
+            {
+                foreach (var subjectOld in subjectsOld)
+                {
+                    if (subjectOld.Name == subject.Name)
+                    {
+                        foreach (var assignment in subject.Assignments)
+                        {
+                            try
+                            {
+                                if (!subjectOld.Assignments.Contains(assignment))
+                                {
                                     subject.IsNew = true;
                                     assignment.IsNew = true;
                                     assignment.DisplayName += " *";
                                     assignment.LargeTextFontWeight = FontWeights.SemiBold;
                                     assignment.SmallTextFontWeight = FontWeights.Bold;
                                 }
-                            } catch (System.ArgumentOutOfRangeException) { }
+                            }
+                            catch (System.ArgumentOutOfRangeException) { }
                         }
 
                     }
                 }
-                if (subject.IsNew) {
+                if (subject.IsNew)
+                {
                     subject.DisplayName += " *";
                     subject.LargeTextFontWeight = FontWeights.Normal;
                     subject.SmallTextFontWeight = FontWeights.SemiBold;
@@ -124,13 +149,17 @@ namespace SchoolPower.Models {
             }
 
             // new attendance
-            foreach (var attendance in attendances) {
-                try { 
-                    if (!attendancesOld.Contains(attendance)){
+            foreach (var attendance in attendances)
+            {
+                try
+                {
+                    if (!attendancesOld.Contains(attendance))
+                    {
                         attendance.SmallTextFontWeight = FontWeights.SemiBold;
                         attendance.DisplayName += " *";
                     }
-                } catch (System.ArgumentOutOfRangeException) {}
+                }
+                catch (System.ArgumentOutOfRangeException) { }
             }
 
             // history data
@@ -139,7 +168,8 @@ namespace SchoolPower.Models {
             string[] dateArray = ((string)localSettings.Values["dates"]).Split(' ');
 
             // add every history to List<HistoryData>
-            foreach (var date in dateArray) {
+            foreach (var date in dateArray)
+            {
                 historyDatas.Add(new HistoryData(date));
             }
 
@@ -148,21 +178,30 @@ namespace SchoolPower.Models {
                 historyDatas.RemoveAt(0);
 
             // GPA selected subjects
-            foreach(var subject in subjects) {
+            foreach (var subject in subjects)
+            {
                 bool b = false;
-                try {
+                try
+                {
                     b = (bool)localSettings.Values[subject.Name];
-                } catch (System.NullReferenceException) {
+                }
+                catch (NullReferenceException)
+                {
                     localSettings.Values[subject.Name] = false;
-                } try {
+                }
+                try
+                {
                     GPASelectedSubject[subject.Name] = b;
-                } catch (Exception) {
+                }
+                catch (Exception)
+                {
                     GPASelectedSubject.Add(subject.Name, b);
                 }
             }
         }
-        
-        public static async Task<string> Kissing(string username, string password, bool isLogin) {
+
+        public static async Task<string> Kissing(string username, string password, bool isLogin)
+        {
 
             string action;
             if (isLogin)
@@ -187,10 +226,12 @@ namespace SchoolPower.Models {
             return await response.Content.ReadAsStringAsync();
         }
 
-        public static async Task<string> GetStudentData(NewOrOld NoO) {
+        public static async Task<string> GetStudentData(NewOrOld NoO)
+        {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            switch (NoO) {
-                case NewOrOld.New: 
+            switch (NoO)
+            {
+                case NewOrOld.New:
                     StorageFile file = await folder.GetFileAsync("studentInfo");
                     string ret = await FileIO.ReadTextAsync(file);
                     return ret;
@@ -198,19 +239,22 @@ namespace SchoolPower.Models {
                     StorageFile fileOld = await folder.GetFileAsync("studentInfoOld");
                     string retOld = await FileIO.ReadTextAsync(fileOld);
                     return retOld;
-                default: 
+                default:
                     return null;
             }
         }
 
-        public static JObject ParseJSON(string json) {
+        public static JObject ParseJSON(string json)
+        {
             JObject ret = JObject.Parse(json);
             return ret;
         }
 
-        public async static Task SaveStudentData(string json, NewOrOld NoO) {
+        public async static Task SaveStudentData(string json, NewOrOld NoO)
+        {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            switch (NoO) {
+            switch (NoO)
+            {
                 case NewOrOld.New:
                     StorageFile file = await folder.CreateFileAsync("studentInfo", CreationCollisionOption.ReplaceExisting);
                     StorageFile sampleFile = await folder.GetFileAsync("studentInfo");
@@ -226,27 +270,33 @@ namespace SchoolPower.Models {
             }
         }
 
-        public static double GetAllGPA(string SelectedPeroid) {   
+        public static double GetAllGPA(string SelectedPeroid)
+        {
 
-            double index = 0; 
+            double index = 0;
             double gradeSum = 0;
 
-            foreach (var subject in subjects) {
-                foreach (var grade in subject.Peroids) {
-                    if (grade.Time == SelectedPeroid && grade.Percent != "0") {
+            foreach (var subject in subjects)
+            {
+                foreach (var grade in subject.Peroids)
+                {
+                    if (grade.Time == SelectedPeroid && grade.Percent != "0")
+                    {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
                     }
                 }
             }
 
-            switch (index) {
+            switch (index)
+            {
                 case 0: return 0;
                 default: return Math.Round(gradeSum / index, 3);
             }
         }
-        
-        public static double GetSelectedGPA(string SelectedPeroid) {
+
+        public static double GetSelectedGPA(string SelectedPeroid)
+        {
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             double index = 0;
@@ -254,32 +304,37 @@ namespace SchoolPower.Models {
 
             System.Diagnostics.Debug.WriteLine(SelectedPeroid);
 
-            foreach (var subject in subjects) {
+            foreach (var subject in subjects)
+            {
                 System.Diagnostics.Debug.WriteLine(subject.Name);
-                foreach (var grade in subject.Peroids) {
+                foreach (var grade in subject.Peroids)
+                {
 
-                    System.Diagnostics.Debug.WriteLine(grade.Time + " " + grade.Percent + " "+ GPASelectedSubject[subject.Name]);
+                    System.Diagnostics.Debug.WriteLine(grade.Time + " " + grade.Percent + " " + GPASelectedSubject[subject.Name]);
 
-                    if (grade.Time == SelectedPeroid && grade.Percent != "0" && GPASelectedSubject[subject.Name]) {
+                    if (grade.Time == SelectedPeroid && grade.Percent != "0" && GPASelectedSubject[subject.Name])
+                    {
                         gradeSum += Convert.ToDouble(grade.Percent);
                         index += 1;
                     }
                 }
             }
-            switch (index) {
-                case 0: return 0;
-                default: return Math.Round(gradeSum / index, 3);
-            }
+            return index==0 ? 0 : Math.Round(gradeSum / index, 3);
+            
         }
-        
-        public static double GetSelectedGPA(string SelectedPeroid, int total) {
+
+        public static double GetSelectedGPA(string SelectedPeroid, int total)
+        {
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             List<double> grades = new List<double>();
 
-            foreach (var subject in StudentData.subjects) {
-                foreach (var grade in subject.Peroids) {
-                    if (grade.Time != SelectedPeroid && grade.Percent != "0" && (bool)localSettings.Values[subject.Name]) {
+            foreach (var subject in subjects)
+            {
+                foreach (var grade in subject.Peroids)
+                {
+                    if (grade.Time != SelectedPeroid && grade.Percent != "0" && (bool)localSettings.Values[subject.Name])
+                    {
                         grades.Add(Convert.ToDouble(grade.Percent));
                     }
                 }
@@ -288,21 +343,26 @@ namespace SchoolPower.Models {
             grades.Reverse();
 
             double sum = 0;
-            if (grades.Count < total) {
-                foreach (double grade in grades) {
+            if (grades.Count < total)
+            {
+                foreach (double grade in grades)
+                {
                     sum += grade;
                 }
                 total = grades.Count;
-            } 
-            else {
-                for (int i = 0; i < total; i++) {
+            }
+            else
+            {
+                for (int i = 0; i < total; i++)
+                {
                     sum += grades[i];
                 }
             }
             return Math.Round(sum / total, 3);
         }
 
-        public static async Task<string> Refresh() {
+        public static async Task<string> Refresh()
+        {
 
             string studata = "";
             string studataOld = "";
@@ -316,13 +376,15 @@ namespace SchoolPower.Models {
             try { studata = await Kissing(username, password, false); } catch (Exception) { }
 
             // bad network or server error 
-            if (studata == "") {
+            if (studata == "")
+            {
                 return "error";
             }
 
             // save studata
-            else {
-                
+            else
+            {
+
                 // move previous studata to old
                 studataOld = await GetStudentData(NewOrOld.New);
                 await SaveStudentData(studataOld, NewOrOld.Old);
@@ -331,17 +393,20 @@ namespace SchoolPower.Models {
                 await SaveStudentData(studata, NewOrOld.New);
 
                 // clear history
-                for (int i = subjects.Count; i >= 1; i--) {
+                for (int i = subjects.Count; i >= 1; i--)
+                {
                     subjects.RemoveAt(i - 1);
                 }
-                for (int j = attendances.Count; j >= 1; j--) {
+                for (int j = attendances.Count; j >= 1; j--)
+                {
                     attendances.RemoveAt(j - 1);
                 }
 
                 // new StudentData
                 StudentData studentData = new StudentData(ParseJSON(studata), ParseJSON(studataOld));
 
-                if (DisabledMsgDialog != null) {
+                if (DisabledMsgDialog != null)
+                {
                     await DisabledMsgDialog.ShowAsync();
                 }
 
@@ -349,8 +414,10 @@ namespace SchoolPower.Models {
             }
         }
 
-        public static SolidColorBrush GetColor(string letterGrade) {
-            switch (letterGrade) {
+        public static SolidColorBrush GetColor(string letterGrade)
+        {
+            switch (letterGrade)
+            {
                 case "A":
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(200, 0, 121, 107));
                 case "B":
@@ -377,24 +444,29 @@ namespace SchoolPower.Models {
             }
         }
 
-        public static string CollectCurrentHistoryData() {
+        public static string CollectCurrentHistoryData()
+        {
 
-            JObject json = new JObject {
+            JObject json = new JObject
+            {
                 ["date"] = DateTime.Now.ToString("yyyy-MM-dd")
             };
 
             JArray subjectItemArray = new JArray();
 
-            foreach (var subject in subjects) {
+            foreach (var subject in subjects)
+            {
 
                 JObject subjectItem = new JObject();
                 JArray peroidInfoArray = new JArray();
                 subjectItem["name"] = subject.Name;
                 subjectItem["peroids"] = peroidInfoArray;
 
-                foreach (var peroid in subject.Peroids) {
+                foreach (var peroid in subject.Peroids)
+                {
 
-                    if (peroid.IsActive) {
+                    if (peroid.IsActive)
+                    {
 
                         JObject peroidInfo = new JObject();
                         peroidInfo["time"] = peroid.Time;
@@ -409,7 +481,8 @@ namespace SchoolPower.Models {
             return json.ToString();
         }
 
-        public static void SaveHistoryData(string json) {
+        public static void SaveHistoryData(string json)
+        {
 
             // get today date
             string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
@@ -424,44 +497,45 @@ namespace SchoolPower.Models {
             string[] dateArray = null;
             dateArray = date.Split(' ');
             // add today, avoid duplication
-            if (dateArray[dateArray.Length - 1] != currentDate) {
+            if (dateArray[dateArray.Length - 1] != currentDate)
+            {
                 date += " ";
                 date += currentDate;
                 localSettings.Values["dates"] = date;
             }
         }
 
-        public static string GetHistoryData(string date) {
+        public static string GetHistoryData(string date)
+        {
             return (string)localSettings.Values[date];
         }
 
-        public static async Task MagicLogout(int MagicNumber) {
-            if (MagicNumber == StudentData.MagicNumber) {
-                string username = (string)localSettings.Values["UsrName"];
-                string password = (string)localSettings.Values["Passwd"];
-                await Windows.Storage.ApplicationData.Current.ClearAsync();
-                localSettings.Values["UsrName"] = username;
-                localSettings.Values["Passwd"] = password;
+        public static async Task Logout()
+        {
+            string username = (string)localSettings.Values["UsrName"];
+            string password = (string)localSettings.Values["Passwd"];
+            await ApplicationData.Current.ClearAsync();
+            localSettings.Values["UsrName"] = username;
+            localSettings.Values["Passwd"] = password;
 
-                // init default settings
-                localSettings.Values["FirstTimeDisplayHomeDialog"] = true;
-                localSettings.Values["IsStayAtSchool"] = true;
-                localSettings.Values["IsBus"] = false;
-                localSettings.Values["IsDate"] = false;
-                localSettings.Values["IsFirstTimeLogin"] = true;
-                localSettings.Values["showInactive"] = false;
-                localSettings.Values["DashboardShowGradeOfTERM"] = true;
-                localSettings.Values["dates"] = "";
-                localSettings.Values["lang"] = 0;
-                localSettings.Values["CalculateRule"] = 0;
+            // init default settings
+            localSettings.Values["FirstTimeDisplayHomeDialog"] = true;
+            localSettings.Values["IsStayAtSchool"] = true;
+            localSettings.Values["IsBus"] = false;
+            localSettings.Values["IsDate"] = false;
+            localSettings.Values["IsFirstTimeLogin"] = true;
+            localSettings.Values["showInactive"] = false;
+            localSettings.Values["DashboardShowGradeOfTERM"] = true;
+            localSettings.Values["dates"] = "";
+            localSettings.Values["lang"] = 0;
+            localSettings.Values["CalculateRule"] = 0;
 
-                // clear history
-                SelectedSubject = null;
-                subjects = null;
-                attendances = null;
-                subjects = new List<Subject>();
-                attendances = new List<AttendanceItem>();
-            }
+            // clear history
+            SelectedSubject = null;
+            subjects = null;
+            attendances = null;
+            subjects = new List<Subject>();
+            attendances = new List<AttendanceItem>();
         }
     }
 }
