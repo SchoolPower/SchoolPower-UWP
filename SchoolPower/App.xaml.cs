@@ -118,9 +118,9 @@ namespace SchoolPower {
 
             
             themes.Add(new Theme("Liberty", Windows.UI.Color.FromArgb(255, 0, 99, 177)));
-            themes.Add(new Theme("Despair", Windows.UI.Colors.SteelBlue));
-            themes.Add(new Theme("Miku", Windows.UI.Colors.DarkCyan));
-            themes.Add(new Theme("Monika", Windows.UI.Colors.CadetBlue));
+            themes.Add(new Theme("Democracy", Windows.UI.Colors.SteelBlue));
+            themes.Add(new Theme("Despair", Windows.UI.Colors.DarkCyan));
+            themes.Add(new Theme(":3", Windows.UI.Colors.CadetBlue));
 
             themes.Add(new Theme("Soviet", Windows.UI.Colors.Red));
             themes.Add(new Theme("Krunch", Windows.UI.Color.FromArgb(255, 255, 117, 117)));
@@ -128,7 +128,6 @@ namespace SchoolPower {
             // themes.Add(new Theme("Doki", Windows.UI.Color.FromArgb(255, 217, 179, 179)));
 
         
-            
             if ((bool)localSettings.Values["IsFirstTimeLogin"]) {
                 await NavigationService.NavigateAsync(typeof(Views.LoginPage));
             } else {

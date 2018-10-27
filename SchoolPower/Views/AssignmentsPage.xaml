@@ -99,8 +99,16 @@
                     <AppBarButton
                         Icon="Filter"
                         Name="Filter"
-                        Click="Filter_Click"
-                        Label="Filter"/>
+                        Label="Filter" >
+                        <AppBarButton.Flyout>
+                            <Flyout x:Name="fly">
+                                <ListBox>
+                                    <ListBoxItem Content="Regular" Tapped="Filter_Click"/>
+                                    <ListBoxItem Content="Experimental" Tapped="ExperimentalFilter_Click"/>
+                                </ListBox>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
                 </controls:PageHeader.PrimaryCommands>
                 <controls:PageHeader.SecondaryCommands>
                     <AppBarButton 

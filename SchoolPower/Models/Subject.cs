@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -61,7 +63,6 @@ using Windows.UI.Xaml.Media;
     }
  */
 
-
 namespace SchoolPower.Models {
 
     public class Subject {
@@ -75,7 +76,7 @@ namespace SchoolPower.Models {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<Peroid> Peroids = new List<Peroid>();
-        public List<string> CatagoryList { get; set; }
+        public List<Catagory> CatagoryList { get; set; }
         public string LetterGradeOnDashboard { get; set; }
         public string PercentageGradeOnDashboard { get; set; }
         public SolidColorBrush ColorOnDashboard { get; set; }
@@ -118,13 +119,8 @@ namespace SchoolPower.Models {
                     Assignments.Add(new AssignmentItem((JObject)assignmentsJarray[index]));
             } catch (System.NullReferenceException) { }
 
-            // catagory
-            CatagoryList = new List<string>();
-            foreach (var ass in Assignments) {
-                if (!CatagoryList.Contains(ass.Category)) 
-                    CatagoryList.Add(ass.Category);
-            }
 
+            // peroid
             string[] peroidList = { "T1", "T2", "X1", "S1", "T3", "T4", "X2", "S2", "Y1" };
 
             foreach (var peroid in peroidList) {
@@ -179,6 +175,43 @@ namespace SchoolPower.Models {
             Assignments.Reverse();
 
 
+            // catagory
+            CatagoryList = new List<Catagory>();
+
+            var catagoryNameList = new List<string>();
+
+            foreach (var ass in Assignments) {
+                if (!catagoryNameList.Contains(ass.Category))
+                    catagoryNameList.Add(ass.Category);
+            }
+
+            // get cataory weight
+            Dictionary<string, double> weights = new Dictionary<string, double> { };
+            try {
+                string json = (string)localSettings.Values[Name + "CataWeight"];
+                weights = JsonConvert.DeserializeObject<Dictionary<string, double>>(json);
+            } catch (Exception) {
+                foreach (var cata in catagoryNameList) {
+                    weights.Add(cata, 0);
+                }
+            }
+
+            foreach (var cataName in catagoryNameList) {
+                var catagortAssignmentList = new List<AssignmentItem>();
+                foreach (var ass in Assignments) {
+                    if (ass.Category == cataName) {
+                        catagortAssignmentList.Add(ass);
+                    }
+                }
+                double w = 0;
+                try {
+                    w = weights[cataName];
+                } catch (Exception) {
+                    w = 0;
+                }
+                var v = weights[cataName];
+                CatagoryList.Add(new Catagory(cataName, catagortAssignmentList, w));
+            }
         }
 
         bool GetActivity (DateTime start, DateTime end) {
@@ -207,6 +240,7 @@ namespace SchoolPower.Models {
             Eval            = data["eval"].ToString();
             IsActive        = false;
             Color           = StudentData.GetColor(LetterGrade);
+            List <AssignmentItem> assignments = new List<AssignmentItem>();
 
             DateTime Genesis = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
             Date = Genesis.AddSeconds((double)data["startDate"]).ToLocalTime();
@@ -215,6 +249,40 @@ namespace SchoolPower.Models {
                 Comment = "--";
             else 
                 Comment = data["comment"].ToString();
+        }
+    }
+
+    public class Catagory {
+        public string Name { get; set; }
+        public double Weight { get; set; }
+        public string WeightDisplay { get; set; }
+        public string LetterGrade { get; set; }
+        public double Percentage { get; set; }
+        public string PercentageDisplay { get; set; }
+        public SolidColorBrush Color { get; set; }
+        public List<AssignmentItem> Assignments { get; set; }
+
+        public Catagory(string Name, List<AssignmentItem> Assignments, double weight) {
+            this.Name = Name;
+            this.WeightDisplay = "Weight: " + Weight.ToString();
+            this.Assignments = Assignments;
+            this.Color = new SolidColorBrush(Windows.UI.Color.FromArgb(200, 30, 30, 30));
+            double neuromotor = 0;
+            double denominator = 0;
+
+            foreach (var ass in this.Assignments) {
+                double www = 1;
+                try { www = Convert.ToDouble(ass.Weight); } catch (Exception) { www = 1; }
+
+                try { neuromotor += Convert.ToDouble(ass.Score) * www; } catch (Exception) { }
+                try { denominator += Convert.ToDouble(ass.MaximumScore) * www; } catch (Exception) { }
+
+            }
+
+            Percentage = neuromotor / denominator;
+            PercentageDisplay = "Percentage: " + (Math.Round(Percentage, 3)).ToString();
+
+
         }
     }
 }

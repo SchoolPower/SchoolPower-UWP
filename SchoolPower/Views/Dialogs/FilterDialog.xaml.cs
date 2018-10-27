@@ -24,9 +24,11 @@ namespace SchoolPower.Views.Dialogs {
 
         public Dictionary<string, string> Result;
 
-        public FilterDialog(List<string> catagoryList, List<Peroid> peroidList) {
+        public FilterDialog(List<Catagory> catagoryList, List<Peroid> peroidList) {
             this.InitializeComponent();
-            CatagoryList = catagoryList;
+            foreach (var cata in catagoryList) {
+                CatagoryList.Add(cata.Name);
+            }
             PeroidList = peroidList;
         }
 

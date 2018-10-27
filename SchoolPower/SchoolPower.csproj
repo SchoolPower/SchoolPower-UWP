@@ -123,6 +123,9 @@
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CategoricalAssignmentsPage.xaml.cs">
+      <DependentUpon>CategoricalAssignmentsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChartPage.xaml.cs">
       <DependentUpon>ChartPage.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,10 @@
     <Page Include="Views\Busy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CategoricalAssignmentsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ChartPage.xaml">
       <Generator>MSBuild:Compile</Generator>

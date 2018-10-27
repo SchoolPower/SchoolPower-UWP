@@ -16,7 +16,7 @@ namespace SchoolPower.Views {
     /// </summary>
     public sealed partial class AssignmentsPage : Page {
         private ObservableCollection<AssignmentItem> assignments;
-        private List<string> CatagoryList;
+        private List<string> CatagoryList = new List<string>();
         private List<Peroid> TimeList;
         private string selectdeSubject = StudentData.SelectedSubject.Name;
 
@@ -32,34 +32,37 @@ namespace SchoolPower.Views {
             assignments = new ObservableCollection<AssignmentItem>();
             List<AssignmentItem> assss = StudentData.SelectedSubject.Assignments;
 
-            CatagoryList = StudentData.subjects[index].CatagoryList;
+            foreach (var cata in StudentData.SelectedSubject.CatagoryList) {
+                CatagoryList.Add(cata.Name);
+            }
             TimeList = StudentData.SelectedSubject.Peroids;//  subjects[index].Peroids;
 
             var AssignmentFilter = StudentData.AssignmentFilterParam;
-
-            if (AssignmentFilter["time"] != null || AssignmentFilter["cata"] != null) {
-                if (AssignmentFilter["time"] == null) {
-                    foreach (var ass in assss) {
-                        if (ass.Category == AssignmentFilter["cata"]) {
-                            assignments.Add(ass);
+            try {
+                if (AssignmentFilter["time"] != null || AssignmentFilter["cata"] != null) {
+                    if (AssignmentFilter["time"] == null) {
+                        foreach (var ass in assss) {
+                            if (ass.Category == AssignmentFilter["cata"]) {
+                                assignments.Add(ass);
+                            }
                         }
-                    }
-                } else if (AssignmentFilter["cata"] == null) {
-                    foreach (var ass in assss) {
-                        if (new List<string>(ass.Terms).Contains(AssignmentFilter["time"])) {
-                            assignments.Add(ass);
+                    } else if (AssignmentFilter["cata"] == null) {
+                        foreach (var ass in assss) {
+                            if (new List<string>(ass.Terms).Contains(AssignmentFilter["time"])) {
+                                assignments.Add(ass);
+                            }
+                        }
+                    } else {
+                        foreach (var ass in assss) {
+                            if (ass.Category == AssignmentFilter["cata"] && new List<string>(ass.Terms).Contains(AssignmentFilter["time"])) {
+                                assignments.Add(ass);
+                            }
                         }
                     }
                 } else {
-                    foreach (var ass in assss) {
-                        if (ass.Category == AssignmentFilter["cata"] && new List<string>(ass.Terms).Contains(AssignmentFilter["time"])) {
-                            assignments.Add(ass);
-                        }
-                    }
+                    assignments = new ObservableCollection<AssignmentItem>(assss);
                 }
-            } else {
-                assignments = new ObservableCollection<AssignmentItem>(assss);
-            }
+            } catch (Exception) { }
             //foreach(var v in )
 
             InitializeComponent();
@@ -121,7 +124,8 @@ namespace SchoolPower.Views {
             await dialog.ShowAsync();
         }
 
-        private async void Filter_Click(object sender, RoutedEventArgs e) {
+        private async void Filter_Click(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            fly.Hide();
             int index = 0;
             foreach (var subject in StudentData.subjects) {
                 if (subject.Name == StudentData.SelectedSubject.Name) {
@@ -130,13 +134,23 @@ namespace SchoolPower.Views {
                 index += 1;
             }
 
-            var dialog = new SchoolPower.Views.Dialogs.FilterDialog(StudentData.subjects[index].CatagoryList, StudentData.subjects[index].Peroids);
+            var dialog = new FilterDialog(StudentData.subjects[index].CatagoryList, StudentData.subjects[index].Peroids);
             await dialog.ShowAsync();
             StudentData.AssignmentFilterParam = dialog.Result;
+            if (StudentData.AssignmentFilterParam == null) {
+                StudentData.AssignmentFilterParam = new Dictionary<string, string> {
+                    { "time", null},
+                    { "cata", null}
+                };
+            }
             Init();
-            // Frame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubjectName);
 
             // InitializeComponent();
+        }
+
+        private void ExperimentalFilter_Click(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            fly.Hide();
+            Frame.Navigate(typeof(Views.CategoricalAssignmentsPage));
         }
     }
 }

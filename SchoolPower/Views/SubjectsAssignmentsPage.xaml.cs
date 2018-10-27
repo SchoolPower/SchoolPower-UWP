@@ -34,8 +34,15 @@ namespace SchoolPower.Views {
 
             localSettings.Values["IsFirstTimeLogin"] = false;
 
-            StudentData.AssignmentFilterParam["time"] = null;
-            StudentData.AssignmentFilterParam["cata"] = null;
+            try {
+                StudentData.AssignmentFilterParam["time"] = null;
+                StudentData.AssignmentFilterParam["cata"] = null;
+            } catch (Exception) {
+                StudentData.AssignmentFilterParam = new Dictionary<string, string> {
+                    { "time", null},
+                    { "cata", null}
+                };
+            }
 
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
                 async (window, e) => {
@@ -111,6 +118,23 @@ namespace SchoolPower.Views {
                     } 
                 }
                 subject.ColorOnDashboard = StudentData.GetColor(subject.LetterGradeOnDashboard);
+
+                int std = 0;
+                try {
+                    std = Convert.ToInt32(subject.PercentageGradeOnDashboard);
+                } catch (Exception) { }
+
+                foreach (var cata in subject.CatagoryList) {
+                    if ((cata.Percentage * 100) >= std ) {
+                        cata.Color = new SolidColorBrush(Windows.UI.Color.FromArgb(200, 0, 121, 107));
+                    } else if ((cata.Percentage * 100) >= (std * .8)) {
+                        cata.Color = new SolidColorBrush(Windows.UI.Color.FromArgb(200, 56, 124, 60));
+                    } else if ((cata.Percentage * 100) >= (std * .6)) {
+                        cata.Color = new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 179, 0));
+                    } else if ((cata.Percentage * 100) >= (std * .4)) {
+                        cata.Color = new SolidColorBrush(Windows.UI.Color.FromArgb(200, 255, 87, 34));
+                    }
+                }
             }
 
             foreach (var subjectOld in StudentData.subjectsOld) {
@@ -295,26 +319,18 @@ namespace SchoolPower.Views {
             await KissingAsync();
         }
 
-        private async void Filter_Click(object sender, RoutedEventArgs e) {
-            int index = 0;
-            foreach (var subject in StudentData.subjects) {
-                if (subject.Name == StudentData.SelectedSubject.Name) {
-                    break;
-                }
-                index += 1;
-            }
-
-            var dialog = new SchoolPower.Views.Dialogs.FilterDialog(StudentData.subjects[index].CatagoryList, StudentData.subjects[index].Peroids);
-            await dialog.ShowAsync();
-            StudentData.AssignmentFilterParam = dialog.Result;
-            AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubject);
-        }
-
         private void SubjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 
             // reset data
-            StudentData.AssignmentFilterParam["time"] = null;
-            StudentData.AssignmentFilterParam["cata"] = null;
+            try {
+                StudentData.AssignmentFilterParam["time"] = null;
+                StudentData.AssignmentFilterParam["cata"] = null;
+            } catch (Exception) {
+                StudentData.AssignmentFilterParam = new Dictionary<string, string> {
+                    { "time", null},
+                    { "cata", null}
+                };
+            }
 
             // remove img
             NoGradeIcnImg.Visibility = Visibility.Collapsed;
@@ -393,6 +409,33 @@ namespace SchoolPower.Views {
             } else if (txt.Text == StudentData.SelectedSubject.TeacherEmail) {
                 txt.Text = StudentData.SelectedSubject.TeacherName;
             }
+        }
+
+        private async void Filter_Click(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            fly.Hide();
+            int index = 0;
+            foreach (var subject in StudentData.subjects) {
+                if (subject.Name == StudentData.SelectedSubject.Name) {
+                    break;
+                }
+                index += 1;
+            }
+
+            var dialog = new FilterDialog(StudentData.subjects[index].CatagoryList, StudentData.subjects[index].Peroids);
+            await dialog.ShowAsync();
+            StudentData.AssignmentFilterParam = dialog.Result;
+            if (StudentData.AssignmentFilterParam == null) {
+                StudentData.AssignmentFilterParam = new Dictionary<string, string> {
+                    { "time", null},
+                    { "cata", null}
+                };
+            }
+            AssignmentsFrame.Navigate(typeof(AssignmentsPage), StudentData.SelectedSubject);
+        }
+
+        private void ExperimentalFilter_Click(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) {
+            fly.Hide();
+            AssignmentsFrame.Navigate(typeof(Views.CategoricalAssignmentsPage));
         }
     }
 }

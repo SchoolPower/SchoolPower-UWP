@@ -1,0 +1,98 @@
+﻿<Page
+    x:Class="SchoolPower.Views.CategoricalAssignmentsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SchoolPower.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:data="using:SchoolPower.Models"
+    xmlns:controls="using:Template10.Controls"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+
+        <DataTemplate x:Key="CatagoryListTemplate" x:DataType="data:Catagory">
+
+            <Border 
+                Loaded="Border_Loaded" 
+                Background="{x:Bind Color}">
+                <StackPanel Orientation="Vertical" Width="400" Margin="10,0,0,0">
+
+                    <TextBlock Text="{x:Bind Name}" FontWeight="SemiLight" FontSize="20" Margin="0,5,0,0"/>
+                    <TextBlock Text="{x:Bind WeightDisplay}" />
+                    <TextBlock Text="{x:Bind PercentageDisplay}" Margin="0,0,0,8" />
+
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates" CurrentStateChanged="AdaptiveStatesChanged">
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Head-->
+        <RelativePanel 
+            Grid.Row="0" 
+            x:Name="Head"
+            Loaded="Head_Loaded"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <controls:PageHeader 
+                Text="Categorical Filter" x:Name="pageHeader" 
+                RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" >
+            </controls:PageHeader>
+        </RelativePanel>
+
+        <ScrollViewer 
+            Grid.Row="1"
+            HorizontalScrollBarVisibility="Auto"
+            HorizontalScrollMode="Enabled"
+            VerticalScrollBarVisibility="Hidden"
+            VerticalScrollMode="Disabled">
+            <GridView  
+                Name="CatagoryGridView" 
+                Margin="5,5,5,5"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ItemsSource="{x:Bind catagories}" 
+                IsItemClickEnabled="True" 
+                ItemTemplate="{StaticResource CatagoryListTemplate}" 
+                Loaded="CatagoryWarp_Loaded"                  
+                SizeChanged="CatagoryWarp_SizeChanged"
+                ItemClick="CatagoryGridView_ItemClick" >
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid 
+                            x:Name="CatagoryWarp" 
+                            Orientation="Vertical"
+                            MaximumRowsOrColumns="5" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
+        </ScrollViewer>
+    </Grid>
+</Page>
